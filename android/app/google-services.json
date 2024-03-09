@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "938676857383",
+    "project_id": "my-cli-test-3541b",
+    "storage_bucket": "my-cli-test-3541b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938676857383:android:5c09bcaa085ed9cb2b3c02",
+        "android_client_info": {
+          "package_name": "com.example.my_cli_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYwrfUxNpk5q-CERN8v7SXsgg93xjMW1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
