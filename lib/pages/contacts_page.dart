@@ -21,9 +21,10 @@ class ContactsPage extends StatelessWidget {
           title: const Text(AppStrings.contacts),
         ),
         body: Obx(() {
-          List<UserModel> users = controller.model.value.users;
-
-          if (users.isEmpty) {
+          List<UserModel>? users = controller.model.value.users;
+          if (users == null) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (users.isEmpty) {
             return const Center(
               child: CustomText(text: AppStrings.noContacts),
             );

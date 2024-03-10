@@ -1,6 +1,6 @@
 import '../core/models/user_model.dart';
 
 class ContactsPageModel {
-  List<UserModel> users = [];
+  List<UserModel>? users;
   String currentUserId = '';
 }
