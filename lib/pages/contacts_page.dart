@@ -1,19 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../core/constants/app_strings.dart';
 import '../models/user_model.dart';
 
 class ContactsPage extends StatelessWidget {
-  const ContactsPage({super.key});
+  const ContactsPage({required this.userId, super.key});
+
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
-    final Map arg = ModalRoute.of(context)!.settings.arguments as Map;
-    final String userId = arg['id'].toString();
-
     return Scaffold(
-      appBar: AppBar(title: Text(AppStrings.contacts)),
+      appBar: AppBar(title: const Text(AppStrings.contacts)),
       body: Center(
           child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("contacts").snapshots(),
@@ -33,11 +31,11 @@ class ContactsPage extends StatelessWidget {
             return ListView.builder(
               itemCount: users.length,
               itemBuilder: (context, index) {
-                return Text(users[index].name);
+                return Text(users[index].name!);
               },
             );
           }
-          return CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         },
       )),
     );

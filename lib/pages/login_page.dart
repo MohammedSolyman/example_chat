@@ -1,37 +1,31 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../core/constants/app_messages.dart';
+import '../controllers/login_controller.dart';
 import '../core/constants/app_strings.dart';
-import '../core/constants/pages_names.dart';
-import '../core/theming/theming.dart';
 import '../core/widgets/app_icon.dart';
 import '../core/widgets/custom_button.dart';
 import '../core/widgets/custom_text.dart';
 import '../core/widgets/custom_text_field.dart';
 import '../core/widgets/custom_title.dart';
-import '../core/widgets/show_snackbar.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
-
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    LogInPageController controller = Get.put(LogInPageController());
+
     return Scaffold(
-      backgroundColor: kPrimaryCollor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 7),
         child: SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Form(
-              key: formKey,
+              key: controller.model.value.formKey,
               child: Column(
                 children: [
                   const Spacer(flex: 1),
@@ -42,17 +36,21 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   CustomTextField(
                     hintText: AppStrings.email,
-                    controller: emailController,
+                    controller: controller.model.value.emailController,
                     isEmail: true,
                   ),
                   const SizedBox(height: 10),
                   CustomTextField(
                     hintText: AppStrings.password,
-                    controller: passwordController,
+                    controller: controller.model.value.passwordController,
                     isEmail: false,
                   ),
                   const SizedBox(height: 20),
-                  _logInButton(context),
+                  CustomButton(
+                      text: AppStrings.login,
+                      myFunc: () async {
+                        await controller.logInFunction(context);
+                      }),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -63,8 +61,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       GestureDetector(
                           onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(PagesNames.registerPage);
+                            controller.goToRegisterPage();
                           },
                           child: const CustomText(
                             text: AppStrings.createAccount,
@@ -82,49 +79,5 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  CustomButton _logInButton(BuildContext context) {
-    return CustomButton(
-        text: AppStrings.login,
-        myFunc: () async {
-          FormState? fs = formKey.currentState;
-          if (fs!.validate()) {
-            try {
-              final credential = await FirebaseAuth.instance
-                  .signInWithEmailAndPassword(
-                      email: emailController.text,
-                      password: passwordController.text);
-              showMySnackBar(
-                  context: context,
-                  msg: AppMessages.successLogIn,
-                  isSuccess: true);
-
-              String id = credential.user!.uid;
-
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  PagesNames.contactsPage,
-                  arguments: {'id': id},
-                  (route) => false);
-            } on FirebaseAuthException catch (e) {
-              if (e.code == 'user-not-found') {
-                showMySnackBar(
-                    context: context,
-                    msg: AppMessages.userNotFound,
-                    isSuccess: false);
-              } else if (e.code == 'wrong-password') {
-                showMySnackBar(
-                    context: context,
-                    msg: AppMessages.wrongPassword,
-                    isSuccess: false);
-              } else if (e.code == 'invalid-credential') {
-                showMySnackBar(
-                    context: context,
-                    msg: AppMessages.wrongdata,
-                    isSuccess: false);
-              }
-            }
-          }
-        });
   }
 }

@@ -1,5 +1,17 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryCollor = Color(0xff2B475E);
-
-class AppTheme {}
+class AppTheme {
+  static ThemeData lightThemeData = ThemeData(
+    primaryColor: const Color(0xff2B475E),
+    scaffoldBackgroundColor: const Color(0xff2B475E),
+    appBarTheme: const AppBarTheme(backgroundColor: Color(0xff2B475E)),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+          backgroundColor: const MaterialStatePropertyAll(Colors.white),
+          shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+          minimumSize:
+              const MaterialStatePropertyAll(Size(double.infinity, 60))),
+    ),
+  );
+}

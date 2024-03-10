@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_cli_test/core/theming/theming.dart';
 import 'package:my_cli_test/firebase_options.dart';
-import 'core/constants/pages_names.dart';
-import 'core/routing/routing.dart';
+import 'package:my_cli_test/pages/login_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,9 +19,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: PagesNames.logInPage,
-      routes: myRoutes,
+    return GetMaterialApp(
+      theme: AppTheme.lightThemeData,
+      home: const LoginPage(),
     );
   }
 }
