@@ -3,18 +3,20 @@ import 'package:get/get.dart';
 
 import '../core/models/user_model.dart';
 import '../models/contacts_page_model.dart';
-import '../pages/chat_page.dart';
+import '../pages/chat_page/chat_page.dart';
 
 class ContactsPageController extends GetxController {
   Rx<ContactsPageModel> model = ContactsPageModel().obs;
 
   void getContacts() {
-    List<UserModel> users = [];
+    // get a list of all users
 
     FirebaseFirestore.instance
         .collection("contacts")
         .snapshots()
         .listen((event) {
+      List<UserModel> users = [];
+
       List<QueryDocumentSnapshot> docs = event.docs;
 
       docs.forEach((element) {
@@ -35,16 +37,21 @@ class ContactsPageController extends GetxController {
       model.update((val) {
         val!.users = users;
       });
+
+      users = [];
     });
   }
 
   void getCurrentUserId(String id) {
+    //this function fetches this user id
     model.update((val) {
       val!.currentUserId = id;
     });
   }
 
   String _creaetRoomId(String recieverUserId) {
+    // this function generate an ID to this chat room, by combining the ID's
+    //of the two users after sorting them
     List<String> idsCombination = [model.value.currentUserId, recieverUserId];
     idsCombination.sort(
       (a, b) => a.compareTo(b),
@@ -53,6 +60,7 @@ class ContactsPageController extends GetxController {
   }
 
   Future<void> goToChatPage(UserModel recieverUser) async {
+    //navigate to chat page
     String roomId = _creaetRoomId(recieverUser.id!);
 
     await Get.to(ChatPage(

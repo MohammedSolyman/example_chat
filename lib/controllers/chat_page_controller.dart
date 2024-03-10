@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_cli_test/core/models/message_model.dart';
 import 'package:my_cli_test/core/models/user_model.dart';
@@ -12,6 +13,9 @@ class ChatPageController extends GetxController {
       required UserModel otherUser,
       required String thisUserId}) {
     model.update((val) {
+      //this function will be called at the beginning of the chat page
+      //this function will fetch the room, this user and other user information
+
       val!.roomId = roomId;
       val.thisUserId = thisUserId;
       val.otherUser = otherUser;
@@ -19,6 +23,7 @@ class ChatPageController extends GetxController {
   }
 
   Future<void> sendMessage() async {
+// this function will send the message if it is NOT empty
     String msg = model.value.textController.text;
     UserModel otherUser = model.value.otherUser;
     String roomId = model.value.roomId;
@@ -45,46 +50,13 @@ class ChatPageController extends GetxController {
 
         _clearTextField();
       } catch (e) {
-        print('---------------------------');
-        print(e.toString());
+        debugPrint(e.toString());
       }
     }
   }
 
-  // Future<void> getAllMessages() async {
-  //   String roomId = model.value.roomId;
-
-  //   List<MessageModel> messages = [];
-
-  //   CollectionReference<Map<String, dynamic>> colRef = FirebaseFirestore
-  //       .instance
-  //       .collection("rooms")
-  //       .doc(roomId)
-  //       .collection('messages');
-
-  //   QuerySnapshot<Map<String, dynamic>> querySS = await colRef.get();
-  //   List<QueryDocumentSnapshot<Map<String, dynamic>>> myList = querySS.docs;
-
-  //   myList.forEach((QueryDocumentSnapshot<Map<String, dynamic>> element) {
-  //     Map<String, dynamic> map = element.data();
-  //     MessageModel message = MessageModel.fromMap(map);
-  //     messages.add(message);
-  //   });
-  //   messages.sort(
-  //     (a, b) => a.time.compareTo(b.time),
-  //   );
-
-  //   print('-------------------');
-  //   messages.forEach((element) {
-  //     print(element.message);
-  //   });
-
-  //   model.update((val) {
-  //     val!.messages = messages;
-  //   });
-  // }
-
   void getMessages() {
+    //this function will get the stream of the message of this chat room
     String roomId = model.value.roomId;
 
     FirebaseFirestore.instance
@@ -94,16 +66,6 @@ class ChatPageController extends GetxController {
         .snapshots()
         .listen((event) {
       List<QueryDocumentSnapshot> docs = event.docs;
-      // List<DocumentChange<Map<String, dynamic>>> docs = event.docChanges;
-
-      // QueryDocumentSnapshot lastData = docs.last;
-
-      // MessageModel lastMessage = MessageModel(
-      //     time: lastData.get('time'),
-      //     senderId: lastData.get('senderId'),
-      //     recieverId: lastData.get('recieverId'),
-      //     message: lastData.get('message'));
-
       List<MessageModel> messages = [];
 
       docs.forEach((element) {
@@ -130,5 +92,20 @@ class ChatPageController extends GetxController {
 
   void _clearTextField() {
     model.value.textController.clear();
+  }
+
+  String numsToDateString(int dateTimeNums) {
+    //convert number to date string
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(dateTimeNums);
+    String dateTimeString = dateTime.toString();
+    String dateString = dateTimeString.split(' ').first;
+    return dateString;
+  }
+
+  String numsToTimeString(int dateTimeNums) {
+    //convert number to time string
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(dateTimeNums);
+    String dateTimeString = dateTime.toString();
+    return dateTimeString.split(' ')[1].split('.').first;
   }
 }
