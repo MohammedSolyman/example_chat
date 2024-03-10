@@ -13,19 +13,20 @@ class ContactsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text(AppStrings.contacts)),
       body: Center(
-          child: StreamBuilder<QuerySnapshot>(
+          child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: FirebaseFirestore.instance.collection("contacts").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             print('errrrrrrrrrrroooooooooooor');
             return Text('errrrrroooooor');
           } else if (snapshot.hasData) {
-            print(snapshot.data.toString());
             List<QueryDocumentSnapshot> docs = snapshot.data!.docs;
             List<UserModel> users = [];
             docs.forEach((element) {
               UserModel user = UserModel(
-                  name: element.get('id'), email: element.get('email'));
+                  id: element.get('id'),
+                  name: element.get('name'),
+                  email: element.get('email'));
               users.add(user);
             });
             return ListView.builder(

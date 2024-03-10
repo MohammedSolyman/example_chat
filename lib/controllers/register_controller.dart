@@ -13,7 +13,7 @@ import '../pages/contacts_page.dart';
 class RegisterController extends GetxController {
   Rx<RegisterModel> model = RegisterModel().obs;
 
-  Future<UserModel> _signUp(BuildContext context) async {
+  _signUp(BuildContext context) async {
     // 1.1 prepare information
     String email = model.value.emailController.text;
     String name = model.value.nameController.text;
@@ -42,6 +42,9 @@ class RegisterController extends GetxController {
         //clear all text fields
         _clearTextFields();
 
+        //returning the registered user
+        return user;
+
         //in case of known errors occur:
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
@@ -63,31 +66,36 @@ class RegisterController extends GetxController {
         }
       }
     }
-    return user;
   }
 
-  Future<void> registerFunction(BuildContext context) async {
-    // register this user to firebase auth
-    UserModel user = await _signUp(context);
+  //registerFunction
 
-    if (user.id != '') {
-      // If the registering process was successful, the
-      // will get a (id).
+  registerFunction(BuildContext context) async {
+    try {
+      //if the registering the user is successful,
+      //add this user to the contacts collection in firebase store
+      UserModel user = await _signUp(context);
+      await _addToConacts(user);
+    } catch (e) {
+      //in case of error
+      print(e.toString());
+    }
+  }
 
-      try {
-        //try to add this user to the (contacts) collection
-        //in the firebase and assign the user id as a document name.
-        FirebaseFirestore myInstance = FirebaseFirestore.instance;
-        CollectionReference<Map<String, dynamic>> colRef =
-            myInstance.collection('contacts');
-        DocumentReference<Map<String, dynamic>> docRef = colRef.doc(user.id);
-        docRef.set({'id': user.id, 'name': user.name, 'email': user.email});
+  Future<void> _addToConacts(UserModel user) async {
+    try {
+      //try to add this user to the (contacts) collection
+      //in the firebase and assign the user id as a document name.
+      FirebaseFirestore myInstance = FirebaseFirestore.instance;
+      CollectionReference<Map<String, dynamic>> colRef =
+          myInstance.collection('contacts');
+      DocumentReference<Map<String, dynamic>> docRef = colRef.doc(user.id);
+      docRef.set({'id': user.id, 'name': user.name, 'email': user.email});
 
-        //remove all pages and navigate to the contacts page
-        _goToContactPage(id: user.id!);
-      } catch (e) {
-        print(e.toString());
-      }
+      //remove all pages and navigate to the contacts page
+      _goToContactPage(id: user.id!);
+    } catch (e) {
+      print(e.toString());
     }
   }
 
