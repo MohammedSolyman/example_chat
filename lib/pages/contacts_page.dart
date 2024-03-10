@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_cli_test/core/widgets/custom_title.dart';
 import '../controllers/contacts_page_controller.dart';
 import '../core/constants/app_strings.dart';
 import '../core/models/user_model.dart';
@@ -18,7 +19,7 @@ class ContactsPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text(AppStrings.contacts),
+          title: const CustomTitle(text: AppStrings.contacts),
         ),
         body: Obx(() {
           List<UserModel>? users = controller.model.value.users;
@@ -41,6 +42,9 @@ class ContactsPage extends StatelessWidget {
                             textAlign: TextAlign.center),
                       ),
                       title: Text(users[index].name!),
+                      onTap: () async {
+                        await controller.goToChatPage(users[index]);
+                      },
                     ),
                   );
                 },

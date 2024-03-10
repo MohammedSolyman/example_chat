@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:my_cli_test/models/contacts_page_model.dart';
 
 import '../core/models/user_model.dart';
+import '../models/contacts_page_model.dart';
+import '../pages/chat_page.dart';
 
 class ContactsPageController extends GetxController {
   Rx<ContactsPageModel> model = ContactsPageModel().obs;
@@ -27,6 +28,10 @@ class ContactsPageController extends GetxController {
         }
       });
 
+      users.sort(
+        (a, b) => a.name!.compareTo(b.name!),
+      );
+
       model.update((val) {
         val!.users = users;
       });
@@ -37,5 +42,23 @@ class ContactsPageController extends GetxController {
     model.update((val) {
       val!.currentUserId = id;
     });
+  }
+
+  String _creaetRoomId(String recieverUserId) {
+    List<String> idsCombination = [model.value.currentUserId, recieverUserId];
+    idsCombination.sort(
+      (a, b) => a.compareTo(b),
+    );
+    return '${idsCombination[0]}-${idsCombination[1]}';
+  }
+
+  Future<void> goToChatPage(UserModel recieverUser) async {
+    String roomId = _creaetRoomId(recieverUser.id!);
+
+    await Get.to(ChatPage(
+      roomId: roomId,
+      otherUser: recieverUser,
+      thisUserId: model.value.currentUserId,
+    ));
   }
 }

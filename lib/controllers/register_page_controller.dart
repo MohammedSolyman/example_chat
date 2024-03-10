@@ -73,14 +73,14 @@ class RegisterController extends GetxController {
       //if the registering the user is successful,
       //add this user to the contacts collection in firebase store
       UserModel user = await _signUp(context);
-      await _addToConacts(user);
+      await _addToContacts(user);
     } catch (e) {
       //in case of error
       print(e.toString());
     }
   }
 
-  Future<void> _addToConacts(UserModel user) async {
+  Future<void> _addToContacts(UserModel user) async {
     try {
       //try to add this user to the (contacts) collection
       //in the firebase and assign the user id as a document name.
@@ -88,7 +88,7 @@ class RegisterController extends GetxController {
       CollectionReference<Map<String, dynamic>> colRef =
           myInstance.collection('contacts');
       DocumentReference<Map<String, dynamic>> docRef = colRef.doc(user.id);
-      docRef.set({'id': user.id, 'name': user.name, 'email': user.email});
+      await docRef.set({'id': user.id, 'name': user.name, 'email': user.email});
 
       //remove all pages and navigate to the contacts page
       _goToContactPage(id: user.id!);
