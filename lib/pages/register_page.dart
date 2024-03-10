@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/register_controller.dart';
+import '../controllers/register_page_controller.dart';
 import '../core/constants/app_strings.dart';
 import '../core/widgets/app_icon.dart';
 import '../core/widgets/custom_button.dart';

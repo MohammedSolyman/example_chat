@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RegisterModel {
+class RegisterPageModel {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

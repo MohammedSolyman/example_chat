@@ -7,11 +7,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../core/constants/app_messages.dart';
 import '../core/widgets/show_snackbar.dart';
 import '../models/register_page_model.dart';
-import '../models/user_model.dart';
+import '../core/models/user_model.dart';
 import '../pages/contacts_page.dart';
 
 class RegisterController extends GetxController {
-  Rx<RegisterModel> model = RegisterModel().obs;
+  Rx<RegisterPageModel> model = RegisterPageModel().obs;
 
   _signUp(BuildContext context) async {
     // 1.1 prepare information
@@ -67,8 +67,6 @@ class RegisterController extends GetxController {
       }
     }
   }
-
-  //registerFunction
 
   registerFunction(BuildContext context) async {
     try {

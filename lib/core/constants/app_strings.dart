@@ -17,4 +17,7 @@ class AppStrings {
 
   // pages appbars title
   static const String contacts = 'contacts';
+
+  //
+  static const String noContacts = 'there are no contacts yet.';
 }

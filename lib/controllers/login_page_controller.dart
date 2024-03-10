@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../core/constants/app_messages.dart';
 import '../core/widgets/show_snackbar.dart';
 import '../models/login_page_model.dart';
-import '../models/user_model.dart';
+import '../core/models/user_model.dart';
 import '../pages/contacts_page.dart';
 import '../pages/register_page.dart';
 
