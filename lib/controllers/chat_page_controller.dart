@@ -35,7 +35,7 @@ class ChatPageController extends GetxController {
       try {
         FirebaseFirestore myInstance = FirebaseFirestore.instance;
         CollectionReference<Map<String, dynamic>> colRef =
-            myInstance.collection('rooms');
+            myInstance.collection('contacts rooms');
         DocumentReference<Map<String, dynamic>> docRef = colRef.doc(roomId);
         CollectionReference<Map<String, dynamic>> msgColRef =
             docRef.collection('messages');
@@ -60,7 +60,7 @@ class ChatPageController extends GetxController {
     String roomId = model.value.roomId;
 
     FirebaseFirestore.instance
-        .collection("rooms")
+        .collection("contacts rooms")
         .doc(roomId)
         .collection('messages')
         .snapshots()

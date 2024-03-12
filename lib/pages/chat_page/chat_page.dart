@@ -6,9 +6,7 @@ import 'package:my_cli_test/pages/chat_page/components/lower_block.dart';
 import '../../controllers/chat_page_controller.dart';
 import '../../core/constants/assets_paths.dart';
 import '../../core/models/user_model.dart';
-import '../../core/widgets/custom_text.dart';
-import '../../core/widgets/custom_title.dart';
-
+  
 class ChatPage extends StatelessWidget {
   const ChatPage(
       {required this.roomId,

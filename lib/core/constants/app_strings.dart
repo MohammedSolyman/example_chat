@@ -20,4 +20,10 @@ class AppStrings {
 
   //
   static const String noContacts = 'there are no contacts yet.';
+
+//group
+  static const String createGroup = 'create group';
+  static const String cancel = 'cancel';
+  static const String create = 'create';
+  static const String addName = 'add group name';
 }

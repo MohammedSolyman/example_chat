@@ -86,7 +86,7 @@ class RegisterController extends GetxController {
       //in the firebase and assign the user id as a document name.
       FirebaseFirestore myInstance = FirebaseFirestore.instance;
       CollectionReference<Map<String, dynamic>> colRef =
-          myInstance.collection('contacts');
+          myInstance.collection('contacts info');
       DocumentReference<Map<String, dynamic>> docRef = colRef.doc(user.id);
       await docRef.set({'id': user.id, 'name': user.name, 'email': user.email});
 
@@ -99,7 +99,7 @@ class RegisterController extends GetxController {
 
   void _goToContactPage({required String id}) {
     Get.offAll(() => ContactsPage(
-          userId: id,
+          currentUserId: id,
         ));
   }
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../core/models/user_model.dart';
 import '../models/contacts_page_model.dart';
+import '../pages/adding_contacts/adding_contacts.dart';
 import '../pages/chat_page/chat_page.dart';
 
 class ContactsPageController extends GetxController {
@@ -12,7 +13,7 @@ class ContactsPageController extends GetxController {
     // get a list of all users
 
     FirebaseFirestore.instance
-        .collection("contacts")
+        .collection("contacts info")
         .snapshots()
         .listen((event) {
       List<UserModel> users = [];
@@ -68,5 +69,25 @@ class ContactsPageController extends GetxController {
       otherUser: recieverUser,
       thisUserId: model.value.currentUserId,
     ));
+  }
+
+  void cancelGroup() {
+    _clearTextField();
+    Get.back();
+  }
+
+  void createGroup() {
+    if (model.value.groupTec.text.isNotEmpty) {
+      _goToAdingContacts(model.value.groupTec.text);
+      _clearTextField();
+    }
+  }
+
+  void _goToAdingContacts(String groupName) {
+    Get.to(() => AddingContacts(groupName: groupName));
+  }
+
+  void _clearTextField() {
+    model.value.groupTec.clear();
   }
 }

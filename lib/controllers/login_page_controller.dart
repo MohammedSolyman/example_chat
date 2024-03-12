@@ -63,7 +63,7 @@ class LogInPageController extends GetxController {
   }
 
   void _goToContactPage({required String id}) {
-    Get.offAll(() => ContactsPage(userId: id));
+    Get.offAll(() => ContactsPage(currentUserId: id));
   }
 
   void goToRegisterPage() {
