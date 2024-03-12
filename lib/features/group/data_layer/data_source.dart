@@ -28,7 +28,7 @@ class RemotePostDataSource implements BaseRemoteGroupDataSource {
 
       return groupId;
     } catch (e) {
-      throw ServerEx();
+      throw ServerException();
     }
   }
 
@@ -46,7 +46,7 @@ class RemotePostDataSource implements BaseRemoteGroupDataSource {
       await docRef.set({'groupName': 'new name'}, SetOptions(merge: true));
       return unit;
     } catch (e) {
-      throw ServerEx();
+      throw ServerException();
     }
   }
 }

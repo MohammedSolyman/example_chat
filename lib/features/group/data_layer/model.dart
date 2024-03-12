@@ -24,7 +24,7 @@ class GroupModel extends GroupEntity {
   factory GroupModel.fromMap(Map<String, dynamic> map) {
     return GroupModel(
       groupName: map['groupName'],
-      members: map['members'],
+      members: List<String>.from((map['members'])),
       groupId: map['groupId'],
       groupImage: map['groupImage'],
       creationDateTime: map['creationDateTime'],

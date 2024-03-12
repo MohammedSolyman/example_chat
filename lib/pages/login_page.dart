@@ -1,22 +1,30 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:my_cli_test/features/user/data_layer/model.dart';
+import 'package:my_cli_test/features/user/presentaion_layer/controller.dart';
 
-import '../controllers/login_page_controller.dart';
 import '../core/constants/app_strings.dart';
 import '../core/widgets/app_icon.dart';
 import '../core/widgets/custom_button.dart';
 import '../core/widgets/custom_text.dart';
 import '../core/widgets/custom_text_field.dart';
 import '../core/widgets/custom_title.dart';
+import 'package:my_cli_test/core/dependency_injection/dependency_injection.dart'
+    as di;
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    LogInPageController controller = Get.put(LogInPageController());
+//    LogInPageController controller = Get.put(LogInPageController());
+    UserController userController = di.sl<UserController>();
+
+    TextEditingController tecEmail = TextEditingController();
+    TextEditingController tecPassword = TextEditingController();
+
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return Scaffold(
       body: Padding(
@@ -25,7 +33,7 @@ class LoginPage extends StatelessWidget {
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Form(
-              key: controller.model.value.formKey,
+              key: formKey,
               child: Column(
                 children: [
                   const Spacer(flex: 1),
@@ -36,20 +44,27 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   CustomTextField(
                     hintText: AppStrings.email,
-                    controller: controller.model.value.emailController,
+                    controller: tecEmail,
                     isEmail: true,
                   ),
                   const SizedBox(height: 10),
                   CustomTextField(
                     hintText: AppStrings.password,
-                    controller: controller.model.value.passwordController,
+                    controller: tecPassword,
                     isEmail: false,
                   ),
                   const SizedBox(height: 20),
                   CustomButton(
                       text: AppStrings.login,
                       myFunc: () async {
-                        await controller.logInFunction(context);
+                        bool isValid = formKey.currentState!.validate();
+                        if (isValid) {
+                          UserModel userModel = UserModel(
+                              subscribedGroupsIds: const [],
+                              email: tecEmail.text,
+                              password: tecPassword.text);
+                          await userController.signIn(context, userModel);
+                        }
                       }),
                   const SizedBox(height: 10),
                   Row(
@@ -61,7 +76,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       GestureDetector(
                           onTap: () {
-                            controller.goToRegisterPage();
+                            userController.toSignUpPage();
                           },
                           child: const CustomText(
                             text: AppStrings.createAccount,

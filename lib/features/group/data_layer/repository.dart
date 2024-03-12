@@ -25,7 +25,7 @@ class GroupRepository implements BaseGroupRepository {
         String groupId =
             await baseRemoteGroupDataSource.createGroup(groupModel);
         return Right(groupId);
-      } on ServerEx {
+      } on ServerException {
         return const Left(
             ServerFailure(failureMessage: ErrorMessages.serverError));
       }
@@ -42,7 +42,7 @@ class GroupRepository implements BaseGroupRepository {
       try {
         await baseRemoteGroupDataSource.renameGroup(groupModel);
         return const Right(unit);
-      } on ServerEx {
+      } on ServerException {
         return const Left(
             ServerFailure(failureMessage: ErrorMessages.serverError));
       }

@@ -39,9 +39,6 @@ class GroupController extends GetxController {
     result.fold((Failure failure) {
       showMyDialog(
           context: context, msg: failure.failureMessage, isSuccess: false);
-    }, (String groupId) {
-      print('------------------------------');
-      print(groupId);
-    });
+    }, (String groupId) {});
   }
 }
