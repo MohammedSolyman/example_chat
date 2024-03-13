@@ -44,8 +44,10 @@ class ContactsPage extends StatelessWidget {
                         children: [
                           const Text(AppStrings.addName),
                           CustomTextField(
-                              isEmail: false,
-                              controller: controller.model.value.groupTec)
+                            isEmail: false,
+                            controller: controller.model.value.groupTec,
+                            isPassword: false,
+                          )
                         ],
                       ),
                       backgroundColor: Colors.green,

@@ -8,9 +8,10 @@ class AppTheme {
       appBarTheme: const AppBarTheme(backgroundColor: Color(0xff2B475E)),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-            backgroundColor: const MaterialStatePropertyAll(Colors.white),
+            foregroundColor: const MaterialStatePropertyAll(Colors.white),
+            backgroundColor: const MaterialStatePropertyAll(Color(0xff2B475E)),
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12))),
+                borderRadius: BorderRadius.circular(25))),
             minimumSize:
                 const MaterialStatePropertyAll(Size(double.infinity, 60))),
       ),

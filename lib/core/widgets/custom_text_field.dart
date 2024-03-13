@@ -6,11 +6,12 @@ class CustomTextField extends StatelessWidget {
       {super.key,
       required this.isEmail,
       required this.controller,
-      this.hintText});
+      this.hintText,
+      required this.isPassword});
   final String? hintText;
   final TextEditingController controller;
   final bool isEmail;
-
+  final bool isPassword;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -30,8 +31,14 @@ class CustomTextField extends StatelessWidget {
         }
       },
       controller: controller,
+      obscureText: isPassword ? true : false,
+      style: TextStyle(color: Theme.of(context).primaryColor),
       decoration: InputDecoration(
         hintText: hintText,
+        labelText: hintText,
+        errorStyle: const TextStyle(color: Colors.white),
+        fillColor: Colors.white,
+        filled: true,
         hintStyle: const TextStyle(
           color: Colors.white,
         ),

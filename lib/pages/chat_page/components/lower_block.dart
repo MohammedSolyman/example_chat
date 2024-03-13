@@ -14,6 +14,7 @@ class LowerBlock extends StatelessWidget {
       children: [
         Expanded(
           child: CustomTextField(
+              isPassword: false,
               isEmail: false,
               controller: controller.model.value.textController),
         ),
