@@ -30,5 +30,10 @@ class AppStrings {
   static const String groupDescription = 'group description';
   static const String addGroupName = 'add group name';
   static const String addGroupDescription = 'add group description';
+
+  //selecting group members page
   static const String selectMembers = 'selecting group members';
+  static const String selectAll = 'select all members';
+  static const String unSelectAll = 'unselect all members';
+  static const String selectUserAtLeast = 'at least select one contact';
 }

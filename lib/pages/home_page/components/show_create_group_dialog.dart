@@ -4,7 +4,6 @@ import 'package:my_cli_test/pages/selecting_group_members/selecting_group_member
 import '../../../core/constants/app_strings.dart';
 import '../../../core/widgets/custom_text.dart';
 import '../../../core/widgets/custom_text_field.dart';
-import '../../../features/group/data_layer/model.dart';
 import '../../../features/group/presentaion_layer/group_controller.dart';
 import '../../../features/user/presentaion_layer/controller.dart';
 
@@ -43,6 +42,7 @@ showCreateGroupDialog(BuildContext context) async {
           hintText: AppStrings.groupDescription,
           controller: tecGroupDescription,
           isPassword: false,
+          linesNumbers: 3,
         )
       ],
     ),
@@ -83,11 +83,11 @@ showCreateGroupDialog(BuildContext context) async {
                 user: userController.model.value.currentUser!,
                 groupId: groupId);
 
-//go to selecting groups members
+            // close the dialog
+            Get.back();
+
+            //go to selecting groups members
             Get.to(() => const SelectingGroupMembersPage());
-            // //TEST ONLY
-            // await groupController
-            //     .addUsersToGroupFunction(['aaaaa', 'bbbbb'], groupId);
           },
           child: const CustomText(text: AppStrings.create, isSamll: true))
     ],

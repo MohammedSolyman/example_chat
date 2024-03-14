@@ -7,11 +7,15 @@ class CustomTextField extends StatelessWidget {
       required this.isEmail,
       required this.controller,
       this.hintText,
-      required this.isPassword});
+      required this.isPassword,
+      this.linesNumbers = 1});
+
   final String? hintText;
   final TextEditingController controller;
   final bool isEmail;
   final bool isPassword;
+  final int linesNumbers;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -31,6 +35,8 @@ class CustomTextField extends StatelessWidget {
         }
       },
       controller: controller,
+      minLines: linesNumbers,
+      maxLines: linesNumbers,
       obscureText: isPassword ? true : false,
       style: TextStyle(color: Theme.of(context).primaryColor),
       decoration: InputDecoration(

@@ -10,8 +10,18 @@ import '../data_layer/model.dart';
 import '../domain_layer/entity.dart';
 import '../domain_layer/use_cases.dart';
 
+class CustomUser {
+  UserModel user;
+  bool isSelected;
+  CustomUser({
+    required this.user,
+    required this.isSelected,
+  });
+}
+
 class UserControllerModel {
   List<UserModel>? users;
+  List<CustomUser> customUsers = [];
   String currentUserId = '';
   UserModel? currentUser;
 }
@@ -98,6 +108,7 @@ class UserController extends GetxController {
         model.update((val) {
           val!.users = usersModels;
         });
+        _generateCustomUsers();
       },
     );
   }
@@ -137,5 +148,32 @@ class UserController extends GetxController {
 
     Either<Failure, Unit> result =
         await addGroupToUser.addGroupToUser(newUser, groupId);
+  }
+
+  void _generateCustomUsers() {
+    List<CustomUser> customUsers = model.value.users!
+        .map((e) => CustomUser(user: e, isSelected: false))
+        .toList();
+
+    model.update((val) {
+      val!.customUsers = customUsers;
+    });
+  }
+
+  void toggleSelectivity(int index) {
+    model.update((val) {
+      val!.customUsers[index].isSelected = !val.customUsers[index].isSelected;
+    });
+  }
+
+  List<String> getSelectedIds() {
+    List<String> selectedIds = [];
+
+    for (var element in model.value.customUsers) {
+      if (element.isSelected) {
+        selectedIds.add(element.user.id!);
+      }
+    }
+    return selectedIds;
   }
 }
