@@ -40,7 +40,6 @@ class RemoteMessageDataSource implements BaseRemoteMessageDataSource {
 
       return unit;
     } catch (e) {
-      print(e.toString());
       throw UnkownException();
     }
   }

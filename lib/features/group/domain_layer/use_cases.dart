@@ -20,3 +20,13 @@ class UpdateGroupUseCase {
     return await baseGroupRepository.updateGroup(groupEntity);
   }
 }
+
+class AddUsersGroupUseCase {
+  BaseGroupRepository baseGroupRepository;
+  AddUsersGroupUseCase({required this.baseGroupRepository});
+
+  Future<Either<Failure, Unit>> addUsersGroupUseCase(
+      List<String> usersIds, String groupId) async {
+    return await baseGroupRepository.addUsersGroup(usersIds, groupId);
+  }
+}

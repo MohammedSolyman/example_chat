@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:my_cli_test/core/errors/error_messages.dart';
 
-import 'package:my_cli_test/core/errors/failures.dart';
+import '../../../core/errors/error_messages.dart';
+import '../../../core/errors/failures.dart';
+import '../domain_layer/entity.dart';
 import 'data_source.dart';
 import 'model.dart';
-import 'package:my_cli_test/features/group/domain_layer/entity.dart';
 
 import '../../../core/errors/exceptions.dart';
 import '../../../core/network_info/network_info.dart';
@@ -41,6 +41,23 @@ class GroupRepository implements BaseGroupRepository {
     if (await networkInfo.isConnected) {
       try {
         await baseRemoteGroupDataSource.updateGroup(groupModel);
+        return const Right(unit);
+      } on ServerException {
+        return const Left(
+            ServerFailure(failureMessage: ErrorMessages.serverError));
+      }
+    } else {
+      return const Left(
+          NoConnectionFailure(failureMessage: ErrorMessages.noConnection));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> addUsersGroup(
+      List<String> usersIds, String groupId) async {
+    if (await networkInfo.isConnected) {
+      try {
+        await baseRemoteGroupDataSource.addUsersGroup(usersIds, groupId);
         return const Right(unit);
       } on ServerException {
         return const Left(

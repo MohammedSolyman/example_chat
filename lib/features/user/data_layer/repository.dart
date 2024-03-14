@@ -130,9 +130,20 @@ class UserRepository implements BaseUserRepository {
 
   @override
   Future<Either<Failure, Unit>> addGroupToUser(
-      UserEntity usersEntities, String groupId) {
-    // TODO: implement addUsersToGroup
-    throw UnimplementedError();
+      UserEntity userEntity, String groupId) async {
+    UserModel userModel = UserModel.fromEntity(userEntity);
+    if (await networkInfo.isConnected) {
+      try {
+        await baseRemoteUserDataSource.addGroupToUser(userModel, groupId);
+        return const Right(unit);
+      } on UnkownException {
+        return const Left(
+            UnknownFailure(failureMessage: ErrorMessages.unknownError));
+      }
+    } else {
+      return const Left(
+          NoConnectionFailure(failureMessage: ErrorMessages.noConnection));
+    }
   }
 
   @override

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/errors/failures.dart';
 import '../../../core/widgets/show_my_dialoge.dart';
-import '../../../pages/home_page.dart';
+import '../../../pages/home_page/home_page.dart';
 import '../../../pages/register_page.dart';
 import '../data_layer/data_source.dart';
 import '../data_layer/model.dart';
@@ -112,12 +112,12 @@ class UserController extends GetxController {
     await Get.offAll(() => HomePage(currentUser: currentUser));
   }
 
-  void getHomePageInfo(String id) {
-    //this function fetches this user id
-    model.update((val) {
-      val!.currentUserId = id;
-    });
-  }
+  // void getHomePageInfo(String id) {
+  //   //this function fetches this user id
+  //   model.update((val) {
+  //     val!.currentUserId = id;
+  //   });
+  // }
 
   String generateRoomId(String recieverUserId) {
     // this function generate an ID to this chat room, by combining the ID's
@@ -130,7 +130,12 @@ class UserController extends GetxController {
   }
 
   addGroupToUserFunction({required UserModel user, required groupId}) async {
+    List<String> goupsIdList = user.subscribedGroupsIds;
+    goupsIdList.add(groupId);
+
+    UserModel newUser = user.copyWith(subscribedGroupsIds: goupsIdList);
+
     Either<Failure, Unit> result =
-        await addGroupToUser.addGroupToUser(user, groupId);
+        await addGroupToUser.addGroupToUser(newUser, groupId);
   }
 }

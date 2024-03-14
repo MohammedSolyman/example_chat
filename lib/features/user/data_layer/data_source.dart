@@ -143,7 +143,8 @@ class RemoteUserDataSource implements BaseRemoteUserDataSource {
       CollectionReference<Map<String, dynamic>> colRef =
           myInstance.collection('contacts info');
       DocumentReference<Map<String, dynamic>> docRef = colRef.doc(userModel.id);
-      await docRef.set(userModel.toMap(), SetOptions(merge: true));
+      await docRef.set(userModel.toMap());
+
       return unit;
     } catch (e) {
       throw UnkownException();

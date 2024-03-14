@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import '../../../core/errors/failures.dart';
 import '../../../core/widgets/show_my_dialoge.dart';
 import '../data_layer/model.dart';
-import '../domain_layer/entity.dart';
 import '../domain_layer/use_cases.dart';
 
 class StateModel {
@@ -17,10 +16,11 @@ class GroupController extends GetxController {
   Rx<StateModel> model = StateModel().obs;
   CreateGroupUseCase createGroupUseCase;
   UpdateGroupUseCase updateGroupUseCase;
-  GroupController({
-    required this.createGroupUseCase,
-    required this.updateGroupUseCase,
-  });
+  AddUsersGroupUseCase addUsersGroupUseCase;
+  GroupController(
+      {required this.createGroupUseCase,
+      required this.updateGroupUseCase,
+      required this.addUsersGroupUseCase});
 
   updateGoup({
     required BuildContext context,
@@ -42,7 +42,7 @@ class GroupController extends GetxController {
       required String groupDescription,
       required adminId}) async {
     // this function create a group and assign the creating user as an admin
-    GroupEntity groupEntity = GroupEntity(
+    GroupModel groupEntity = GroupModel(
         groupName: groupName,
         groupDescription: groupDescription,
         members: [adminId]);
@@ -57,5 +57,9 @@ class GroupController extends GetxController {
         val!.groupId = groupId;
       });
     });
+  }
+
+  addUsersToGroupFunction(List<String> usersIds, String groupId) async {
+    await addUsersGroupUseCase.addUsersGroupUseCase(usersIds, groupId);
   }
 }

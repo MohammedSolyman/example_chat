@@ -45,4 +45,24 @@ class GroupModel extends GroupEntity {
         creationDateTime: groupEntity.creationDateTime,
         groupImage: groupEntity.groupImage);
   }
+
+  GroupModel copyWith({
+    String? groupName,
+    String? groupDescription,
+    String? groupId,
+    String? groupImage,
+    String? creationDateTime,
+    String? adminId,
+    List<String>? members,
+  }) {
+    return GroupModel(
+      groupName: groupName ?? this.groupName,
+      groupDescription: groupDescription ?? this.groupDescription,
+      groupId: groupId ?? this.groupId,
+      groupImage: groupImage ?? this.groupImage,
+      creationDateTime: creationDateTime ?? this.creationDateTime,
+      adminId: adminId ?? this.adminId,
+      members: members ?? this.members,
+    );
+  }
 }

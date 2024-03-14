@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_cli_test/pages/home_page.dart';
+import 'package:my_cli_test/pages/home_page/home_page.dart';
 import '../core/constants/app_strings.dart';
 import '../core/constants/assets_paths.dart';
 import '../core/widgets/app_icon.dart';

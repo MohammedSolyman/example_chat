@@ -6,6 +6,7 @@ import 'package:my_cli_test/features/group/data_layer/model.dart';
 abstract class BaseRemoteGroupDataSource {
   Future<String> createGroup(GroupModel groupModel);
   Future<Unit> updateGroup(GroupModel groupModel);
+  Future<Unit> addUsersGroup(List<String> usersIds, String groupId);
 }
 
 class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
@@ -44,6 +45,28 @@ class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
           colRef.doc(groupModel.groupId);
 
       await docRef.set(groupModel.toMap(), SetOptions(merge: true));
+      return unit;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<Unit> addUsersGroup(List<String> usersIds, String groupId) async {
+    try {
+      FirebaseFirestore myInstance = FirebaseFirestore.instance;
+      CollectionReference<Map<String, dynamic>> colRef =
+          myInstance.collection('groups info');
+      DocumentReference<Map<String, dynamic>> docRef = colRef.doc(groupId);
+
+      DocumentSnapshot<Map<String, dynamic>> docSnap = await docRef.get();
+      Map<String, dynamic>? map = docSnap.data();
+      GroupModel groupModel = GroupModel.fromMap(map!);
+      List<String> members = groupModel.members!;
+      List<String> newMembers = [...usersIds, ...members];
+      GroupModel newGroupModel = groupModel.copyWith(members: newMembers);
+      docRef.set(newGroupModel.toMap());
+
       return unit;
     } catch (e) {
       throw ServerException();

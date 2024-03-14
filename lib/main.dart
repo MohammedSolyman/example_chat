@@ -22,7 +22,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserController userController = Get.put(di.sl<UserController>());
+    Get.put(di.sl<UserController>());
 
     return GetMaterialApp(
       theme: AppTheme.lightThemeData,
