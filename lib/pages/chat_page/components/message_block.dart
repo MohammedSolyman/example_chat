@@ -2,13 +2,25 @@ import 'package:flutter/material.dart';
 
 class MessageBlock extends StatelessWidget {
   const MessageBlock(
-      {required this.isMe, required this.msg, required this.time, super.key});
+      {required this.isMe,
+      required this.msg,
+      required this.time,
+      required this.isGroup,
+      this.senderName,
+      super.key});
 
   final bool isMe;
   final String msg;
   final String time;
+  final String? senderName;
+  final bool isGroup;
   @override
   Widget build(BuildContext context) {
+    List<Widget> messageChildren = [];
+    if (isGroup) {
+      messageChildren.add(Text(senderName!));
+    }
+    messageChildren.addAll([Text(msg), Text(time)]);
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -27,7 +39,7 @@ class MessageBlock extends StatelessWidget {
         child: Column(
           crossAxisAlignment:
               isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-          children: [Text(msg), Text(time)],
+          children: messageChildren,
         ),
       ),
     );

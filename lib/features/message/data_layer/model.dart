@@ -1,24 +1,29 @@
-import 'package:my_cli_test/features/message/domain_layer/entity.dart';
 import 'package:intl/intl.dart';
+
+import '../domain_layer/entity.dart';
 
 class MessageModel extends MessageEntity {
   const MessageModel({
     required super.dateTime,
+    required super.senderName,
     required super.senderId,
     required super.recieverId,
     required super.body,
     required super.messageType,
   });
 
-  MessageModel copyWith(
-      {int? dateTime,
-      String? senderId,
-      String? recieverId,
-      String? body,
-      String? messageType}) {
+  MessageModel copyWith({
+    int? dateTime,
+    String? senderId,
+    String? recieverId,
+    String? body,
+    String? messageType,
+    String? senderName,
+  }) {
     return MessageModel(
         dateTime: dateTime ?? this.dateTime,
         senderId: senderId ?? this.senderId,
+        senderName: senderName ?? this.senderName,
         recieverId: recieverId ?? this.recieverId,
         body: body ?? this.body,
         messageType: messageType ?? this.messageType);
@@ -30,7 +35,8 @@ class MessageModel extends MessageEntity {
       'senderId': senderId,
       'recieverId': recieverId,
       'body': body,
-      'messageType': messageType
+      'messageType': messageType,
+      'senderName': senderName
     };
   }
 
@@ -38,6 +44,7 @@ class MessageModel extends MessageEntity {
     return MessageModel(
         dateTime: map['dateTime'],
         senderId: map['senderId'],
+        senderName: map['senderName'],
         recieverId: map['recieverId'],
         body: map['body'],
         messageType: map['messageType']);
@@ -47,6 +54,7 @@ class MessageModel extends MessageEntity {
     return MessageModel(
         dateTime: messageEntity.dateTime,
         senderId: messageEntity.senderId,
+        senderName: messageEntity.senderName,
         recieverId: messageEntity.recieverId,
         body: messageEntity.body,
         messageType: messageEntity.messageType);

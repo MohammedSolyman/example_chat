@@ -41,7 +41,7 @@ class ChatPage extends StatelessWidget {
         ? groupModel!.groupDescription
         : messageController.model.value.otherUser!.email;
 
-    messageController.getMessages(context: context);
+    messageController.getMessagesFunction(context: context, roomId: roomId);
 
     return Scaffold(
       appBar: chatAppBar(title: title, subtitle: subtitle),
@@ -50,9 +50,13 @@ class ChatPage extends StatelessWidget {
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(AssetsPaths.background), fit: BoxFit.fill)),
-        child: const Center(
+        child: Center(
           child: Column(
-            children: [ChatBody(), LowerBlock()],
+            children: [
+              ChatBody(isGroup: isGroup),
+              LowerBlock(
+                  roomId: roomId, recieverId: isGroup ? roomId : otherUser!.id!)
+            ],
           ),
         ),
       ),

@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../core/constants/app_strings.dart';
 import '../core/constants/assets_paths.dart';
 import '../core/widgets/app_icon.dart';
@@ -17,7 +18,7 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserController userController = di.sl<UserController>();
+    UserController userController = Get.find<UserController>();
     TextEditingController tecEmail = TextEditingController();
     TextEditingController tecPassword = TextEditingController();
     TextEditingController tecName = TextEditingController();
@@ -78,6 +79,20 @@ class RegisterPage extends StatelessWidget {
                                 password: tecPassword.text);
 
                             await userController.signUp(context, userModel);
+
+                            // //get this user id
+                            // String userId =
+                            //     userController.model.value.currentUserId;
+
+                            // //get this user info
+                            // await userController.getUserInfoFunction(userId);
+
+                            // //get this user model
+                            // UserModel currentUser =
+                            //     userController.model.value.currentUser!;
+
+                            //go to homepage
+                            //  Get.off(() => HomePage(currentUser: currentUser));
                           }
                         }),
                     const SizedBox(height: 10),

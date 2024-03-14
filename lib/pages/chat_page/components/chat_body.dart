@@ -6,8 +6,9 @@ import 'message_tile.dart';
 import 'time_tile.dart';
 
 class ChatBody extends StatelessWidget {
-  const ChatBody({super.key});
+  const ChatBody({required this.isGroup, super.key});
 
+  final bool isGroup;
   @override
   Widget build(BuildContext context) {
     MessageController messageController = Get.find<MessageController>();
@@ -34,7 +35,8 @@ class ChatBody extends StatelessWidget {
               }
             }
 
-            widgetsList.add(MessageTile(message: messages[index]));
+            widgetsList
+                .add(MessageTile(isGroup: isGroup, message: messages[index]));
 
             return Column(
               children: widgetsList,

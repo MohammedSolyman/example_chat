@@ -39,42 +39,48 @@ class MessageController extends GetxController {
     });
   }
 
-  MessageModel _prepareTextMessage(String body) {
+  MessageModel prepareTextMessage(
+      {required String body, required String recieverId, required senderName}) {
     //prepare the message model
 
     DateTime now = DateTime.now();
     int dateTime = now.millisecondsSinceEpoch;
 
     return MessageModel(
+      senderName: senderName,
       dateTime: dateTime,
       senderId: model.value.thisUserId,
-      recieverId: model.value.otherUser!.id!,
+      recieverId: recieverId,
       body: body,
       messageType: MessageType.text,
     );
   }
 
-  sendTextMessage({required BuildContext context, required String text}) async {
+  sendTextMessage(
+      {required BuildContext context,
+      required MessageModel message,
+      required String roomId}) async {
     //send this message is it is NOT empty.
-    if (text.isNotEmpty) {
-      MessageModel message = _prepareTextMessage(text);
 
-      Either<Failure, Unit> result =
-          await sendMessageUseCase.sendMessage(message, model.value.roomId);
+    Either<Failure, Unit> result =
+        // await sendMessageUseCase.sendMessage(message, model.value.roomId);
+        await sendMessageUseCase.sendMessage(message, roomId);
 
-      result.fold((Failure failure) {
-        showMyDialog(
-            context: context, msg: failure.failureMessage, isSuccess: false);
-      }, (Unit unit) {});
-    }
+    result.fold((Failure failure) {
+      showMyDialog(
+          context: context, msg: failure.failureMessage, isSuccess: false);
+    }, (Unit unit) {});
   }
 
-  getMessages({required BuildContext context}) async {
+  getMessagesFunction({required BuildContext context, required roomId}) async {
     Either<Failure, Unit> result = await getMessagesUseCase.getMessages(
-      model.value.roomId,
+      roomId,
       (List<MessageEntity> p0) {
         List<MessageModel> messagesModels =
             p0.map((e) => MessageModel.fromEntity(e)).toList();
+
+        print('------------------------------');
+        print(messagesModels.length);
 
         model.update((val) {
           val!.messages = messagesModels;

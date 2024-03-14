@@ -6,9 +6,10 @@ import '../../../features/message/presentaion_layer/controller.dart';
 import 'message_block.dart';
 
 class MessageTile extends StatelessWidget {
-  const MessageTile({required this.message, super.key});
+  const MessageTile({required this.message, required this.isGroup, super.key});
 
   final MessageModel message;
+  final bool isGroup;
   @override
   Widget build(BuildContext context) {
     MessageController messageController = Get.find<MessageController>();
@@ -19,6 +20,8 @@ class MessageTile extends StatelessWidget {
       String timeString = message.getimeString();
 
       return MessageBlock(
+        isGroup: isGroup,
+        senderName: message.senderName,
         isMe: isMe,
         msg: msg,
         time: timeString,

@@ -16,14 +16,14 @@ showCreateGroupDialog(BuildContext context) async {
 
   //1. define dialog
   AlertDialog dialog = AlertDialog(
-    title: Align(
-        alignment: Alignment.center, child: const Text(AppStrings.createGroup)),
+    title: const Align(
+        alignment: Alignment.center, child: Text(AppStrings.createGroup)),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Align(
+        const Align(
           alignment: Alignment.centerLeft,
-          child: const Text(
+          child: Text(
             AppStrings.addGroupName,
           ),
         ),
@@ -33,10 +33,10 @@ showCreateGroupDialog(BuildContext context) async {
           controller: tecGroupName,
           isPassword: false,
         ),
-        SizedBox(height: 10),
-        Align(
+        const SizedBox(height: 10),
+        const Align(
             alignment: Alignment.centerLeft,
-            child: const Text(AppStrings.addGroupDescription)),
+            child: Text(AppStrings.addGroupDescription)),
         CustomTextField(
           isEmail: false,
           hintText: AppStrings.groupDescription,

@@ -52,7 +52,7 @@ class RemoteMessageDataSource implements BaseRemoteMessageDataSource {
 
     //detecting if it is contacts room or group room
     String collection =
-        roomId.startsWith('contact') ? 'contacts rooms' : 'group rooms';
+        roomId.startsWith('contact') ? 'contacts rooms' : 'groups rooms';
     List<MessageModel> messages = [];
 
     try {
@@ -68,6 +68,7 @@ class RemoteMessageDataSource implements BaseRemoteMessageDataSource {
           MessageModel message = MessageModel(
             dateTime: element.get('dateTime'),
             senderId: element.get('senderId'),
+            senderName: element.get('senderName'),
             recieverId: element.get('recieverId'),
             body: element.get('body'),
             messageType: element.get('messageType'),

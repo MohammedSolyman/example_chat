@@ -61,6 +61,10 @@ class UserController extends GetxController {
     }, (UserEntity user) async {
       UserModel userModel = UserModel.fromEntity(user);
       await addUserToContactInfo(context, userModel);
+      model.update((val) {
+        val!.currentUser = userModel;
+      });
+
       _toHomePage(userModel);
     });
   }
@@ -141,7 +145,8 @@ class UserController extends GetxController {
   }
 
   addGroupToUserFunction({required UserModel user, required groupId}) async {
-    List<String> goupsIdList = user.subscribedGroupsIds;
+    List<String> x = user.subscribedGroupsIds;
+    List<String> goupsIdList = x.map((e) => e.toString()).toList();
     goupsIdList.add(groupId);
 
     UserModel newUser = user.copyWith(subscribedGroupsIds: goupsIdList);
