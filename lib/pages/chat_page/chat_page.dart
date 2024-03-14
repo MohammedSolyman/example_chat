@@ -1,32 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_cli_test/pages/chat_page/components/chat_appbar.dart';
-import 'package:my_cli_test/pages/chat_page/components/chat_body.dart';
-import 'package:my_cli_test/pages/chat_page/components/lower_block.dart';
-import '../../controllers/chat_page_controller.dart';
 import '../../core/constants/assets_paths.dart';
-import '../../core/models/user_model.dart';
-  
+import '../../core/dependency_injection/dependency_injection.dart' as di;
+import '../../features/message/presentaion_layer/controller.dart';
+import '../../features/user/data_layer/model.dart';
+import 'components/chat_appbar.dart';
+import 'components/chat_body.dart';
+import 'components/lower_block.dart';
+
 class ChatPage extends StatelessWidget {
   const ChatPage(
       {required this.roomId,
-      required this.otherUser,
+      this.otherUser,
       required this.thisUserId,
+      required this.isGroup,
       super.key});
 
   final String roomId;
-  final UserModel otherUser;
+  final UserModel? otherUser;
   final String thisUserId;
+  final bool isGroup; // is it contact room or group room?
 
   @override
   Widget build(BuildContext context) {
-    ChatPageController controller = Get.put(ChatPageController());
-    controller.getChatInfo(
-        roomId: roomId, otherUser: otherUser, thisUserId: thisUserId);
-    controller.getMessages();
+    MessageController messageController = Get.put(di.sl<MessageController>());
+
+    messageController.getChatPageInfo(
+      roomId: roomId,
+      otherUser: otherUser,
+      thisUserId: thisUserId,
+    );
+
+    String title =
+        isGroup ? 'group name' : messageController.model.value.otherUser!.name!;
+    String subtitle = isGroup
+        ? 'group description'
+        : messageController.model.value.otherUser!.email;
+
+    messageController.getMessages(context: context);
 
     return Scaffold(
-      appBar: chatAppBar(otherUser),
+      appBar: chatAppBar(title: title, subtitle: subtitle),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
         decoration: const BoxDecoration(

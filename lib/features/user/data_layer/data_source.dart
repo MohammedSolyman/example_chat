@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +15,8 @@ abstract class BaseRemoteUserDataSource {
 
   //interactions with (contacts info collection)
   Future<Unit> addUserToContactInfo(UserModel userModel);
-  Future<List<UserModel>> getUsersFromCantactsInfo(String currentUserId);
+  Future<Unit> getUsersFromCantactsInfo(
+      String currentUserId, void Function(List<UserModel>) callback);
 
   //interactions with groups
   Future<List<UserModel>> addUsersToGroup(
@@ -91,13 +94,15 @@ class RemoteUserDataSource implements BaseRemoteUserDataSource {
   }
 
   @override
-  Future<List<UserModel>> getUsersFromCantactsInfo(String currentUserId) async {
+  Future<Unit> getUsersFromCantactsInfo(
+      String currentUserId, void Function(List<UserModel>) callback) async {
     // try to get a list of all users
     //If it is successful sort the list alphebetically and retun it..
     //If it is NOT seccessfult throw an expception.
-    List<UserModel> users = [];
 
     try {
+      List<UserModel> users = [];
+
       FirebaseFirestore.instance
           .collection("contacts info")
           .snapshots()
@@ -115,12 +120,15 @@ class RemoteUserDataSource implements BaseRemoteUserDataSource {
             users.add(user);
           }
         });
-      });
-      users.sort(
-        (a, b) => a.name!.compareTo(b.name!),
-      );
 
-      return users;
+        users.sort(
+          (a, b) => a.name!.compareTo(b.name!),
+        );
+        callback(users);
+        users = [];
+      });
+
+      return unit;
     } catch (e) {
       throw UnkownException();
     }
@@ -138,4 +146,10 @@ class RemoteUserDataSource implements BaseRemoteUserDataSource {
     // TODO: implement deleteUserFromGroup
     throw UnimplementedError();
   }
+
+  @override
+  List<UserModel> users = [];
 }
+
+
+// a -> c

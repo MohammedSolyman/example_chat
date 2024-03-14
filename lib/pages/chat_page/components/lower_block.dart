@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_cli_test/controllers/chat_page_controller.dart';
-import 'package:my_cli_test/core/widgets/custom_text_field.dart';
+import '../../../core/widgets/custom_text_field.dart';
+import '../../../features/message/presentaion_layer/controller.dart';
 
 class LowerBlock extends StatelessWidget {
   const LowerBlock({super.key});
-
   @override
   Widget build(BuildContext context) {
-    ChatPageController controller = Get.put(ChatPageController());
+    MessageController messageController = Get.find<MessageController>();
+
+    TextEditingController tec = TextEditingController();
 
     return Row(
       children: [
         Expanded(
           child: CustomTextField(
-              isPassword: false,
-              isEmail: false,
-              controller: controller.model.value.textController),
+              isPassword: false, isEmail: false, controller: tec),
         ),
         IconButton(
             onPressed: () async {
-              await controller.sendMessage();
-              controller.getMessages();
+              await messageController.sendTextMessage(
+                context: context,
+                text: tec.text,
+              );
+
+              tec.clear();
             },
             icon: const Icon(Icons.send))
       ],

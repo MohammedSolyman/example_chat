@@ -8,7 +8,7 @@ abstract class BaseRemoteGroupDataSource {
   Future<Unit> renameGroup(GroupModel groupModel);
 }
 
-class RemotePostDataSource implements BaseRemoteGroupDataSource {
+class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
   @override
   Future<String> createGroup(GroupModel groupModel) async {
     try {

@@ -1,8 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:my_cli_test/features/user/data_layer/model.dart';
-import 'package:my_cli_test/features/user/presentaion_layer/controller.dart';
 import '../core/constants/app_strings.dart';
 import '../core/constants/assets_paths.dart';
 import '../core/widgets/app_icon.dart';
@@ -10,17 +8,16 @@ import '../core/widgets/custom_button.dart';
 import '../core/widgets/custom_text.dart';
 import '../core/widgets/custom_text_field.dart';
 import '../core/widgets/custom_title.dart';
-import 'package:my_cli_test/core/dependency_injection/dependency_injection.dart'
-    as di;
+import '../core/dependency_injection/dependency_injection.dart' as di;
+import '../features/user/data_layer/model.dart';
+import '../features/user/presentaion_layer/controller.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    //  RegisterController controller = Get.put(RegisterController());
     UserController userController = di.sl<UserController>();
-
     TextEditingController tecEmail = TextEditingController();
     TextEditingController tecPassword = TextEditingController();
     TextEditingController tecName = TextEditingController();

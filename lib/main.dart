@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_cli_test/core/theming/theming.dart';
-import 'package:my_cli_test/firebase_options.dart';
-import 'package:my_cli_test/pages/login_page.dart';
-import 'package:my_cli_test/core/dependency_injection/dependency_injection.dart'
-    as di;
+import 'core/theming/theming.dart';
+import 'firebase_options.dart';
+import 'core/dependency_injection/dependency_injection.dart' as di;
+import 'pages/login_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

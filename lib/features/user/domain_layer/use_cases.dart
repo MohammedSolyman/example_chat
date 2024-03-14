@@ -39,9 +39,10 @@ class GetUsersFromCantactsInfoUseCase {
   BaseUserRepository baseUserRepository;
   GetUsersFromCantactsInfoUseCase({required this.baseUserRepository});
 
-  Future<Either<Failure, List<UserEntity>>> getUsersFromCantactsInfo(
-      String currentUserId) async {
-    return await baseUserRepository.getUsersFromCantactsInfo(currentUserId);
+  Future<Either<Failure, Unit>> getUsersFromCantactsInfo(
+      String currentUserId, void Function(List<UserEntity>) callback) async {
+    return await baseUserRepository.getUsersFromCantactsInfo(
+        currentUserId, callback);
   }
 }
 

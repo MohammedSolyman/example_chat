@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import '../../../core/models/user_model.dart';
 import '../../../core/widgets/custom_text.dart';
 import '../../../core/widgets/custom_title.dart';
 
-AppBar chatAppBar(UserModel otherUser) {
+AppBar chatAppBar({required String title, required String subtitle}) {
   return AppBar(
       title: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      CustomTitle(text: otherUser.name!),
+      CustomTitle(text: title),
       CustomText(
-        text: otherUser.email,
+        text: subtitle,
         isSamll: true,
       )
     ],

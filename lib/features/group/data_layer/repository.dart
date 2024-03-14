@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:my_cli_test/core/errors/error_messages.dart';
 
 import 'package:my_cli_test/core/errors/failures.dart';
-import 'package:my_cli_test/features/group/data_layer/data_source.dart';
-import 'package:my_cli_test/features/group/data_layer/model.dart';
+import 'data_source.dart';
+import 'model.dart';
 import 'package:my_cli_test/features/group/domain_layer/entity.dart';
 
 import '../../../core/errors/exceptions.dart';

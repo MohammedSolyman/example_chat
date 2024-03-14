@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:my_cli_test/features/group/domain_layer/entity.dart';
-import 'package:my_cli_test/features/group/domain_layer/repository.dart';
-
+import 'entity.dart';
+import 'repository.dart';
 import '../../../core/errors/failures.dart';
 
 class CreateGroupUseCase {

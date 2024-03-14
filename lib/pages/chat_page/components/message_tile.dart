@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_cli_test/controllers/chat_page_controller.dart';
-import 'package:my_cli_test/pages/chat_page/components/message_block.dart';
 
-import '../../../core/models/message_model.dart';
+import '../../../features/message/data_layer/model.dart';
+import '../../../features/message/presentaion_layer/controller.dart';
+import 'message_block.dart';
 
 class MessageTile extends StatelessWidget {
   const MessageTile({required this.message, super.key});
@@ -11,12 +11,12 @@ class MessageTile extends StatelessWidget {
   final MessageModel message;
   @override
   Widget build(BuildContext context) {
-    ChatPageController controller = Get.put(ChatPageController());
+    MessageController messageController = Get.find<MessageController>();
 
     return Obx(() {
-      String msg = message.message;
-      bool isMe = message.senderId == controller.model.value.thisUserId;
-      String timeString = controller.numsToTimeString(message.time.toInt());
+      String msg = message.body;
+      bool isMe = message.senderId == messageController.model.value.thisUserId;
+      String timeString = message.getimeString();
 
       return MessageBlock(
         isMe: isMe,

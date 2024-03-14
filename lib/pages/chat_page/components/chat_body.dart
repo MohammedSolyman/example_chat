@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_cli_test/pages/chat_page/components/message_tile.dart';
-import 'package:my_cli_test/pages/chat_page/components/time_tile.dart';
-
-import '../../../controllers/chat_page_controller.dart';
-import '../../../core/models/message_model.dart';
+import '../../../features/message/data_layer/model.dart';
+import '../../../features/message/presentaion_layer/controller.dart';
+import 'message_tile.dart';
+import 'time_tile.dart';
 
 class ChatBody extends StatelessWidget {
   const ChatBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    ChatPageController controller = Get.put(ChatPageController());
+    MessageController messageController = Get.find<MessageController>();
     String tempDate = '';
 
     return Obx(() {
-      List<MessageModel> messages = controller.model.value.messages;
+      List<MessageModel> messages = messageController.model.value.messages;
 
       return Expanded(
         child: ListView.builder(
@@ -23,8 +22,7 @@ class ChatBody extends StatelessWidget {
           itemBuilder: (context, index) {
             List<Widget> widgetsList = [];
 
-            String date =
-                controller.numsToDateString(messages[index].time.toInt());
+            String date = messages[index].getDateString();
 
             if (index == 0) {
               tempDate = date;
