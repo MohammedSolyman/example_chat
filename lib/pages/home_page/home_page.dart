@@ -10,6 +10,7 @@ import '../../core/dependency_injection/dependency_injection.dart' as di;
 import '../../features/user/data_layer/model.dart';
 import '../../features/user/presentaion_layer/controller.dart';
 import '../chat_page/chat_page.dart';
+import 'components/create_group_row.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({required this.currentUser, super.key});
@@ -18,11 +19,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(di.sl<GroupController>());
+
     UserController userController = Get.put(di.sl<UserController>());
     userController.getUsersFromCantactsInfo(context);
 
     return Scaffold(
-        appBar: AppBar(title: const AddGroupRow()),
+        appBar: AppBar(title: const CreateGroupRow()),
         body: Obx(() {
           List<UserModel>? users = userController.model.value.users;
           if (users == null) {
@@ -63,111 +66,111 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class AddGroupRow extends StatelessWidget {
-  const AddGroupRow({
-    super.key,
-  });
+// class AddGroupRow extends StatelessWidget {
+//   const AddGroupRow({
+//     super.key,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    GroupController groupController = Get.find<GroupController>();
-    UserController userController = Get.find<UserController>();
+//   @override
+//   Widget build(BuildContext context) {
+//     GroupController groupController = Get.find<GroupController>();
+//     UserController userController = Get.find<UserController>();
 
-    TextEditingController tecGroupName = TextEditingController();
-    TextEditingController tecGroupDescription = TextEditingController();
+//     TextEditingController tecGroupName = TextEditingController();
+//     TextEditingController tecGroupDescription = TextEditingController();
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const CustomTitle(text: AppStrings.contacts),
-        Row(
-          children: [
-            CustomText(
-              text: AppStrings.createGroup,
-              isSamll: true,
-            ),
-            IconButton(
-              onPressed: () async {
-                //1. define dialog
-                AlertDialog dialog = AlertDialog(
-                  title: const Text(AppStrings.createGroup),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(AppStrings.addGroupName),
-                      CustomTextField(
-                        isEmail: false,
-                        hintText: AppStrings.groupName,
-                        controller: tecGroupName,
-                        isPassword: false,
-                      ),
-                      const Text(AppStrings.addGroupDescription),
-                      CustomTextField(
-                        isEmail: false,
-                        hintText: AppStrings.groupDescription,
-                        controller: tecGroupDescription,
-                        isPassword: false,
-                      )
-                    ],
-                  ),
-                  backgroundColor: Colors.green,
-                  elevation: 20,
-                  actions: [
-                    TextButton(
-                        onPressed: () {
-                          // for test ONLY, you must edit the original group model (copyWith)
-                          GroupModel groupModel = GroupModel(
-                              groupName: tecGroupName.text,
-                              groupId: 'R9fZTdk2Yw3cWIeJBpYO',
-                              groupDescription: tecGroupDescription.text);
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         const CustomTitle(text: AppStrings.contacts),
+//         Row(
+//           children: [
+//             CustomText(
+//               text: AppStrings.createGroup,
+//               isSamll: true,
+//             ),
+//             IconButton(
+//               onPressed: () async {
+//                 //1. define dialog
+//                 AlertDialog dialog = AlertDialog(
+//                   title: const Text(AppStrings.createGroup),
+//                   content: Column(
+//                     mainAxisSize: MainAxisSize.min,
+//                     children: [
+//                       const Text(AppStrings.addGroupName),
+//                       CustomTextField(
+//                         isEmail: false,
+//                         hintText: AppStrings.groupName,
+//                         controller: tecGroupName,
+//                         isPassword: false,
+//                       ),
+//                       const Text(AppStrings.addGroupDescription),
+//                       CustomTextField(
+//                         isEmail: false,
+//                         hintText: AppStrings.groupDescription,
+//                         controller: tecGroupDescription,
+//                         isPassword: false,
+//                       )
+//                     ],
+//                   ),
+//                   backgroundColor: Colors.green,
+//                   elevation: 20,
+//                   actions: [
+//                     TextButton(
+//                         onPressed: () {
+//                           // for test ONLY, you must edit the original group model (copyWith)
+//                           GroupModel groupModel = GroupModel(
+//                               groupName: tecGroupName.text,
+//                               groupId: 'R9fZTdk2Yw3cWIeJBpYO',
+//                               groupDescription: tecGroupDescription.text);
 
-                          groupController.updateGoup(
-                              context: context, groupModel: groupModel);
-                        },
-                        child: const CustomText(
-                          text: AppStrings.cancel,
-                          isSamll: true,
-                        )),
-                    TextButton(
-                        onPressed: () async {
-                          //create  a group and assign  creating user as an admin
-                          await groupController.createGoup(
-                              adminId:
-                                  userController.model.value.currentUser!.id,
-                              context: context,
-                              groupName: tecGroupName.text,
-                              groupDescription: tecGroupDescription.text);
+//                           groupController.updateGoup(
+//                               context: context, groupModel: groupModel);
+//                         },
+//                         child: const CustomText(
+//                           text: AppStrings.cancel,
+//                           isSamll: true,
+//                         )),
+//                     TextButton(
+//                         onPressed: () async {
+//                           //create  a group and assign  creating user as an admin
+//                           await groupController.createGoup(
+//                               adminId:
+//                                   userController.model.value.currentUser!.id,
+//                               context: context,
+//                               groupName: tecGroupName.text,
+//                               groupDescription: tecGroupDescription.text);
 
-                          //get the id of the created group
-                          String groupId = groupController.model.value.groupId;
+//                           //get the id of the created group
+//                           String groupId = groupController.model.value.groupId;
 
-                          //add this group to user's groups list
-                          await userController.addGroupToUserFunction(
-                              user: userController.model.value.currentUser!,
-                              groupId: groupId);
+//                           //add this group to user's groups list
+//                           await userController.addGroupToUserFunction(
+//                               user: userController.model.value.currentUser!,
+//                               groupId: groupId);
 
-                          //TEST ONLY
-                          await groupController.addUsersToGroupFunction(
-                              ['aaaaa', 'bbbbb'], groupId);
-                        },
-                        child: const CustomText(
-                            text: AppStrings.create, isSamll: true))
-                  ],
-                );
+//                           //TEST ONLY
+//                           await groupController.addUsersToGroupFunction(
+//                               ['aaaaa', 'bbbbb'], groupId);
+//                         },
+//                         child: const CustomText(
+//                             text: AppStrings.create, isSamll: true))
+//                   ],
+//                 );
 
-                //2. show dialog
-                await showDialog(
-                  context: context,
-                  builder: (context) {
-                    return dialog;
-                  },
-                );
-              },
-              icon: const Icon(Icons.add),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
+//                 //2. show dialog
+//                 await showDialog(
+//                   context: context,
+//                   builder: (context) {
+//                     return dialog;
+//                   },
+//                 );
+//               },
+//               icon: const Icon(Icons.add),
+//             ),
+//           ],
+//         ),
+//       ],
+//     );
+//   }
+// }

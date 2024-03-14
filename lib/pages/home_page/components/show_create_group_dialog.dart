@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_cli_test/pages/selecting_group_members/selecting_group_members.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/widgets/custom_text.dart';
 import '../../../core/widgets/custom_text_field.dart';
@@ -16,18 +17,27 @@ showCreateGroupDialog(BuildContext context) async {
 
   //1. define dialog
   AlertDialog dialog = AlertDialog(
-    title: const Text(AppStrings.createGroup),
+    title: Align(
+        alignment: Alignment.center, child: const Text(AppStrings.createGroup)),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(AppStrings.addGroupName),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: const Text(
+            AppStrings.addGroupName,
+          ),
+        ),
         CustomTextField(
           isEmail: false,
           hintText: AppStrings.groupName,
           controller: tecGroupName,
           isPassword: false,
         ),
-        const Text(AppStrings.addGroupDescription),
+        SizedBox(height: 10),
+        Align(
+            alignment: Alignment.centerLeft,
+            child: const Text(AppStrings.addGroupDescription)),
         CustomTextField(
           isEmail: false,
           hintText: AppStrings.groupDescription,
@@ -41,14 +51,16 @@ showCreateGroupDialog(BuildContext context) async {
     actions: [
       TextButton(
           onPressed: () {
-            // for test ONLY, you must edit the original group model (copyWith)
-            GroupModel groupModel = GroupModel(
-                groupName: tecGroupName.text,
-                groupId: 'R9fZTdk2Yw3cWIeJBpYO',
-                groupDescription: tecGroupDescription.text);
+            // // for test ONLY, you must edit the original group model (copyWith)
+            // GroupModel groupModel = GroupModel(
+            //     groupName: tecGroupName.text,
+            //     groupId: 'R9fZTdk2Yw3cWIeJBpYO',
+            //     groupDescription: tecGroupDescription.text);
 
-            groupController.updateGoup(
-                context: context, groupModel: groupModel);
+            // groupController.updateGoup(
+            //     context: context, groupModel: groupModel);
+
+            Get.back();
           },
           child: const CustomText(
             text: AppStrings.cancel,
@@ -71,9 +83,11 @@ showCreateGroupDialog(BuildContext context) async {
                 user: userController.model.value.currentUser!,
                 groupId: groupId);
 
-            //TEST ONLY
-            await groupController
-                .addUsersToGroupFunction(['aaaaa', 'bbbbb'], groupId);
+//go to selecting groups members
+            Get.to(() => const SelectingGroupMembersPage());
+            // //TEST ONLY
+            // await groupController
+            //     .addUsersToGroupFunction(['aaaaa', 'bbbbb'], groupId);
           },
           child: const CustomText(text: AppStrings.create, isSamll: true))
     ],

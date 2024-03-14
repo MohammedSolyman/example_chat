@@ -30,4 +30,5 @@ class AppStrings {
   static const String groupDescription = 'group description';
   static const String addGroupName = 'add group name';
   static const String addGroupDescription = 'add group description';
+  static const String selectMembers = 'selecting group members';
 }

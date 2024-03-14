@@ -4,8 +4,8 @@ import '../../../core/widgets/custom_text.dart';
 import '../../../core/widgets/custom_title.dart';
 import 'show_create_group_dialog.dart';
 
-class AddGroupRow extends StatelessWidget {
-  const AddGroupRow({
+class CreateGroupRow extends StatelessWidget {
+  const CreateGroupRow({
     super.key,
   });
 
