@@ -5,7 +5,7 @@ import 'package:my_cli_test/features/group/data_layer/model.dart';
 
 abstract class BaseRemoteGroupDataSource {
   Future<String> createGroup(GroupModel groupModel);
-  Future<Unit> renameGroup(GroupModel groupModel);
+  Future<Unit> updateGroup(GroupModel groupModel);
 }
 
 class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
@@ -33,9 +33,9 @@ class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
   }
 
   @override
-  Future<Unit> renameGroup(GroupModel groupModel) async {
+  Future<Unit> updateGroup(GroupModel groupModel) async {
     try {
-      //try to rename this group if it fails throw an server exception
+      //try to update this group if it fails throw an server exception
 
       FirebaseFirestore myInstance = FirebaseFirestore.instance;
       CollectionReference<Map<String, dynamic>> colRef =
@@ -43,7 +43,7 @@ class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
       DocumentReference<Map<String, dynamic>> docRef =
           colRef.doc(groupModel.groupId);
 
-      await docRef.set({'groupName': 'new name'}, SetOptions(merge: true));
+      await docRef.set(groupModel.toMap(), SetOptions(merge: true));
       return unit;
     } catch (e) {
       throw ServerException();

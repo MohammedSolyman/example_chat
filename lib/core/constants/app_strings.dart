@@ -26,4 +26,8 @@ class AppStrings {
   static const String cancel = 'cancel';
   static const String create = 'create';
   static const String addName = 'add group name';
+  static const String groupName = 'group name';
+  static const String groupDescription = 'group description';
+  static const String addGroupName = 'add group description';
+  static const String addGroupDescription = 'add group name';
 }

@@ -1,18 +1,19 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../core/errors/failures.dart';
 import '../../../core/widgets/show_my_dialoge.dart';
-import '../../../pages/contacts_page.dart';
+import '../../../pages/home_page.dart';
 import '../../../pages/register_page.dart';
 import '../data_layer/data_source.dart';
 import '../data_layer/model.dart';
+import '../domain_layer/entity.dart';
 import '../domain_layer/use_cases.dart';
 
 class UserControllerModel {
   List<UserModel>? users;
   String currentUserId = '';
+  UserModel? currentUser;
 }
 
 class UserController extends GetxController {
@@ -25,9 +26,10 @@ class UserController extends GetxController {
 
   AddUserToContactInfoUseCase addUserToContactInfoUseCase;
   GetUsersFromCantactsInfoUseCase getUsersFromCantactsInfoUseCase;
+  GetUserInfo getUserInfo;
 
-  AddUsersToGroup addUsersToGroup;
-  DeleteUserFromGroup deleteUserFromGroup;
+  AddGroupToUser addGroupToUser;
+  DeleteGroupFromUser deleteGroupFromUser;
 
   UserController({
     required this.signUpUseCase,
@@ -35,30 +37,45 @@ class UserController extends GetxController {
     required this.signOutUseCase,
     required this.addUserToContactInfoUseCase,
     required this.getUsersFromCantactsInfoUseCase,
-    required this.addUsersToGroup,
-    required this.deleteUserFromGroup,
+    required this.addGroupToUser,
+    required this.deleteGroupFromUser,
+    required this.getUserInfo,
   });
 
   signUp(BuildContext context, UserModel userModel) async {
-    Either<Failure, String> result = await signUpUseCase.signUp(userModel);
+    Either<Failure, UserEntity> result = await signUpUseCase.signUp(userModel);
 
     result.fold((Failure failure) {
       showMyDialog(
           context: context, msg: failure.failureMessage, isSuccess: false);
-    }, (String userId) async {
-      await addUserToContactInfo(context, userModel.copyWith(id: userId));
-      _toContactsPage(userId);
+    }, (UserEntity user) async {
+      UserModel userModel = UserModel.fromEntity(user);
+      await addUserToContactInfo(context, userModel);
+      _toHomePage(userModel);
     });
   }
 
-  signIn(BuildContext context, UserModel userModel) async {
+  signInFunction(BuildContext context, UserModel userModel) async {
     Either<Failure, String> result = await signInUseCase.signIn(userModel);
 
     result.fold((Failure failure) {
       showMyDialog(
           context: context, msg: failure.failureMessage, isSuccess: false);
     }, (String userId) {
-      _toContactsPage(userId);
+      model.update((val) {
+        val!.currentUserId = userId;
+      });
+    });
+  }
+
+  getUserInfoFunction(String userId) async {
+    Either<Failure, UserEntity> result = await getUserInfo.getUserInfo(userId);
+
+    result.fold((Failure failure) => null, (UserEntity userEntity) {
+      UserModel user = UserModel.fromEntity(userEntity);
+      model.update((val) {
+        val!.currentUser = user;
+      });
     });
   }
 
@@ -90,12 +107,12 @@ class UserController extends GetxController {
     await Get.to(() => const RegisterPage());
   }
 
-  Future<void> _toContactsPage(String currentUserId) async {
+  Future<void> _toHomePage(UserModel currentUser) async {
     // remove all page from the route and navigate to contacts page
-    await Get.offAll(() => ContactsPage(currentUserId: currentUserId));
+    await Get.offAll(() => HomePage(currentUser: currentUser));
   }
 
-  void getContactsPageInfo(String id) {
+  void getHomePageInfo(String id) {
     //this function fetches this user id
     model.update((val) {
       val!.currentUserId = id;
@@ -110,5 +127,10 @@ class UserController extends GetxController {
       (a, b) => a.compareTo(b),
     );
     return 'contactsrooms${idsCombination[0]}-${idsCombination[1]}';
+  }
+
+  addGroupToUserFunction({required UserModel user, required groupId}) async {
+    Either<Failure, Unit> result =
+        await addGroupToUser.addGroupToUser(user, groupId);
   }
 }

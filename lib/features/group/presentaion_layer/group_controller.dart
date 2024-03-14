@@ -2,24 +2,33 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_cli_test/features/group/domain_layer/entity.dart';
 
 import '../../../core/errors/failures.dart';
 import '../../../core/widgets/show_my_dialoge.dart';
+import '../data_layer/model.dart';
+import '../domain_layer/entity.dart';
 import '../domain_layer/use_cases.dart';
 
+class StateModel {
+  String groupId = '';
+}
+
 class GroupController extends GetxController {
+  Rx<StateModel> model = StateModel().obs;
   CreateGroupUseCase createGroupUseCase;
-  RenameGroupUseCase renameGroupUseCase;
+  UpdateGroupUseCase updateGroupUseCase;
   GroupController({
     required this.createGroupUseCase,
-    required this.renameGroupUseCase,
+    required this.updateGroupUseCase,
   });
 
-  renameGoup(BuildContext context, String groupName) async {
-    GroupEntity groupEntity = GroupEntity(groupName: groupName);
+  updateGoup({
+    required BuildContext context,
+    required GroupModel groupModel,
+  }) async {
+    groupModel.groupName = 'new name';
     Either<Failure, Unit> result =
-        await renameGroupUseCase.renameGroup(groupEntity);
+        await updateGroupUseCase.updateGroup(groupModel);
 
     result.fold((Failure failure) {
       showMyDialog(
@@ -30,15 +39,23 @@ class GroupController extends GetxController {
   createGoup(
       {required BuildContext context,
       required String groupName,
+      required String groupDescription,
       required adminId}) async {
-    GroupEntity groupEntity =
-        GroupEntity(groupName: groupName, members: [adminId]);
+    // this function create a group and assign the creating user as an admin
+    GroupEntity groupEntity = GroupEntity(
+        groupName: groupName,
+        groupDescription: groupDescription,
+        members: [adminId]);
     Either<Failure, String> result =
         await createGroupUseCase.createGroup(groupEntity);
 
     result.fold((Failure failure) {
       showMyDialog(
           context: context, msg: failure.failureMessage, isSuccess: false);
-    }, (String groupId) {});
+    }, (String groupId) {
+      model.update((val) {
+        val!.groupId = groupId;
+      });
+    });
   }
 }

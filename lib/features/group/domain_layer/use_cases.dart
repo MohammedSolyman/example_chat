@@ -12,11 +12,11 @@ class CreateGroupUseCase {
   }
 }
 
-class RenameGroupUseCase {
+class UpdateGroupUseCase {
   BaseGroupRepository baseGroupRepository;
-  RenameGroupUseCase({required this.baseGroupRepository});
+  UpdateGroupUseCase({required this.baseGroupRepository});
 
-  Future<Either<Failure, Unit>> renameGroup(GroupEntity groupEntity) async {
-    return await baseGroupRepository.renameGroup(groupEntity);
+  Future<Either<Failure, Unit>> updateGroup(GroupEntity groupEntity) async {
+    return await baseGroupRepository.updateGroup(groupEntity);
   }
 }

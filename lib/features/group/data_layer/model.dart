@@ -3,6 +3,7 @@ import 'package:my_cli_test/features/group/domain_layer/entity.dart';
 class GroupModel extends GroupEntity {
   GroupModel({
     required super.groupName,
+    required super.groupDescription,
     super.members,
     super.groupImage,
     super.creationDateTime,
@@ -13,6 +14,7 @@ class GroupModel extends GroupEntity {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'groupName': groupName,
+      'groupDescription': groupDescription,
       'members': members,
       'groupId': groupId,
       'groupImage': groupImage,
@@ -24,6 +26,7 @@ class GroupModel extends GroupEntity {
   factory GroupModel.fromMap(Map<String, dynamic> map) {
     return GroupModel(
       groupName: map['groupName'],
+      groupDescription: map['groupDescription'],
       members: List<String>.from((map['members'])),
       groupId: map['groupId'],
       groupImage: map['groupImage'],
@@ -35,6 +38,7 @@ class GroupModel extends GroupEntity {
   factory GroupModel.fromEntity(GroupEntity groupEntity) {
     return GroupModel(
         groupName: groupEntity.groupName,
+        groupDescription: groupEntity.groupDescription,
         members: groupEntity.members,
         adminId: groupEntity.adminId,
         groupId: groupEntity.groupId,

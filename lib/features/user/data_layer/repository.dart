@@ -56,17 +56,18 @@ class UserRepository implements BaseUserRepository {
   }
 
   @override
-  Future<Either<Failure, String>> signUp(UserEntity userEntity) async {
+  Future<Either<Failure, UserEntity>> signUp(UserEntity userEntity) async {
     //if there is internet connection, do the following, otherwose return failure.
     //if there is internet connection, try to sign up this user.
-    //if it is successful, retern the user id,
+    //if it is successful, retern the user entity,
     //if it is NOT successful, return the corresponding failure
 
     if (await networkInfo.isConnected) {
       UserModel userModel = UserModel.fromEntity(userEntity);
       try {
-        String userId = await baseRemoteUserDataSource.signUp(userModel);
-        return Right(userId);
+        UserModel user = await baseRemoteUserDataSource.signUp(userModel);
+
+        return Right(user);
       } on WeakPasswordException {
         return const Left(WeakPasswordFailure(
             failureMessage: ErrorMessages.weakPasswordError));
@@ -128,16 +129,32 @@ class UserRepository implements BaseUserRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> addUsersToGroup(
-      List<UserEntity> usersEntities, String groupId) {
+  Future<Either<Failure, Unit>> addGroupToUser(
+      UserEntity usersEntities, String groupId) {
     // TODO: implement addUsersToGroup
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, Unit>> deleteUserFromGroup(
+  Future<Either<Failure, Unit>> deleteGroupFromUser(
       UserEntity userEntity, String groupId) {
-    // TODO: implement deleteUserFromGroup
+    // TODO: implement deleteGroupFromUser
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> getUserInfo(String userId) async {
+    if (await networkInfo.isConnected) {
+      try {
+        UserModel user = await baseRemoteUserDataSource.getUserInfo(userId);
+        return Right(user);
+      } on UnkownException {
+        return const Left(
+            UnknownFailure(failureMessage: ErrorMessages.unknownError));
+      }
+    } else {
+      return const Left(
+          NoConnectionFailure(failureMessage: ErrorMessages.noConnection));
+    }
   }
 }

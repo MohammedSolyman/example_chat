@@ -8,7 +8,7 @@ class SignUpUseCase {
   BaseUserRepository baseUserRepository;
   SignUpUseCase({required this.baseUserRepository});
 
-  Future<Either<Failure, String>> signUp(UserEntity userEntity) async {
+  Future<Either<Failure, UserEntity>> signUp(UserEntity userEntity) async {
     return await baseUserRepository.signUp(userEntity);
   }
 }
@@ -21,7 +21,7 @@ class SignInUseCase {
     return await baseUserRepository.signIn(userEntity);
   }
 
-  Future<Either<Failure, String>> signUp(UserEntity userEntity) async {
+  Future<Either<Failure, UserEntity>> signUp(UserEntity userEntity) async {
     return await baseUserRepository.signUp(userEntity);
   }
 }
@@ -56,22 +56,31 @@ class AddUserToContactInfoUseCase {
   }
 }
 
-class DeleteUserFromGroup {
+class DeleteGroupFromUser {
   BaseUserRepository baseUserRepository;
-  DeleteUserFromGroup({required this.baseUserRepository});
+  DeleteGroupFromUser({required this.baseUserRepository});
 
-  Future<Either<Failure, Unit>> deleteUserFromGroup(
+  Future<Either<Failure, Unit>> deleteGroupFromUser(
       UserEntity userEntity, String groupId) async {
-    return await baseUserRepository.deleteUserFromGroup(userEntity, groupId);
+    return await baseUserRepository.deleteGroupFromUser(userEntity, groupId);
   }
 }
 
-class AddUsersToGroup {
+class AddGroupToUser {
   BaseUserRepository baseUserRepository;
-  AddUsersToGroup({required this.baseUserRepository});
+  AddGroupToUser({required this.baseUserRepository});
 
-  Future<Either<Failure, Unit>> addUsersToGroup(
-      List<UserEntity> usersEntities, String groupId) async {
-    return await baseUserRepository.addUsersToGroup(usersEntities, groupId);
+  Future<Either<Failure, Unit>> addGroupToUser(
+      UserEntity usersEntities, String groupId) async {
+    return await baseUserRepository.addGroupToUser(usersEntities, groupId);
+  }
+}
+
+class GetUserInfo {
+  BaseUserRepository baseUserRepository;
+  GetUserInfo({required this.baseUserRepository});
+
+  Future<Either<Failure, UserEntity>> getUserInfo(String userId) async {
+    return await baseUserRepository.getUserInfo(userId);
   }
 }

@@ -36,11 +36,11 @@ class GroupRepository implements BaseGroupRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> renameGroup(GroupEntity groupEntity) async {
+  Future<Either<Failure, Unit>> updateGroup(GroupEntity groupEntity) async {
     GroupModel groupModel = GroupModel.fromEntity(groupEntity);
     if (await networkInfo.isConnected) {
       try {
-        await baseRemoteGroupDataSource.renameGroup(groupModel);
+        await baseRemoteGroupDataSource.updateGroup(groupModel);
         return const Right(unit);
       } on ServerException {
         return const Left(

@@ -24,24 +24,25 @@ Future<void> init() async {
   // controllers
   sl.registerFactory(() => GroupController(
         createGroupUseCase: sl(),
-        renameGroupUseCase: sl(),
+        updateGroupUseCase: sl(),
       ));
 
   sl.registerFactory(() => UserController(
+      getUserInfo: sl(),
       signUpUseCase: sl(),
       signInUseCase: sl(),
       signOutUseCase: sl(),
       addUserToContactInfoUseCase: sl(),
       getUsersFromCantactsInfoUseCase: sl(),
-      addUsersToGroup: sl(),
-      deleteUserFromGroup: sl()));
+      addGroupToUser: sl(),
+      deleteGroupFromUser: sl()));
 
   sl.registerFactory(() =>
       MessageController(sendMessageUseCase: sl(), getMessagesUseCase: sl()));
   ////////////////////////////////////////////////////
   // usecases
   sl.registerLazySingleton(() => CreateGroupUseCase(baseGroupRepository: sl()));
-  sl.registerLazySingleton(() => RenameGroupUseCase(baseGroupRepository: sl()));
+  sl.registerLazySingleton(() => UpdateGroupUseCase(baseGroupRepository: sl()));
 
   sl.registerLazySingleton(() => SignUpUseCase(baseUserRepository: sl()));
   sl.registerLazySingleton(() => SignInUseCase(baseUserRepository: sl()));
@@ -52,13 +53,15 @@ Future<void> init() async {
   sl.registerLazySingleton(
       () => GetUsersFromCantactsInfoUseCase(baseUserRepository: sl()));
 
-  sl.registerLazySingleton(() => AddUsersToGroup(baseUserRepository: sl()));
-  sl.registerLazySingleton(() => DeleteUserFromGroup(baseUserRepository: sl()));
+  sl.registerLazySingleton(() => AddGroupToUser(baseUserRepository: sl()));
+  sl.registerLazySingleton(() => DeleteGroupFromUser(baseUserRepository: sl()));
 
   sl.registerLazySingleton(
       () => SendMessageUseCase(baseMessageRepository: sl()));
   sl.registerLazySingleton(
       () => GetMessagesUseCase(baseMessageRepository: sl()));
+
+  sl.registerLazySingleton(() => GetUserInfo(baseUserRepository: sl()));
 
 ////////////////////////////////////////////////////////
 // // repositories

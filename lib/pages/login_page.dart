@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_cli_test/pages/home_page.dart';
 import '../core/constants/app_strings.dart';
 import '../core/constants/assets_paths.dart';
 import '../core/widgets/app_icon.dart';
@@ -62,11 +63,29 @@ class LoginPage extends StatelessWidget {
                         myFunc: () async {
                           bool isValid = formKey.currentState!.validate();
                           if (isValid) {
+                            //prepare userModel
                             UserModel userModel = UserModel(
                                 subscribedGroupsIds: const [],
                                 email: tecEmail.text,
                                 password: tecPassword.text);
-                            await userController.signIn(context, userModel);
+
+                            //sign in this user
+                            await userController.signInFunction(
+                                context, userModel);
+
+                            //get this user id
+                            String userId =
+                                userController.model.value.currentUserId;
+
+                            //get this user info
+                            await userController.getUserInfoFunction(userId);
+
+                            //get this user model
+                            UserModel currentUser =
+                                userController.model.value.currentUser!;
+
+                            //go to homepage
+                            Get.off(() => HomePage(currentUser: currentUser));
                           }
                         }),
                     const SizedBox(height: 10),

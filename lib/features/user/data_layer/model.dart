@@ -37,6 +37,14 @@ class UserModel extends UserEntity {
       name: userEntity.name,
       password: userEntity.password);
 
+  UserEntity toEntity() => UserEntity(
+        id: id,
+        name: name,
+        password: password,
+        email: email,
+        subscribedGroupsIds: subscribedGroupsIds,
+      );
+
   UserModel copyWith({
     String? id,
     String? password,

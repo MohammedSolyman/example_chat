@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class GroupEntity extends Equatable {
-  final String groupName;
+  String groupName;
+  String groupDescription;
   String? groupId = '';
   String? groupImage = '';
   String? creationDateTime = '';
@@ -10,6 +11,7 @@ class GroupEntity extends Equatable {
 
   GroupEntity({
     required this.groupName,
+    required this.groupDescription,
     this.members,
     this.groupId,
     this.groupImage,
@@ -25,5 +27,6 @@ class GroupEntity extends Equatable {
         creationDateTime,
         adminId,
         members,
+        groupDescription
       ];
 }
