@@ -10,6 +10,7 @@ import '../domain_layer/use_cases.dart';
 
 class StateModel {
   String groupId = '';
+  List<GroupModel> allGroups = [];
 }
 
 class GroupController extends GetxController {
@@ -17,10 +18,12 @@ class GroupController extends GetxController {
   CreateGroupUseCase createGroupUseCase;
   UpdateGroupUseCase updateGroupUseCase;
   AddUsersGroupUseCase addUsersGroupUseCase;
+  GetAllGroupsUseCase getAllGroupsUseCase;
   GroupController(
       {required this.createGroupUseCase,
       required this.updateGroupUseCase,
-      required this.addUsersGroupUseCase});
+      required this.addUsersGroupUseCase,
+      required this.getAllGroupsUseCase});
 
   updateGoup({
     required BuildContext context,
@@ -61,5 +64,15 @@ class GroupController extends GetxController {
 
   addUsersToGroupFunction(List<String> usersIds, String groupId) async {
     await addUsersGroupUseCase.addUsersGroupUseCase(usersIds, groupId);
+  }
+
+  getAllGroupsFunction() async {
+    await getAllGroupsUseCase.getAllGroupsUseCase((p0) {
+      List<GroupModel> groups =
+          p0.map((e) => GroupModel.fromEntity(e)).toList();
+      model.update((val) {
+        val!.allGroups = groups;
+      });
+    });
   }
 }

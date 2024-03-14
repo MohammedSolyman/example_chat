@@ -15,11 +15,14 @@ class AppStrings {
   static const String register = 'REGISTER';
   static const String login = 'LOG IN';
 
-  // pages appbars title
+  // hompepage
+  static const String homepage = 'homepage';
   static const String contacts = 'contacts';
+  static const String groups = 'groups';
 
   //
   static const String noContacts = 'there are no contacts yet.';
+  static const String noGroups = 'there are no groups yet.';
 
 //group
   static const String createGroup = 'create group';

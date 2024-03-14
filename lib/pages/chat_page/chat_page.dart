@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/constants/assets_paths.dart';
 import '../../core/dependency_injection/dependency_injection.dart' as di;
+import '../../features/group/data_layer/model.dart';
 import '../../features/message/presentaion_layer/controller.dart';
 import '../../features/user/data_layer/model.dart';
 import 'components/chat_appbar.dart';
@@ -12,12 +13,14 @@ class ChatPage extends StatelessWidget {
   const ChatPage(
       {required this.roomId,
       this.otherUser,
+      this.groupModel,
       required this.thisUserId,
       required this.isGroup,
       super.key});
 
   final String roomId;
   final UserModel? otherUser;
+  final GroupModel? groupModel;
   final String thisUserId;
   final bool isGroup; // is it contact room or group room?
 
@@ -31,10 +34,11 @@ class ChatPage extends StatelessWidget {
       thisUserId: thisUserId,
     );
 
-    String title =
-        isGroup ? 'group name' : messageController.model.value.otherUser!.name!;
+    String title = isGroup
+        ? groupModel!.groupName
+        : messageController.model.value.otherUser!.name!;
     String subtitle = isGroup
-        ? 'group description'
+        ? groupModel!.groupDescription
         : messageController.model.value.otherUser!.email;
 
     messageController.getMessages(context: context);

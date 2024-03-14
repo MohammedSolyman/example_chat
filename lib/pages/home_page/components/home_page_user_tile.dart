@@ -4,8 +4,8 @@ import '../../../features/user/data_layer/model.dart';
 import '../../../features/user/presentaion_layer/controller.dart';
 import '../../chat_page/chat_page.dart';
 
-class HomePageTile extends StatelessWidget {
-  const HomePageTile({required this.user, super.key});
+class HomePageUserTile extends StatelessWidget {
+  const HomePageUserTile({required this.user, super.key});
 
   final UserModel user;
   @override
