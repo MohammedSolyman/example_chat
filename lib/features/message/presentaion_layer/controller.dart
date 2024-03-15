@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/models/user_model.dart';
 import '../../../core/widgets/show_my_dialoge.dart';
 import '../data_layer/model.dart';
 import '../../../core/errors/failures.dart';
-import '../../user/data_layer/model.dart';
 import '../domain_layer/entity.dart';
 import '../domain_layer/use_cases.dart';
 

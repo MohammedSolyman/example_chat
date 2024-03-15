@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../features/user/data_layer/model.dart';
+import '../../../core/models/user_model.dart';
 import '../../../features/user/presentaion_layer/controller.dart';
 import '../../chat_page/chat_page.dart';
 

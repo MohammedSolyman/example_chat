@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../core/constants/app_strings.dart';
 import '../core/constants/assets_paths.dart';
+import '../core/models/user_model.dart';
 import '../core/widgets/app_icon.dart';
 import '../core/widgets/custom_button.dart';
 import '../core/widgets/custom_text.dart';
 import '../core/widgets/custom_text_field.dart';
 import '../core/widgets/custom_title.dart';
 import '../core/dependency_injection/dependency_injection.dart' as di;
-import '../features/user/data_layer/model.dart';
+import '../features/auth/presentaion_layer/controller.dart';
 import '../features/user/presentaion_layer/controller.dart';
 import 'home_page/home_page.dart';
 
@@ -18,6 +19,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.put(di.sl<UserController>());
+    AuthController authController = Get.put(di.sl<AuthController>());
 
     TextEditingController tecEmail = TextEditingController();
     TextEditingController tecPassword = TextEditingController();
@@ -70,22 +72,16 @@ class LoginPage extends StatelessWidget {
                                 password: tecPassword.text);
 
                             //sign in this user
-                            await userController.signInFunction(
+                            String userId = await authController.signInFunction(
                                 context, userModel);
 
-                            //get this user id
-                            String userId =
-                                userController.model.value.currentUserId;
-
                             //get this user info
-                            await userController.getUserInfoFunction(userId);
-
-                            //get this user model
-                            UserModel currentUser =
-                                userController.model.value.currentUser!;
+                            UserModel userModelWithInfo = await authController
+                                .getUserInfoFunction(userId);
 
                             //go to homepage
-                            Get.off(() => HomePage(currentUser: currentUser));
+                            Get.offAll(
+                                () => HomePage(currentUser: userModelWithInfo));
                           }
                         }),
                     const SizedBox(height: 10),
@@ -98,7 +94,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         GestureDetector(
                             onTap: () {
-                              userController.toSignUpPage();
+                              authController.toSignUpPage();
                             },
                             child: const CustomText(
                               text: AppStrings.createAccount,

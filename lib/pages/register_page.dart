@@ -2,14 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_cli_test/pages/home_page/home_page.dart';
 import '../core/constants/app_strings.dart';
 import '../core/constants/assets_paths.dart';
+import '../core/models/user_model.dart';
 import '../core/widgets/app_icon.dart';
 import '../core/widgets/custom_button.dart';
 import '../core/widgets/custom_text.dart';
 import '../core/widgets/custom_text_field.dart';
 import '../core/widgets/custom_title.dart';
-import '../features/user/data_layer/model.dart';
+import '../features/auth/presentaion_layer/controller.dart';
 import '../features/user/presentaion_layer/controller.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -18,6 +20,8 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find<UserController>();
+    AuthController authController = Get.find<AuthController>();
+
     TextEditingController tecEmail = TextEditingController();
     TextEditingController tecPassword = TextEditingController();
     TextEditingController tecName = TextEditingController();
@@ -71,27 +75,24 @@ class RegisterPage extends StatelessWidget {
                         myFunc: () async {
                           bool isValid = formKey.currentState!.validate();
                           if (isValid) {
+                            // prepare user model
                             UserModel userModel = UserModel(
                                 subscribedGroupsIds: const [],
                                 email: tecEmail.text,
                                 name: tecName.text,
                                 password: tecPassword.text);
 
-                            await userController.signUp(context, userModel);
+                            // sign in
+                            UserModel userModelWithId = await authController
+                                .signUpFunction(context, userModel);
 
-                            // //get this user id
-                            // String userId =
-                            //     userController.model.value.currentUserId;
+                            // add this user to contacts info collection
+                            userController.addUserToContactInfoFunction(
+                                context: context, userModel: userModelWithId);
 
-                            // //get this user info
-                            // await userController.getUserInfoFunction(userId);
-
-                            // //get this user model
-                            // UserModel currentUser =
-                            //     userController.model.value.currentUser!;
-
-                            //go to homepage
-                            //  Get.off(() => HomePage(currentUser: currentUser));
+                            // navigate to hompage
+                            Get.offAll(
+                                () => HomePage(currentUser: userModelWithId));
                           }
                         }),
                     const SizedBox(height: 10),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
+import '../../../core/models/user_model.dart';
 import '../../../core/widgets/custom_text.dart';
-import '../../../features/user/data_layer/model.dart';
 import '../../../features/user/presentaion_layer/controller.dart';
 import 'home_page_user_tile.dart';
 
