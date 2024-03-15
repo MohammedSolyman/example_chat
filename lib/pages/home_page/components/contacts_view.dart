@@ -7,7 +7,9 @@ import '../../../features/user/presentaion_layer/controller.dart';
 import 'home_page_user_tile.dart';
 
 class ContactsView extends StatelessWidget {
-  const ContactsView({super.key});
+  const ContactsView({required this.currentUserId, super.key});
+
+  final String currentUserId;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,11 @@ class ContactsView extends StatelessWidget {
           child: ListView.builder(
             itemCount: users.length,
             itemBuilder: (context, index) {
-              return HomePageUserTile(user: users[index]);
+              if (users[index].id != currentUserId) {
+                return HomePageUserTile(user: users[index]);
+              } else {
+                return Container();
+              }
             },
           ),
         );

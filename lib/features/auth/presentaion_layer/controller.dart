@@ -5,29 +5,26 @@ import '../../../core/entities/user_entitie.dart';
 import '../../../core/errors/failures.dart';
 import '../../../core/models/user_model.dart';
 import '../../../core/widgets/show_my_dialoge.dart';
-import '../../../pages/home_page/home_page.dart';
-import '../../../pages/register_page.dart';
-import '../data_layer/data_source.dart';
 import '../domain_layer/use_cases.dart';
 
-class CustomUser {
-  UserModel user;
-  bool isSelected;
-  CustomUser({
-    required this.user,
-    required this.isSelected,
-  });
-}
+// class CustomUser {
+//   UserModel user;
+//   bool isSelected;
+//   CustomUser({
+//     required this.user,
+//     required this.isSelected,
+//   });
+// }
 
-class UserControllerModel {
-  List<UserModel>? users;
-  List<CustomUser> customUsers = [];
-  String currentUserId = '';
-  UserModel? currentUser;
-}
+// class UserControllerModel {
+//   List<UserModel>? users;
+//   List<CustomUser> customUsers = [];
+//   String currentUserId = '';
+//   UserModel? currentUser;
+// }
 
 class AuthController extends GetxController {
-  Rx<UserControllerModel> model = UserControllerModel().obs;
+//  Rx<UserControllerModel> model = UserControllerModel().obs;
 
   SignUpUseCase signUpUseCase;
   SignInUseCase signInUseCase;
@@ -67,31 +64,33 @@ class AuthController extends GetxController {
   getUserInfoFunction(String userId) async {
     Either<Failure, UserEntity> result = await getUserInfo.getUserInfo(userId);
 
-    return result.fold((Failure failure) {}, (UserEntity userEntity) {
+    return result.fold((Failure failure) {
+      print(' --error -------');
+    }, (UserEntity userEntity) {
       UserModel user = UserModel.fromEntity(userEntity);
       return user;
     });
   }
 
-  Future<void> toSignUpPage() async {
-    // navigate to register page
-    await Get.to(() => const RegisterPage());
-  }
+  // Future<void> toSignUpPage() async {
+  //   // navigate to register page
+  //   await Get.to(() => const RegisterPage());
+  // }
 
-  Future<void> _toHomePage(UserModel currentUser) async {
-    // remove all page from the route and navigate to contacts page
-    await Get.offAll(() => HomePage(currentUser: currentUser));
-  }
+  // Future<void> _toHomePage(UserModel currentUser) async {
+  //   // remove all page from the route and navigate to contacts page
+  //   await Get.offAll(() => HomePage(currentUser: currentUser));
+  // }
 
-  String generateRoomId(String recieverUserId) {
-    // this function generate an ID to this chat room, by combining the ID's
-    //of the two users after sorting them
-    List<String> idsCombination = [model.value.currentUserId, recieverUserId];
-    idsCombination.sort(
-      (a, b) => a.compareTo(b),
-    );
-    return 'contactsrooms${idsCombination[0]}-${idsCombination[1]}';
-  }
+  // String generateRoomId(String recieverUserId) {
+  //   // this function generate an ID to this chat room, by combining the ID's
+  //   //of the two users after sorting them
+  //   List<String> idsCombination = [model.value.currentUserId, recieverUserId];
+  //   idsCombination.sort(
+  //     (a, b) => a.compareTo(b),
+  //   );
+  //   return 'contactsrooms${idsCombination[0]}-${idsCombination[1]}';
+  // }
 
   // Future<void> toSignUpPage() async {
   //   // navigate to register page

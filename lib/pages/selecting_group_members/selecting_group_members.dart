@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../core/constants/app_strings.dart';
-import '../../core/dependency_injection/dependency_injection.dart' as di;
 import '../../core/widgets/custom_text.dart';
 import '../../core/widgets/custom_title.dart';
-import '../../features/group/presentaion_layer/group_controller.dart';
 import '../../features/user/presentaion_layer/controller.dart';
 import 'components/Selecting_tile.dart';
 import 'components/selecting_row.dart';
@@ -16,8 +14,8 @@ class SelectingGroupMembersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserController userController = Get.put(di.sl<UserController>());
-    GroupController groupController = Get.put(di.sl<GroupController>());
+    UserController userController = Get.find<UserController>();
+    //  GroupController groupController = Get.find<GroupController>();
 
     return Scaffold(
         appBar:

@@ -8,7 +8,7 @@ abstract class BaseRemoteUserDataSource {
   //interactions with (contacts info collection)
   Future<Unit> addUserToContactInfo(UserModel userModel);
   Future<Unit> getUsersFromCantactsInfo(
-      String currentUserId, void Function(List<UserModel>) callback);
+      void Function(List<UserModel>) callback);
 
   //interactions with groups
   Future<Unit> addGroupToUser(UserModel userModel, String groupId);
@@ -34,7 +34,7 @@ class RemoteUserDataSource implements BaseRemoteUserDataSource {
 
   @override
   Future<Unit> getUsersFromCantactsInfo(
-      String currentUserId, void Function(List<UserModel>) callback) async {
+      void Function(List<UserModel>) callback) async {
     // try to get a list of all users
     //If it is successful sort the list alphebetically and retun it..
     //If it is NOT seccessfult throw an expception.
@@ -49,15 +49,13 @@ class RemoteUserDataSource implements BaseRemoteUserDataSource {
         List<QueryDocumentSnapshot> docs = event.docs;
 
         docs.forEach((element) {
-          if (currentUserId != element.get('id')) {
-            UserModel user = UserModel(
-                id: element.get('id'),
-                name: element.get('name'),
-                email: element.get('email'),
-                subscribedGroupsIds: const []);
+          UserModel user = UserModel(
+              id: element.get('id'),
+              name: element.get('name'),
+              email: element.get('email'),
+              subscribedGroupsIds: const []);
 
-            users.add(user);
-          }
+          users.add(user);
         });
 
         users.sort(

@@ -8,18 +8,16 @@ import '../core/widgets/custom_button.dart';
 import '../core/widgets/custom_text.dart';
 import '../core/widgets/custom_text_field.dart';
 import '../core/widgets/custom_title.dart';
-import '../core/dependency_injection/dependency_injection.dart' as di;
 import '../features/auth/presentaion_layer/controller.dart';
-import '../features/user/presentaion_layer/controller.dart';
 import 'home_page/home_page.dart';
+import 'register_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    UserController userController = Get.put(di.sl<UserController>());
-    AuthController authController = Get.put(di.sl<AuthController>());
+    AuthController authController = Get.find<AuthController>();
 
     TextEditingController tecEmail = TextEditingController();
     TextEditingController tecPassword = TextEditingController();
@@ -94,7 +92,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         GestureDetector(
                             onTap: () {
-                              authController.toSignUpPage();
+                              Get.to(() => const RegisterPage());
                             },
                             child: const CustomText(
                               text: AppStrings.createAccount,

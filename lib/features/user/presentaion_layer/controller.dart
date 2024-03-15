@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/entities/user_entitie.dart';
 import '../../../core/errors/failures.dart';
 import '../../../core/models/user_model.dart';
 import '../../../core/widgets/show_my_dialoge.dart';
@@ -48,16 +49,20 @@ class UserController extends GetxController {
     }, (Unit unit) {});
   }
 
-  getUsersFromCantactsInfo(BuildContext context) async {
+  getUsersGenerateCustomUsers() async {
     await getUsersFromCantactsInfoUseCase.getUsersFromCantactsInfo(
-      model.value.currentUserId,
-      (p0) {
+      (List<UserEntity> p0) {
         List<UserModel> usersModels =
             p0.map((e) => UserModel.fromEntity(e)).toList();
+
+        List<CustomUser> customUsers = usersModels
+            .map((e) => CustomUser(user: e, isSelected: false))
+            .toList();
+
         model.update((val) {
           val!.users = usersModels;
+          val.customUsers = customUsers;
         });
-        _generateCustomUsers();
       },
     );
   }
@@ -83,16 +88,6 @@ class UserController extends GetxController {
         await addGroupToUser.addGroupToUser(newUser, groupId);
   }
 
-  void _generateCustomUsers() {
-    List<CustomUser> customUsers = model.value.users!
-        .map((e) => CustomUser(user: e, isSelected: false))
-        .toList();
-
-    model.update((val) {
-      val!.customUsers = customUsers;
-    });
-  }
-
   void toggleSelectivity(int index) {
     model.update((val) {
       val!.customUsers[index].isSelected = !val.customUsers[index].isSelected;
@@ -108,5 +103,12 @@ class UserController extends GetxController {
       }
     }
     return selectedIds;
+  }
+
+  @override
+  void onInit() async {
+    await getUsersGenerateCustomUsers();
+
+    super.onInit();
   }
 }

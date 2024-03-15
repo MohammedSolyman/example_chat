@@ -6,7 +6,7 @@ abstract class BaseUserRepository {
   //interactions with (contacts info collection)
   Future<Either<Failure, Unit>> addUserToContactInfo(UserEntity userEntity);
   Future<Either<Failure, Unit>> getUsersFromCantactsInfo(
-      String currentUserId, void Function(List<UserEntity>) callback);
+      void Function(List<UserEntity>) callback);
 
   //interactions with groups
   Future<Either<Failure, Unit>> addGroupToUser(

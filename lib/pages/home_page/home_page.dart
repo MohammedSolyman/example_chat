@@ -21,7 +21,6 @@ class HomePage extends StatelessWidget {
     GroupController groupController = Get.put(di.sl<GroupController>());
     UserController userController = Get.put(di.sl<UserController>());
 
-    userController.getUsersFromCantactsInfo(context);
     groupController.getAllGroupsFunction();
 
     return Scaffold(
@@ -32,24 +31,24 @@ class HomePage extends StatelessWidget {
                 AssetsPaths.background01,
               ),
               fit: BoxFit.cover)),
-      child: const Padding(
-        padding: EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            TopRow(),
+            const TopRow(),
             Expanded(
               child: DefaultTabController(
                 length: 2,
                 child: Column(
                   children: [
-                    TabBar(labelColor: Colors.red, tabs: [
+                    const TabBar(labelColor: Colors.red, tabs: [
                       MyTab(text: AppStrings.contacts),
                       MyTab(text: AppStrings.groups),
                     ]),
                     Expanded(
                       child: TabBarView(children: [
-                        ContactsView(),
-                        GroupsView(),
+                        ContactsView(currentUserId: currentUser.id!),
+                        const GroupsView(),
                       ]),
                     ),
                   ],
