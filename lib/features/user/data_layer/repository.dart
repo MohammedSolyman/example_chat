@@ -1,14 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:my_cli_test/core/errors/error_messages.dart';
-import 'package:my_cli_test/core/errors/exceptions.dart';
 
-import 'package:my_cli_test/core/errors/failures.dart';
-import 'package:my_cli_test/core/network_info/network_info.dart';
-import 'package:my_cli_test/features/user/data_layer/data_source.dart';
-import 'package:my_cli_test/features/user/data_layer/model.dart';
-import 'package:my_cli_test/features/user/domain_layer/entity.dart';
-
+import '../../../core/errors/error_messages.dart';
+import '../../../core/errors/exceptions.dart';
+import '../../../core/errors/failures.dart';
+import '../../../core/network_info/network_info.dart';
+import '../domain_layer/entity.dart';
 import '../domain_layer/repository.dart';
+import 'data_source.dart';
+import 'model.dart';
 
 class UserRepository implements BaseUserRepository {
   BaseRemoteUserDataSource baseRemoteUserDataSource;

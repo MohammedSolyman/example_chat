@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:my_cli_test/features/user/domain_layer/entity.dart';
-import 'package:my_cli_test/features/user/domain_layer/repository.dart';
 
 import '../../../core/errors/failures.dart';
+import 'entity.dart';
+import 'repository.dart';
 
 class SignUpUseCase {
   BaseUserRepository baseUserRepository;

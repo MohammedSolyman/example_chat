@@ -7,7 +7,6 @@ import '../../core/dependency_injection/dependency_injection.dart' as di;
 import '../../core/widgets/custom_text.dart';
 import '../../core/widgets/custom_title.dart';
 import '../../features/group/presentaion_layer/group_controller.dart';
-import '../../features/user/data_layer/model.dart';
 import '../../features/user/presentaion_layer/controller.dart';
 import 'components/Selecting_tile.dart';
 import 'components/selecting_row.dart';

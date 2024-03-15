@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_cli_test/pages/selecting_group_members/selecting_group_members.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/widgets/custom_text.dart';
 import '../../../core/widgets/custom_text_field.dart';
 import '../../../features/group/presentaion_layer/group_controller.dart';
 import '../../../features/user/presentaion_layer/controller.dart';
+import '../../selecting_group_members/selecting_group_members.dart';
 
 showCreateGroupDialog(BuildContext context) async {
   GroupController groupController = Get.find<GroupController>();

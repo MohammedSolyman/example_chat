@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_cli_test/pages/home_page/home_page.dart';
 import '../core/constants/app_strings.dart';
 import '../core/constants/assets_paths.dart';
 import '../core/widgets/app_icon.dart';
@@ -11,6 +10,7 @@ import '../core/widgets/custom_title.dart';
 import '../core/dependency_injection/dependency_injection.dart' as di;
 import '../features/user/data_layer/model.dart';
 import '../features/user/presentaion_layer/controller.dart';
+import 'home_page/home_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

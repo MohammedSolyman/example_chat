@@ -1,12 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
-import 'package:my_cli_test/core/errors/exceptions.dart';
-
-import 'package:my_cli_test/core/errors/failures.dart';
 import '../../../core/errors/error_messages.dart';
+import '../../../core/errors/exceptions.dart';
+import '../../../core/errors/failures.dart';
+import '../domain_layer/entity.dart';
 import 'model.dart';
-import 'package:my_cli_test/features/message/domain_layer/entity.dart';
-
 import '../../../core/network_info/network_info.dart';
 import '../domain_layer/repository.dart';
 import 'data_source.dart';

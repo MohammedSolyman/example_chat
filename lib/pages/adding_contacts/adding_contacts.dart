@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_cli_test/core/widgets/custom_title.dart';
+
+import '../../core/widgets/custom_title.dart';
 
 class AddingContacts extends StatelessWidget {
   const AddingContacts({required this.groupName, super.key});

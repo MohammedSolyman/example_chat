@@ -1,4 +1,4 @@
-import 'package:my_cli_test/features/group/domain_layer/entity.dart';
+import '../domain_layer/entity.dart';
 
 class GroupModel extends GroupEntity {
   GroupModel({
