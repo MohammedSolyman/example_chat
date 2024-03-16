@@ -86,8 +86,8 @@ class UserController extends GetxController {
 
     UserModel newUser = user.copyWith(subscribedGroupsIds: goupsIdList);
 
-    Either<Failure, Unit> result =
-        await addGroupToUser.addGroupToUser(newUser, groupId);
+    //Either<Failure, Unit> result =
+    await addGroupToUser.addGroupToUser(newUser, groupId);
   }
 
   void toggleSelectivity(int index) {
@@ -105,5 +105,14 @@ class UserController extends GetxController {
       }
     }
     return selectedIds;
+  }
+
+  void makeAll(bool trueOrFalse) {
+    model.update((val) {
+      val!.customUsers = val.customUsers.map((e) {
+        e.isSelected = trueOrFalse;
+        return e;
+      }).toList();
+    });
   }
 }

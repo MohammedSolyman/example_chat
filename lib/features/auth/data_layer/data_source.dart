@@ -70,7 +70,6 @@ class RemoteAuthDataSource implements BaseRemoteAuthDataSource {
       await FirebaseAuth.instance.signOut();
       return unit;
     } on FirebaseAuthException catch (e) {
-      print(e.toString());
       throw UnkownException();
     }
   }

@@ -57,21 +57,9 @@ class AuthController extends GetxController {
   getUserInfoFunction(String userId) async {
     Either<Failure, UserEntity> result = await getUserInfo.getUserInfo(userId);
 
-    return result.fold((Failure failure) {
-      print(' --error -------');
-    }, (UserEntity userEntity) {
+    return result.fold((Failure failure) {}, (UserEntity userEntity) {
       UserModel user = UserModel.fromEntity(userEntity);
       return user;
     });
   }
-
-  // String generateRoomId(String recieverUserId) {
-  //   // this function generate an ID to this chat room, by combining the ID's
-  //   //of the two users after sorting them
-  //   List<String> idsCombination = [model.value.currentUserId, recieverUserId];
-  //   idsCombination.sort(
-  //     (a, b) => a.compareTo(b),
-  //   );
-  //   return 'contactsrooms${idsCombination[0]}-${idsCombination[1]}';
-  // }
 }

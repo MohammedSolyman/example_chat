@@ -70,11 +70,11 @@ class GroupRepository implements BaseGroupRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> getAllGroups(
+  Future<Either<Failure, Unit>> getGroups(String currentUserId,
       void Function(List<GroupEntity> p1) callback) async {
     if (await networkInfo.isConnected) {
       try {
-        await baseRemoteGroupDataSource.getAllGroups(callback);
+        await baseRemoteGroupDataSource.getGroups(currentUserId, callback);
         return const Right(unit);
       } on ServerException {
         return const Left(

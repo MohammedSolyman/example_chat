@@ -8,7 +8,8 @@ abstract class BaseRemoteGroupDataSource {
   Future<String> createGroup(GroupModel groupModel);
   Future<Unit> updateGroup(GroupModel groupModel);
   Future<Unit> addUsersGroup(List<String> usersIds, String groupId);
-  Future<Unit> getAllGroups(void Function(List<GroupModel>) callback);
+  Future<Unit> getGroups(
+      String currentUserId, void Function(List<GroupModel>) callback);
 }
 
 class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
@@ -76,7 +77,8 @@ class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
   }
 
   @override
-  Future<Unit> getAllGroups(void Function(List<GroupModel>) callback) async {
+  Future<Unit> getGroups(
+      String currentUserId, void Function(List<GroupModel>) callback) async {
     List<GroupModel> groups = [];
 
     try {
@@ -87,20 +89,21 @@ class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
         List<QueryDocumentSnapshot> docs = event.docs;
 
         docs.forEach((element) {
-          List<dynamic> a = element.get('members');
-          List<String> b = a.map((e) => e.toString()).toList();
+          List<dynamic> members1 = element.get('members');
+          List<String> members = members1.map((e) => e.toString()).toList();
+          if (members.contains(currentUserId)) {
+            GroupModel group = GroupModel(
+              groupDescription: element.get('groupDescription'),
+              groupName: element.get('groupName'),
+              adminId: element.get('adminId'),
+              creationDateTime: element.get('creationDateTime'),
+              groupId: element.get('groupId'),
+              groupImage: element.get('groupImage'),
+              members: members,
+            );
 
-          GroupModel group = GroupModel(
-            groupDescription: element.get('groupDescription'),
-            groupName: element.get('groupName'),
-            adminId: element.get('adminId'),
-            creationDateTime: element.get('creationDateTime'),
-            groupId: element.get('groupId'),
-            groupImage: element.get('groupImage'),
-            members: b,
-          );
-
-          groups.add(group);
+            groups.add(group);
+          }
         });
 
         //sort all grpoups

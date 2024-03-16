@@ -23,11 +23,21 @@ class MyDrawer extends StatelessWidget {
       backgroundColor: Theme.of(context).primaryColorLight,
       child: ListView(
         children: [
-          const DrawerHeader(
-              child: CircleAvatar(
-            foregroundImage: AssetImage(
-              AssetsPaths.chatIcon,
-            ),
+          DrawerHeader(
+              child: Column(
+            children: [
+              SizedBox(
+                  child: Container(
+                height: 60,
+                width: 60,
+                decoration: const BoxDecoration(
+                    image:
+                        DecorationImage(image: AssetImage(AssetsPaths.contact)),
+                    shape: BoxShape.circle),
+              )),
+              CustomText(text: currentUser.name!),
+              CustomText(text: currentUser.email),
+            ],
           )),
           const ListTile(
             leading: Icon(Icons.person),

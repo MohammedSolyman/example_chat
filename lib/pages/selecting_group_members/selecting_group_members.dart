@@ -40,31 +40,6 @@ class SelectingGroupMembersPage extends StatelessWidget {
                       itemCount: customUusers.length,
                       itemBuilder: (context, index) {
                         return SelectingTile(index: index);
-
-                        // Card(
-                        //   child: ListTile(
-                        //     leading: CircleAvatar(
-                        //       backgroundColor: Colors.red,
-                        //       child: Text(users[index].name![0],
-                        //           textAlign: TextAlign.center),
-                        //     ),
-                        //     title: Text(users[index].name!),
-
-                        //     onLongPress: () {
-                        //       selectedMemebersIds.add(users[index].id!);
-                        //     },
-
-                        //     // onTap: () async {
-                        //     //   String roomId =
-                        //     //       userController.generateRoomId(users[index].id!);
-                        //     //   Get.to(() => ChatPage(
-                        //     //       roomId: roomId,
-                        //     //       thisUserId: currentUser.id!,
-                        //     //       otherUser: users[index],
-                        //     //       isGroup: false));
-                        //     //  },
-                        //   ),
-                        // );
                       },
                     ),
                   ),

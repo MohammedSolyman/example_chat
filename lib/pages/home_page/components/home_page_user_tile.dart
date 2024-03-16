@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/constants/assets_paths.dart';
 import '../../../core/models/user_model.dart';
 import '../../../features/user/presentaion_layer/controller.dart';
 import '../../chat_page/chat_page.dart';
@@ -16,9 +17,8 @@ class HomePageUserTile extends StatelessWidget {
 
     return Card(
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: Colors.red,
-          child: Text(user.name![0], textAlign: TextAlign.center),
+        leading: const CircleAvatar(
+          foregroundImage: AssetImage(AssetsPaths.contact),
         ),
         title: Text(user.name!),
         onTap: () async {

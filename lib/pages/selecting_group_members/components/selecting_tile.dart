@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/constants/assets_paths.dart';
 import '../../../features/user/presentaion_layer/controller.dart';
 
 class SelectingTile extends StatelessWidget {
@@ -16,24 +17,13 @@ class SelectingTile extends StatelessWidget {
             ? Colors.cyan
             : Colors.blueGrey.shade400,
         child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: Colors.red,
-            child: Text(
-                userController.model.value.customUsers[index].user.name![0],
-                textAlign: TextAlign.center),
+          leading: const CircleAvatar(
+            foregroundImage: AssetImage(AssetsPaths.contact),
           ),
           title: Text(userController.model.value.customUsers[index].user.name!),
           onLongPress: () {
             userController.toggleSelectivity(index);
           },
-          // onTap: () async {
-          //   String roomId = userController.generateRoomId(user.id!);
-          //   Get.to(() => ChatPage(
-          //       roomId: roomId,
-          //       thisUserId: userController.model.value.currentUser!.id!,
-          //       otherUser: user,
-          //       isGroup: false));
-          // },
         ),
       );
     });

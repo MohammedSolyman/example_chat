@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/constants/assets_paths.dart';
 import '../../../core/models/user_model.dart';
 import '../../../features/group/data_layer/model.dart';
-import '../../../features/user/presentaion_layer/controller.dart';
 import '../../chat_page/chat_page.dart';
 
 class HomePageGroupTile extends StatelessWidget {
@@ -13,13 +13,12 @@ class HomePageGroupTile extends StatelessWidget {
   final UserModel currentUser;
   @override
   Widget build(BuildContext context) {
-    UserController userController = Get.find<UserController>();
+//    UserController userController = Get.find<UserController>();
 
     return Card(
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: Colors.red,
-          child: Text(group.groupName[0], textAlign: TextAlign.center),
+        leading: const CircleAvatar(
+          foregroundImage: AssetImage(AssetsPaths.group),
         ),
         title: Text(group.groupName),
         onTap: () async {

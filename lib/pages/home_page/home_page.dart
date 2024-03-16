@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
     GroupController groupController = Get.put(di.sl<GroupController>());
 
     userController.getUsersGenerateCustomUsers(currentUserId: currentUser.id!);
-    groupController.getAllGroupsFunction();
+    groupController.getGroupsFunction(currentUser.id!);
 
     return Scaffold(
         endDrawer: MyDrawer(currentUser: currentUser),

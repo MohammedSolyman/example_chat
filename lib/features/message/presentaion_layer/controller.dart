@@ -79,9 +79,6 @@ class MessageController extends GetxController {
         List<MessageModel> messagesModels =
             p0.map((e) => MessageModel.fromEntity(e)).toList();
 
-        print('------------------------------');
-        print(messagesModels.length);
-
         model.update((val) {
           val!.messages = messagesModels;
         });

@@ -31,12 +31,12 @@ class AddUsersGroupUseCase {
   }
 }
 
-class GetAllGroupsUseCase {
+class GetGroupsUseCase {
   BaseGroupRepository baseGroupRepository;
-  GetAllGroupsUseCase({required this.baseGroupRepository});
+  GetGroupsUseCase({required this.baseGroupRepository});
 
-  Future<Either<Failure, Unit>> getAllGroupsUseCase(
-      void Function(List<GroupEntity>) callback) async {
-    return await baseGroupRepository.getAllGroups(callback);
+  Future<Either<Failure, Unit>> getGroupsUseCase(
+      String currentUserId, void Function(List<GroupEntity>) callback) async {
+    return await baseGroupRepository.getGroups(currentUserId, callback);
   }
 }

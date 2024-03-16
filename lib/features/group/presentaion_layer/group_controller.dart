@@ -1,8 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../core/errors/failures.dart';
 import '../../../core/widgets/show_my_dialoge.dart';
 import '../data_layer/model.dart';
@@ -18,7 +16,7 @@ class GroupController extends GetxController {
   CreateGroupUseCase createGroupUseCase;
   UpdateGroupUseCase updateGroupUseCase;
   AddUsersGroupUseCase addUsersGroupUseCase;
-  GetAllGroupsUseCase getAllGroupsUseCase;
+  GetGroupsUseCase getAllGroupsUseCase;
   GroupController(
       {required this.createGroupUseCase,
       required this.updateGroupUseCase,
@@ -45,7 +43,13 @@ class GroupController extends GetxController {
       required String groupDescription,
       required adminId}) async {
     // this function create a group and assign the creating user as an admin
+
+    DateTime now = DateTime.now();
+    int dateTime = now.millisecondsSinceEpoch;
+
     GroupModel groupEntity = GroupModel(
+        creationDateTime: dateTime,
+        adminId: adminId,
         groupName: groupName,
         groupDescription: groupDescription,
         members: [adminId]);
@@ -66,8 +70,8 @@ class GroupController extends GetxController {
     await addUsersGroupUseCase.addUsersGroupUseCase(usersIds, groupId);
   }
 
-  getAllGroupsFunction() async {
-    await getAllGroupsUseCase.getAllGroupsUseCase((p0) {
+  getGroupsFunction(String currentUserId) async {
+    await getAllGroupsUseCase.getGroupsUseCase(currentUserId, (p0) {
       List<GroupModel> groups =
           p0.map((e) => GroupModel.fromEntity(e)).toList();
       model.update((val) {

@@ -20,14 +20,19 @@ class SelecetingRow extends StatelessWidget {
         Row(
           children: [
             TextButton(
-                onPressed: () {},
-                child: CustomText(
+                onPressed: () {
+                  userController.makeAll(true);
+                },
+                child: const CustomText(
                   text: AppStrings.selectAll,
                   isSamll: true,
                 )),
             TextButton(
-                onPressed: () {},
-                child: CustomText(text: AppStrings.unSelectAll, isSamll: true)),
+                onPressed: () {
+                  userController.makeAll(false);
+                },
+                child: const CustomText(
+                    text: AppStrings.unSelectAll, isSamll: true)),
           ],
         ),
         IconButton(
