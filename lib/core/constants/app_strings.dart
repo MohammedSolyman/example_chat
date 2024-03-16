@@ -16,7 +16,7 @@ class AppStrings {
   static const String login = 'LOG IN';
 
   // hompepage
-  static const String homepage = 'homepage';
+  static const String homepage = 'HOMEPAGE';
   static const String contacts = 'contacts';
   static const String groups = 'groups';
 
@@ -25,7 +25,6 @@ class AppStrings {
   static const String noGroups = 'there are no groups yet.';
 
 //group
-  static const String createGroup = 'create group';
   static const String cancel = 'cancel';
   static const String create = 'create';
   static const String addName = 'add group name';
@@ -39,4 +38,9 @@ class AppStrings {
   static const String selectAll = 'select all members';
   static const String unSelectAll = 'unselect all members';
   static const String selectUserAtLeast = 'at least select one contact';
+
+  //drawer
+  static const String updateProfileImage = 'update profile image';
+  static const String signOut = 'sign out';
+  static const String createGroup = 'create group';
 }

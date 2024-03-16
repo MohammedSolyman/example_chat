@@ -17,20 +17,13 @@ class TopRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const CustomTitle(text: AppStrings.homepage),
-          Row(
-            children: [
-              const CustomText(
-                text: AppStrings.createGroup,
-                isSamll: true,
-              ),
-              IconButton(
-                onPressed: () async {
-                  await showCreateGroupDialog(context);
+          Builder(builder: (context) {
+            return IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
                 },
-                icon: const Icon(Icons.add),
-              ),
-            ],
-          ),
+                icon: const Icon(Icons.menu));
+          }),
         ],
       ),
     );
