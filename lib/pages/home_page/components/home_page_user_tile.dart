@@ -5,9 +5,11 @@ import '../../../features/user/presentaion_layer/controller.dart';
 import '../../chat_page/chat_page.dart';
 
 class HomePageUserTile extends StatelessWidget {
-  const HomePageUserTile({required this.user, super.key});
+  const HomePageUserTile(
+      {required this.currentUser, required this.user, super.key});
 
   final UserModel user;
+  final UserModel currentUser;
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find<UserController>();
@@ -20,10 +22,11 @@ class HomePageUserTile extends StatelessWidget {
         ),
         title: Text(user.name!),
         onTap: () async {
-          String roomId = userController.generateRoomId(user.id!);
+          String roomId = userController.generateRoomId(
+              senderId: currentUser.id!, recieverId: user.id!);
           Get.to(() => ChatPage(
               roomId: roomId,
-              thisUserId: userController.model.value.currentUser!.id!,
+              currentUser: currentUser,
               otherUser: user,
               isGroup: false));
         },

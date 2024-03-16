@@ -26,8 +26,8 @@ class SignOutUseCase {
   BaseAuthRepository baseAuthRepository;
   SignOutUseCase({required this.baseAuthRepository});
 
-  Future<Either<Failure, Unit>> signOut(UserEntity userEntity) async {
-    return await baseAuthRepository.signOut(userEntity);
+  Future<Either<Failure, Unit>> signOut() async {
+    return await baseAuthRepository.signOut();
   }
 }
 

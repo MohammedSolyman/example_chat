@@ -48,9 +48,23 @@ class AuthRepository implements BaseAuthRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> signOut(UserEntity userEntity) async {
-    // TODO: implement signIn
-    throw UnimplementedError();
+  Future<Either<Failure, Unit>> signOut() async {
+    //if there is internet connection, do the following, otherwose return failure.
+    //if there is internet connection, try to sign out the current user.
+    //if it is NOT successful, return the corresponding failure
+
+    if (await networkInfo.isConnected) {
+      try {
+        await baseRemoteAuthDataSource.signOut();
+        return const Right(unit);
+      } catch (e) {
+        return const Left(
+            UnknownFailure(failureMessage: ErrorMessages.unknownError));
+      }
+    } else {
+      return const Left(
+          NoConnectionFailure(failureMessage: ErrorMessages.noConnection));
+    }
   }
 
   @override

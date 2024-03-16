@@ -7,22 +7,6 @@ import '../../../core/models/user_model.dart';
 import '../../../core/widgets/show_my_dialoge.dart';
 import '../domain_layer/use_cases.dart';
 
-// class CustomUser {
-//   UserModel user;
-//   bool isSelected;
-//   CustomUser({
-//     required this.user,
-//     required this.isSelected,
-//   });
-// }
-
-// class UserControllerModel {
-//   List<UserModel>? users;
-//   List<CustomUser> customUsers = [];
-//   String currentUserId = '';
-//   UserModel? currentUser;
-// }
-
 class AuthController extends GetxController {
 //  Rx<UserControllerModel> model = UserControllerModel().obs;
 
@@ -61,6 +45,15 @@ class AuthController extends GetxController {
     });
   }
 
+  signOutFunction(BuildContext context) async {
+    Either<Failure, Unit> result = await signOutUseCase.signOut();
+
+    return result.fold((Failure failure) {
+      showMyDialog(
+          context: context, msg: failure.failureMessage, isSuccess: false);
+    }, (Unit unit) {});
+  }
+
   getUserInfoFunction(String userId) async {
     Either<Failure, UserEntity> result = await getUserInfo.getUserInfo(userId);
 
@@ -72,16 +65,6 @@ class AuthController extends GetxController {
     });
   }
 
-  // Future<void> toSignUpPage() async {
-  //   // navigate to register page
-  //   await Get.to(() => const RegisterPage());
-  // }
-
-  // Future<void> _toHomePage(UserModel currentUser) async {
-  //   // remove all page from the route and navigate to contacts page
-  //   await Get.offAll(() => HomePage(currentUser: currentUser));
-  // }
-
   // String generateRoomId(String recieverUserId) {
   //   // this function generate an ID to this chat room, by combining the ID's
   //   //of the two users after sorting them
@@ -90,15 +73,5 @@ class AuthController extends GetxController {
   //     (a, b) => a.compareTo(b),
   //   );
   //   return 'contactsrooms${idsCombination[0]}-${idsCombination[1]}';
-  // }
-
-  // Future<void> toSignUpPage() async {
-  //   // navigate to register page
-  //   await Get.to(() => const RegisterPage());
-  // }
-
-  // Future<void> _toHomePage(UserModel currentUser) async {
-  //   // remove all page from the route and navigate to contacts page
-  //   await Get.offAll(() => HomePage(currentUser: currentUser));
   // }
 }

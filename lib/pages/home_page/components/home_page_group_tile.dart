@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/models/user_model.dart';
 import '../../../features/group/data_layer/model.dart';
 import '../../../features/user/presentaion_layer/controller.dart';
 import '../../chat_page/chat_page.dart';
 
 class HomePageGroupTile extends StatelessWidget {
-  const HomePageGroupTile({required this.group, super.key});
+  const HomePageGroupTile(
+      {required this.currentUser, required this.group, super.key});
 
   final GroupModel group;
+  final UserModel currentUser;
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find<UserController>();
@@ -23,7 +26,7 @@ class HomePageGroupTile extends StatelessWidget {
           Get.to(() => ChatPage(
               roomId: group.groupId!,
               groupModel: group,
-              thisUserId: userController.model.value.currentUser!.id!,
+              currentUser: currentUser,
               isGroup: true));
 
           // String roomId = userController.generateRoomId(group.groupName.id!);

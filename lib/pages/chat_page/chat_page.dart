@@ -14,14 +14,15 @@ class ChatPage extends StatelessWidget {
       {required this.roomId,
       this.otherUser,
       this.groupModel,
-      required this.thisUserId,
+      required this.currentUser,
       required this.isGroup,
       super.key});
 
   final String roomId;
   final UserModel? otherUser;
+  final UserModel currentUser;
   final GroupModel? groupModel;
-  final String thisUserId;
+
   final bool isGroup; // is it contact room or group room?
 
   @override
@@ -31,7 +32,7 @@ class ChatPage extends StatelessWidget {
     messageController.getChatPageInfo(
       roomId: roomId,
       otherUser: otherUser,
-      thisUserId: thisUserId,
+      thisUserId: currentUser.id!,
     );
 
     String title = isGroup
@@ -55,7 +56,10 @@ class ChatPage extends StatelessWidget {
             children: [
               ChatBody(isGroup: isGroup),
               LowerBlock(
-                  roomId: roomId, recieverId: isGroup ? roomId : otherUser!.id!)
+                roomId: roomId,
+                recieverId: isGroup ? roomId : otherUser!.id!,
+                currentUser: currentUser,
+              )
             ],
           ),
         ),

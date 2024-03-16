@@ -19,8 +19,8 @@ class CustomUser {
 class UserControllerModel {
   List<UserModel>? users;
   List<CustomUser> customUsers = [];
-  String currentUserId = '';
-  UserModel? currentUser;
+  // String currentUserId = '';
+  // UserModel? currentUser;
 }
 
 class UserController extends GetxController {
@@ -68,10 +68,11 @@ class UserController extends GetxController {
     );
   }
 
-  String generateRoomId(String recieverUserId) {
+  String generateRoomId(
+      {required String recieverId, required String senderId}) {
     // this function generate an ID to this chat room, by combining the ID's
     //of the two users after sorting them
-    List<String> idsCombination = [model.value.currentUserId, recieverUserId];
+    List<String> idsCombination = [senderId, recieverId];
     idsCombination.sort(
       (a, b) => a.compareTo(b),
     );

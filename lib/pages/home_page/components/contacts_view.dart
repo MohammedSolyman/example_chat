@@ -7,8 +7,9 @@ import '../../../features/user/presentaion_layer/controller.dart';
 import 'home_page_user_tile.dart';
 
 class ContactsView extends StatelessWidget {
-  const ContactsView({super.key});
+  const ContactsView({required this.currentUser, super.key});
 
+  final UserModel currentUser;
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find<UserController>();
@@ -26,7 +27,8 @@ class ContactsView extends StatelessWidget {
           child: ListView.builder(
             itemCount: users.length,
             itemBuilder: (context, index) {
-              return HomePageUserTile(user: users[index]);
+              return HomePageUserTile(
+                  currentUser: currentUser, user: users[index]);
             },
           ),
         );

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_cli_test/pages/home_page/home_page.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/models/user_model.dart';
 import '../../../core/widgets/custom_button.dart';
 import '../../../features/auth/presentaion_layer/controller.dart';
 import '../../../features/user/presentaion_layer/controller.dart';
+import '../../home_page/home_page.dart';
 
 class SignUpButton extends StatelessWidget {
   const SignUpButton({

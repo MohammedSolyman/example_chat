@@ -8,7 +8,7 @@ import '../../../core/models/user_model.dart';
 abstract class BaseRemoteAuthDataSource {
   Future<UserModel> signUp(UserModel userModel);
   Future<String> signIn(UserModel userModel);
-  Future<Unit> signOut(UserModel userModel);
+  Future<Unit> signOut();
   Future<UserModel> getUserInfo(String userId);
 }
 
@@ -62,9 +62,17 @@ class RemoteAuthDataSource implements BaseRemoteAuthDataSource {
   }
 
   @override
-  Future<Unit> signOut(UserModel userModel) {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  Future<Unit> signOut() async {
+    try {
+      //try to sign out this user.
+      //if it NOT successful throw the corresponding exceptions.
+
+      await FirebaseAuth.instance.signOut();
+      return unit;
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+      throw UnkownException();
+    }
   }
 
   @override
