@@ -6,7 +6,7 @@ import 'features/auth/presentaion_layer/controller.dart';
 import 'features/user/presentaion_layer/controller.dart';
 import 'firebase_options.dart';
 import 'core/dependency_injection/dependency_injection.dart' as di;
-import 'pages/login_page.dart';
+import 'pages/sign_in_page/sign_in_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,7 @@ class MainApp extends StatelessWidget {
 
     return GetMaterialApp(
       theme: AppTheme.lightThemeData,
-      home: const LoginPage(),
+      home: const SignInPage(),
     );
   }
 }
