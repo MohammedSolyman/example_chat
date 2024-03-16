@@ -70,16 +70,19 @@ class LoginPage extends StatelessWidget {
                                 password: tecPassword.text);
 
                             //sign in this user
-                            String userId = await authController.signInFunction(
-                                context, userModel);
+                            String? userId = await authController
+                                .signInFunction(context, userModel);
 
-                            //get this user info
-                            UserModel userModelWithInfo = await authController
-                                .getUserInfoFunction(userId);
+                            // if the signing in is successful
+                            if (userId != null) {
+                              //get this user info
+                              UserModel userModelWithInfo = await authController
+                                  .getUserInfoFunction(userId);
 
-                            //go to homepage
-                            Get.offAll(
-                                () => HomePage(currentUser: userModelWithInfo));
+                              //go to homepage
+                              Get.offAll(() =>
+                                  HomePage(currentUser: userModelWithInfo));
+                            }
                           }
                         }),
                     const SizedBox(height: 10),

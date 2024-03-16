@@ -49,8 +49,9 @@ class UserController extends GetxController {
     }, (Unit unit) {});
   }
 
-  getUsersGenerateCustomUsers() async {
+  getUsersGenerateCustomUsers({required String currentUserId}) async {
     await getUsersFromCantactsInfoUseCase.getUsersFromCantactsInfo(
+      currentUserId,
       (List<UserEntity> p0) {
         List<UserModel> usersModels =
             p0.map((e) => UserModel.fromEntity(e)).toList();
@@ -103,12 +104,5 @@ class UserController extends GetxController {
       }
     }
     return selectedIds;
-  }
-
-  @override
-  void onInit() async {
-    await getUsersGenerateCustomUsers();
-
-    super.onInit();
   }
 }

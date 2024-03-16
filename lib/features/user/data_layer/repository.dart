@@ -41,14 +41,15 @@ class UserRepository implements BaseUserRepository {
 
   @override
   Future<Either<Failure, Unit>> getUsersFromCantactsInfo(
-      void Function(List<UserModel>) callback) async {
+      String userId, void Function(List<UserModel>) callback) async {
     //if there is internet connection, do the following, otherwose return failure.
     //if there is internet connection, try to get all users from contacts collection.
     //if it is NOT successful, return the corresponding failure
 
     if (await networkInfo.isConnected) {
       try {
-        await baseRemoteUserDataSource.getUsersFromCantactsInfo(callback);
+        await baseRemoteUserDataSource.getUsersFromCantactsInfo(
+            userId, callback);
         return const Right(unit);
       } on UnkownException {
         return const Left(

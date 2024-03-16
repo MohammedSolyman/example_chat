@@ -83,16 +83,19 @@ class RegisterPage extends StatelessWidget {
                                 password: tecPassword.text);
 
                             // sign in
-                            UserModel userModelWithId = await authController
+                            UserModel? userModelWithId = await authController
                                 .signUpFunction(context, userModel);
 
-                            // add this user to contacts info collection
-                            userController.addUserToContactInfoFunction(
-                                context: context, userModel: userModelWithId);
+                            //if siging up is successful
+                            if (userModelWithId != null) {
+                              // add this user to contacts info collection
+                              userController.addUserToContactInfoFunction(
+                                  context: context, userModel: userModelWithId);
 
-                            // navigate to hompage
-                            Get.offAll(
-                                () => HomePage(currentUser: userModelWithId));
+                              // navigate to hompage
+                              Get.offAll(
+                                  () => HomePage(currentUser: userModelWithId));
+                            }
                           }
                         }),
                     const SizedBox(height: 10),

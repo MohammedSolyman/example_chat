@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'core/theming/theming.dart';
 import 'features/auth/presentaion_layer/controller.dart';
+import 'features/user/presentaion_layer/controller.dart';
 import 'firebase_options.dart';
 import 'core/dependency_injection/dependency_injection.dart' as di;
 import 'pages/login_page.dart';
@@ -23,6 +24,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(di.sl<AuthController>());
+    Get.put(di.sl<UserController>());
 
     return GetMaterialApp(
       theme: AppTheme.lightThemeData,
