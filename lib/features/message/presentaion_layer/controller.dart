@@ -39,8 +39,11 @@ class MessageController extends GetxController {
     });
   }
 
-  MessageModel prepareTextMessage(
-      {required String body, required String recieverId, required senderName}) {
+  MessageModel prepareMessage(
+      {required String messageType,
+      required String body,
+      required String recieverId,
+      required senderName}) {
     //prepare the message model
 
     DateTime now = DateTime.now();
@@ -52,11 +55,11 @@ class MessageController extends GetxController {
       senderId: model.value.thisUserId,
       recieverId: recieverId,
       body: body,
-      messageType: MessageType.text,
+      messageType: messageType,
     );
   }
 
-  sendTextMessage(
+  sendMessage(
       {required BuildContext context,
       required MessageModel message,
       required String roomId}) async {

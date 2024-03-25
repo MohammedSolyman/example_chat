@@ -5,6 +5,11 @@ import '../../features/auth/data_layer/repository.dart';
 import '../../features/auth/domain_layer/repository.dart';
 import '../../features/auth/domain_layer/use_cases.dart';
 import '../../features/auth/presentaion_layer/controller.dart';
+import '../../features/file/data_layer/data_source.dart';
+import '../../features/file/data_layer/repository.dart';
+import '../../features/file/domain_layer/repository.dart';
+import '../../features/file/domain_layer/use_cases.dart';
+import '../../features/file/presentaion_layer/controller.dart';
 import '../../features/group/data_layer/data_source.dart';
 import '../../features/group/data_layer/repository.dart';
 import '../../features/group/domain_layer/repository.dart';
@@ -53,6 +58,14 @@ Future<void> init() async {
         signOutUseCase: sl(),
       ));
 
+  //AssetsController
+  sl.registerFactory(() => FileController(
+      createFileUseCase: sl(),
+      pickFileUseCase: sl(),
+      updateFileUseCase: sl(),
+      deleteFileUseCase: sl(),
+      downloadFileUseCase: sl()));
+
   //////////////////////////////////////////////////////////////////////////
   // usecases ///////////////////////////////////////////////////////////
 
@@ -83,6 +96,16 @@ Future<void> init() async {
   sl.registerLazySingleton(
       () => GetMessagesUseCase(baseMessageRepository: sl()));
 
+  //file usecases
+  sl.registerLazySingleton(() => CreateFileUseCase(baseFileRepository: sl()));
+  sl.registerLazySingleton(() => PickFileUseCase(baseFileRepository: sl()));
+
+  sl.registerLazySingleton(() => UpdateFileUseCase(baseFileRepository: sl()));
+
+  sl.registerLazySingleton(() => DeleteFileUseCase(baseFileRepository: sl()));
+
+  sl.registerLazySingleton(() => DownloadFileUseCase(baseFileRepository: sl()));
+
   //////////////////////////////////////////////////////////////////////////
   // repositories ///////////////////////////////////////////////////////////
 
@@ -102,8 +125,13 @@ Future<void> init() async {
   sl.registerLazySingleton<BaseMessageRepository>(() =>
       MessageRepository(baseRemoteMessageDataSource: sl(), networkInfo: sl()));
 
+  // auth repository
   sl.registerLazySingleton<BaseAuthRepository>(
       () => AuthRepository(baseRemoteAuthDataSource: sl(), networkInfo: sl()));
+
+  // file repository
+  sl.registerLazySingleton<BaseFileRepository>(
+      () => FileRepository(baseRemoteFileDataSource: sl(), networkInfo: sl()));
 
   //////////////////////////////////////////////////////////////////////////
   // data sources //////////////////////////////////////////////////////////
@@ -120,9 +148,13 @@ Future<void> init() async {
   sl.registerLazySingleton<BaseRemoteMessageDataSource>(
       () => RemoteMessageDataSource());
 
-  //  auth source
+  // auth data source
   sl.registerLazySingleton<BaseRemoteAuthDataSource>(
       () => RemoteAuthDataSource());
+
+  // file  data source
+  sl.registerLazySingleton<BaseRemoteFileDataSource>(
+      () => RemoteFileDataSource());
 
   //////////////////////////////////////////////////////////////////////////
   // core ////////////////////////////////////////////////////////////

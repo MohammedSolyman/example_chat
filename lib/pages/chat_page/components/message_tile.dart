@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../features/message/data_layer/model.dart';
 import '../../../features/message/presentaion_layer/controller.dart';
-import 'message_block.dart';
+import 'message_sub_tile.dart';
 
 class MessageTile extends StatelessWidget {
   const MessageTile({required this.message, required this.isGroup, super.key});
@@ -19,13 +18,13 @@ class MessageTile extends StatelessWidget {
       bool isMe = message.senderId == messageController.model.value.thisUserId;
       String timeString = message.getimeString();
 
-      return MessageBlock(
-        isGroup: isGroup,
-        senderName: message.senderName,
-        isMe: isMe,
-        msg: msg,
-        time: timeString,
-      );
+      return MessageSubTile(
+          isGroup: isGroup,
+          senderName: message.senderName,
+          isMe: isMe,
+          msg: msg,
+          time: timeString,
+          messageType: message.messageType);
     });
   }
 }

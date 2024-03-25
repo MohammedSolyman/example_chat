@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-
 import '../../../core/errors/exceptions.dart';
 import 'model.dart';
 

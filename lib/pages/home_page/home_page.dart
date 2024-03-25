@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../core/constants/app_strings.dart';
 import '../../core/constants/assets_paths.dart';
 import '../../core/models/user_model.dart';
+import '../../features/file/presentaion_layer/controller.dart';
 import '../../features/group/presentaion_layer/group_controller.dart';
 import '../../core/dependency_injection/dependency_injection.dart' as di;
 import '../../features/user/presentaion_layer/controller.dart';
@@ -21,6 +22,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     UserController userController = Get.find<UserController>();
     GroupController groupController = Get.put(di.sl<GroupController>());
+    FileController fileController = Get.put(di.sl<FileController>());
 
     userController.getUsersGenerateCustomUsers(currentUserId: currentUser.id!);
     groupController.getGroupsFunction(currentUser.id!);

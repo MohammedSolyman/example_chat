@@ -47,23 +47,27 @@
 // }
 
 import 'package:flutter/material.dart';
-
 import '../../../core/widgets/custom_text.dart';
+import '../../../features/message/data_layer/model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
-class MessageBlock extends StatelessWidget {
-  const MessageBlock(
+class MessageSubTile extends StatelessWidget {
+  const MessageSubTile(
       {required this.isMe,
       required this.msg,
       required this.time,
       required this.isGroup,
       this.senderName,
+      required this.messageType,
       super.key});
 
   final bool isMe;
   final String msg;
+  final String messageType;
   final String time;
   final String? senderName;
   final bool isGroup;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -90,7 +94,7 @@ class MessageBlock extends StatelessWidget {
                     bottomLeft: const Radius.circular(5),
                     bottomRight: const Radius.circular(5),
                   )),
-              child: Text(msg),
+              child: MessageBody(messageType: messageType, messageBody: msg),
             ),
             CustomText(
               text: time,
@@ -100,5 +104,36 @@ class MessageBlock extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class MessageBody extends StatelessWidget {
+  const MessageBody(
+      {super.key, required this.messageType, required this.messageBody});
+
+  final String messageType;
+  final String messageBody;
+
+  @override
+  Widget build(BuildContext context) {
+    if (messageType == MessageType.text) {
+      return Text(messageBody);
+    } else if (messageType == MessageType.image) {
+      return SizedBox(
+          height: 230,
+          width: 150,
+          child: CachedNetworkImage(
+            imageUrl: messageBody,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                CircularProgressIndicator(value: downloadProgress.progress),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+          )
+
+          //  NetworkImage(messageBody)
+
+          );
+    } else {
+      return Container();
+    }
   }
 }
