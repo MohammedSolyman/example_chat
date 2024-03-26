@@ -57,6 +57,7 @@ class RemoteUserDataSource implements BaseRemoteUserDataSource {
             UserModel user = UserModel(
                 id: element.get('id'),
                 name: element.get('name'),
+                image: element.get('image'),
                 email: element.get('email'),
                 subscribedGroupsIds: const []);
 

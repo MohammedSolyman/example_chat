@@ -7,11 +7,11 @@ import '../../features/file/presentaion_layer/controller.dart';
 import '../../features/group/presentaion_layer/group_controller.dart';
 import '../../core/dependency_injection/dependency_injection.dart' as di;
 import '../../features/user/presentaion_layer/controller.dart';
-import 'components/contacts_view.dart';
-import 'components/groups_view.dart';
+import 'components/contacts_view/contacts_view.dart';
+import 'components/groups_view/groups_view.dart';
 import 'components/my_tab.dart';
 import 'components/top_row.dart';
-import 'components/my_drawer.dart';
+import 'components/my_drawer/my_drawer.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({required this.currentUser, super.key});

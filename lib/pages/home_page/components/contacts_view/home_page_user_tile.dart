@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/constants/assets_paths.dart';
-import '../../../core/models/user_model.dart';
-import '../../../features/user/presentaion_layer/controller.dart';
-import '../../chat_page/chat_page.dart';
+import '../../../../core/models/user_model.dart';
+import '../../../../features/user/presentaion_layer/controller.dart';
+import '../../../chat_page/chat_page.dart';
+import '../profile_image.dart';
 
 class HomePageUserTile extends StatelessWidget {
   const HomePageUserTile(
@@ -17,9 +17,7 @@ class HomePageUserTile extends StatelessWidget {
 
     return Card(
       child: ListTile(
-        leading: const CircleAvatar(
-          foregroundImage: AssetImage(AssetsPaths.contact),
-        ),
+        leading: ProfileImage(user: user),
         title: Text(user.name!),
         onTap: () async {
           String roomId = userController.generateRoomId(

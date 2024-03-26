@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/constants/assets_paths.dart';
-import '../../../core/models/user_model.dart';
-import '../../../features/group/data_layer/model.dart';
-import '../../chat_page/chat_page.dart';
+import '../../../../core/constants/assets_paths.dart';
+import '../../../../core/models/user_model.dart';
+import '../../../../features/group/data_layer/model.dart';
+import '../../../chat_page/chat_page.dart';
 
 class HomePageGroupTile extends StatelessWidget {
   const HomePageGroupTile(

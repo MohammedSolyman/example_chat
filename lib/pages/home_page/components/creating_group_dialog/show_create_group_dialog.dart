@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/constants/app_strings.dart';
-import '../../../core/models/user_model.dart';
-import '../../../core/widgets/custom_text.dart';
-import '../../../features/group/presentaion_layer/group_controller.dart';
-import '../../../features/user/presentaion_layer/controller.dart';
-import '../../selecting_group_members/selecting_group_members.dart';
+import '../../../../core/constants/app_strings.dart';
+import '../../../../core/models/user_model.dart';
+import '../../../../core/widgets/custom_text.dart';
+import '../../../../features/group/presentaion_layer/group_controller.dart';
+import '../../../../features/user/presentaion_layer/controller.dart';
+import '../../../selecting_group_members/selecting_group_members.dart';
 import 'group_text_field.dart';
 
 showCreateGroupDialog(

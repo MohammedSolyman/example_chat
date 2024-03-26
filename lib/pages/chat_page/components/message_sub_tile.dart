@@ -126,12 +126,8 @@ class MessageBody extends StatelessWidget {
             imageUrl: messageBody,
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 CircularProgressIndicator(value: downloadProgress.progress),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-          )
-
-          //  NetworkImage(messageBody)
-
-          );
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ));
     } else {
       return Container();
     }
