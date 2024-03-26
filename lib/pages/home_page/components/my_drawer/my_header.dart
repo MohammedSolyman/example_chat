@@ -16,7 +16,7 @@ class MyHeader extends StatelessWidget {
     return DrawerHeader(
         child: Column(
       children: [
-        ProfileImage(user: currentUser),
+        ProfileImage(isGroup: false, user: currentUser),
         CustomText(text: currentUser.name!),
         CustomText(text: currentUser.email),
       ],

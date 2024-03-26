@@ -2,17 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/assets_paths.dart';
 import '../../../../core/models/user_model.dart';
+import '../../../features/group/data_layer/model.dart';
 
 class ProfileImage extends StatelessWidget {
   const ProfileImage({
     super.key,
-    required this.user,
+    this.user,
+    this.group,
+    required this.isGroup,
   });
 
-  final UserModel user;
+  final UserModel? user;
+  final GroupModel? group;
+  final bool isGroup;
 
   @override
   Widget build(BuildContext context) {
+    String? imageUrl = isGroup ? group!.groupImage : user!.image;
+
     return Container(
       height: 60,
       width: 60,
@@ -24,14 +31,14 @@ class ProfileImage extends StatelessWidget {
             width: 55,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                image: user.image == ''
+                image: imageUrl == ''
                     ? DecorationImage(
                         image: AssetImage(
-                          AssetsPaths.contact,
+                          isGroup ? AssetsPaths.group : AssetsPaths.contact,
                         ),
                         fit: BoxFit.fill)
                     : DecorationImage(
-                        image: CachedNetworkImageProvider(user.image!),
+                        image: CachedNetworkImageProvider(imageUrl!),
                         fit: BoxFit.fill))),
       ),
     );

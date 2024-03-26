@@ -17,7 +17,7 @@ class HomePageUserTile extends StatelessWidget {
 
     return Card(
       child: ListTile(
-        leading: ProfileImage(user: user),
+        leading: ProfileImage(isGroup: false, user: user),
         title: Text(user.name!),
         onTap: () async {
           String roomId = userController.generateRoomId(

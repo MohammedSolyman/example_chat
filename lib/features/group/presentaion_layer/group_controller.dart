@@ -52,6 +52,7 @@ class GroupController extends GetxController {
         adminId: adminId,
         groupName: groupName,
         groupDescription: groupDescription,
+        groupImage: '',
         members: [adminId]);
     Either<Failure, String> result =
         await createGroupUseCase.createGroup(groupEntity);

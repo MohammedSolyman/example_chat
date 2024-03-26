@@ -35,6 +35,7 @@ class SignUpButton extends StatelessWidget {
                 subscribedGroupsIds: const [],
                 email: tecEmail.text,
                 name: tecName.text,
+                image: '',
                 password: tecPassword.text);
 
             // sign in

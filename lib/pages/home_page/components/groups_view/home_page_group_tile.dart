@@ -4,6 +4,7 @@ import '../../../../core/constants/assets_paths.dart';
 import '../../../../core/models/user_model.dart';
 import '../../../../features/group/data_layer/model.dart';
 import '../../../chat_page/chat_page.dart';
+import '../profile_image.dart';
 
 class HomePageGroupTile extends StatelessWidget {
   const HomePageGroupTile(
@@ -17,9 +18,7 @@ class HomePageGroupTile extends StatelessWidget {
 
     return Card(
       child: ListTile(
-        leading: const CircleAvatar(
-          foregroundImage: AssetImage(AssetsPaths.group),
-        ),
+        leading: ProfileImage(isGroup: true, group: group),
         title: Text(group.groupName),
         onTap: () async {
           Get.to(() => ChatPage(
@@ -27,13 +26,6 @@ class HomePageGroupTile extends StatelessWidget {
               groupModel: group,
               currentUser: currentUser,
               isGroup: true));
-
-          // String roomId = userController.generateRoomId(group.groupName.id!);
-          // Get.to(() => ChatPage(
-          //     roomId: roomId,
-          //     thisUserId: userController.model.value.currentUser!.id!,
-          //     otherUser: user,
-          //     isGroup: false));
         },
       ),
     );

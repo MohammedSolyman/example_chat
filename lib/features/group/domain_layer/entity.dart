@@ -4,7 +4,7 @@ class GroupEntity extends Equatable {
   String groupName;
   String groupDescription;
   String? groupId = '';
-  String? groupImage = '';
+  String? groupImage;
   int? creationDateTime;
   String? adminId = '';
   List<String>? members = [];

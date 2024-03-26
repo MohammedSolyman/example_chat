@@ -21,8 +21,8 @@ class UpdateImageTile extends StatelessWidget {
     FileController fileController = Get.find<FileController>();
     UserController userController = Get.find<UserController>();
     return ListTile(
-      leading: Icon(Icons.person),
-      title: CustomText(text: AppStrings.updateProfileImage),
+      leading: const Icon(Icons.person),
+      title: const CustomText(text: AppStrings.updateProfileImage),
       onTap: () async {
         // open device directory to pick an image
         File? file = await fileController.pickFileFunction();
