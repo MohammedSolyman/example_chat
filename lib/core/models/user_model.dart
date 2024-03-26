@@ -7,6 +7,7 @@ class UserModel extends UserEntity {
     super.id,
     super.password,
     super.name,
+    super.image,
   });
 
   Map<String, dynamic> toMap() {
@@ -14,6 +15,7 @@ class UserModel extends UserEntity {
       'id': id,
       'password': password,
       'name': name,
+      'image': image,
       'email': email,
       'subscribedGroupsIds': subscribedGroupsIds,
     };
@@ -24,6 +26,7 @@ class UserModel extends UserEntity {
         id: map['id'],
         password: map['password'],
         name: map['name'],
+        image: map['image'],
         email: map['email'],
         subscribedGroupsIds: List<String>.from(
           (map['subscribedGroupsIds']),
@@ -35,11 +38,13 @@ class UserModel extends UserEntity {
       email: userEntity.email,
       id: userEntity.id,
       name: userEntity.name,
+      image: userEntity.image,
       password: userEntity.password);
 
   UserEntity toEntity() => UserEntity(
         id: id,
         name: name,
+        image: image,
         password: password,
         email: email,
         subscribedGroupsIds: subscribedGroupsIds,
@@ -49,6 +54,7 @@ class UserModel extends UserEntity {
     String? id,
     String? password,
     String? name,
+    String? image,
     String? email,
     List<String>? subscribedGroupsIds,
   }) {
@@ -56,6 +62,7 @@ class UserModel extends UserEntity {
       id: id ?? this.id,
       password: password ?? this.password,
       name: name ?? this.name,
+      image: image ?? this.image,
       email: email ?? this.email,
       subscribedGroupsIds: subscribedGroupsIds ?? this.subscribedGroupsIds,
     );

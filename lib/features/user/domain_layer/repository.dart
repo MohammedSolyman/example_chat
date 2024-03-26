@@ -13,4 +13,7 @@ abstract class BaseUserRepository {
       UserEntity userEntity, String groupId);
   Future<Either<Failure, Unit>> deleteGroupFromUser(
       UserEntity userEntity, String groupId);
+
+  //interactions with (contacts info collection)
+  Future<Either<Failure, Unit>> updateContactInfo(UserEntity userEntity);
 }

@@ -24,7 +24,8 @@ class FileController extends GetxController {
     required this.deleteFileUseCase,
     required this.downloadFileUseCase,
   });
-
+  ///////////////////////////////////////////////////////////////////
+  // 1. picking files
   Future<File?> pickFileFunction() async {
     Either<Failure, File?> result = await pickFileUseCase.pickFile();
 
@@ -33,15 +34,9 @@ class FileController extends GetxController {
     });
   }
 
-  Future<String?> createFileFunction(FileModel fileModel) async {
-    FileEntity fileEntity = fileModel.toEntity();
-    Either<Failure, String> result =
-        await createFileUseCase.createFile(fileEntity);
-
-    return result.fold((l) {}, (String downloadLink) => downloadLink);
-  }
-
-  FileModel prepareFile({required File file, required String roomId}) {
+  ///////////////////////////////////////////////////////////////////
+  // 2. preparing file models
+  FileModel prepareMesageFile({required File file, required String roomId}) {
     String prefix = roomId.startsWith('contact')
         ? FirebasePath.contactsRooms
         : FirebasePath.groupsRooms;
@@ -52,5 +47,26 @@ class FileController extends GetxController {
     String extension = baseName.split('.')[1];
 
     return FileModel(path: '$prefix/$roomId/$now.$extension', file: file);
+  }
+
+  FileModel prepareProfileFile(
+      {required File file, required String id, required bool isGroup}) {
+    String prefix =
+        isGroup ? FirebasePath.contactsInfo : FirebasePath.groupsInfo;
+
+    String baseName = basename(file.path);
+    String extension = baseName.split('.')[1];
+
+    return FileModel(path: '$prefix/$id/$id.$extension', file: file);
+  }
+
+  ///////////////////////////////////////////////////////////////////
+  // 3. creating files
+  Future<String?> createFileFunction(FileModel fileModel) async {
+    FileEntity fileEntity = fileModel.toEntity();
+    Either<Failure, String> result =
+        await createFileUseCase.createFile(fileEntity);
+
+    return result.fold((l) {}, (String downloadLink) => downloadLink);
   }
 }

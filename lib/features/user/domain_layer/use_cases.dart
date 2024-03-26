@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-
 import '../../../core/entities/user_entitie.dart';
 import '../../../core/errors/failures.dart';
 import 'repository.dart';
@@ -41,5 +40,15 @@ class AddGroupToUser {
   Future<Either<Failure, Unit>> addGroupToUser(
       UserEntity usersEntities, String groupId) async {
     return await baseUserRepository.addGroupToUser(usersEntities, groupId);
+  }
+}
+
+class UpdateContactInfoUseCase {
+  BaseUserRepository baseUserRepository;
+  UpdateContactInfoUseCase({required this.baseUserRepository});
+
+  Future<Either<Failure, Unit>> updateContactInfoUseCase(
+      UserEntity userEntity) async {
+    return await baseUserRepository.updateContactInfo(userEntity);
   }
 }

@@ -20,7 +20,7 @@ class UserRepository implements BaseUserRepository {
   @override
   Future<Either<Failure, Unit>> addUserToContactInfo(
       UserEntity userEntity) async {
-    //if there is internet connection, do the following, otherwose return failure.
+    //if there is internet connection, do the following, otherwise return failure.
     //if there is internet connection, try to add this user to (contacts info) collection.
     //if it is NOT successful, return the corresponding failure
 
@@ -42,7 +42,7 @@ class UserRepository implements BaseUserRepository {
   @override
   Future<Either<Failure, Unit>> getUsersFromCantactsInfo(
       String userId, void Function(List<UserModel>) callback) async {
-    //if there is internet connection, do the following, otherwose return failure.
+    //if there is internet connection, do the following, otherwise return failure.
     //if there is internet connection, try to get all users from contacts collection.
     //if it is NOT successful, return the corresponding failure
 
@@ -84,5 +84,26 @@ class UserRepository implements BaseUserRepository {
       UserEntity userEntity, String groupId) {
     // TODO: implement deleteGroupFromUser
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, Unit>> updateContactInfo(UserEntity userEntity) async {
+    //if there is internet connection, do the following, otherwise return failure.
+    //if there is internet connection, try to update this user in (contacts info) collection.
+    //if it is NOT successful, return the corresponding failure
+
+    if (await networkInfo.isConnected) {
+      UserModel userModel = UserModel.fromEntity(userEntity);
+      try {
+        await baseRemoteUserDataSource.updateContactInfo(userModel);
+        return const Right(unit);
+      } on UnkownException {
+        return const Left(
+            UnknownFailure(failureMessage: ErrorMessages.unknownError));
+      }
+    } else {
+      return const Left(
+          NoConnectionFailure(failureMessage: ErrorMessages.noConnection));
+    }
   }
 }

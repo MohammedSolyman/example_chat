@@ -41,6 +41,7 @@ Future<void> init() async {
 
   // UserController
   sl.registerFactory(() => UserController(
+      updateContactInfoUseCase: sl(),
       addUserToContactInfoUseCase: sl(),
       getUsersFromCantactsInfoUseCase: sl(),
       addGroupToUser: sl(),
@@ -89,6 +90,8 @@ Future<void> init() async {
       () => GetUsersFromCantactsInfoUseCase(baseUserRepository: sl()));
   sl.registerLazySingleton(() => AddGroupToUser(baseUserRepository: sl()));
   sl.registerLazySingleton(() => DeleteGroupFromUser(baseUserRepository: sl()));
+  sl.registerLazySingleton(
+      () => UpdateContactInfoUseCase(baseUserRepository: sl()));
 
   //message usecases
   sl.registerLazySingleton(

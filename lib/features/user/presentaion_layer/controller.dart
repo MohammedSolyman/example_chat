@@ -30,13 +30,14 @@ class UserController extends GetxController {
   GetUsersFromCantactsInfoUseCase getUsersFromCantactsInfoUseCase;
   AddGroupToUser addGroupToUser;
   DeleteGroupFromUser deleteGroupFromUser;
+  UpdateContactInfoUseCase updateContactInfoUseCase;
 
-  UserController({
-    required this.addUserToContactInfoUseCase,
-    required this.getUsersFromCantactsInfoUseCase,
-    required this.addGroupToUser,
-    required this.deleteGroupFromUser,
-  });
+  UserController(
+      {required this.addUserToContactInfoUseCase,
+      required this.getUsersFromCantactsInfoUseCase,
+      required this.addGroupToUser,
+      required this.deleteGroupFromUser,
+      required this.updateContactInfoUseCase});
 
   addUserToContactInfoFunction(
       {required BuildContext context, required UserModel userModel}) async {
@@ -114,5 +115,11 @@ class UserController extends GetxController {
         return e;
       }).toList();
     });
+  }
+
+  Future<void> updateUserFunction(UserModel user) async {
+    UserEntity userEntity = user.toEntity();
+    // Either<Failure, Unit> result =
+    await updateContactInfoUseCase.updateContactInfoUseCase(userEntity);
   }
 }

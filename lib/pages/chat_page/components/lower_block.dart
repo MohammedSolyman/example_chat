@@ -40,7 +40,7 @@ class LowerBlock extends StatelessWidget {
 
                       if (file != null) {
                         // if the user picks a file send this image message
-                        FileModel fileModel = fileControler.prepareFile(
+                        FileModel fileModel = fileControler.prepareMesageFile(
                             file: file, roomId: roomId);
 
                         String? downloadLink =

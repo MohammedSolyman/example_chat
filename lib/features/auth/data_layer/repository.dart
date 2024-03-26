@@ -19,7 +19,7 @@ class AuthRepository implements BaseAuthRepository {
 
   @override
   Future<Either<Failure, String>> signIn(UserEntity userEntity) async {
-    //if there is internet connection, do the following, otherwose return failure.
+    //if there is internet connection, do the following, otherwise return failure.
     //if there is internet connection, try to sign in this user.
     //if it is NOT successful, return the corresponding failure
 
@@ -49,7 +49,7 @@ class AuthRepository implements BaseAuthRepository {
 
   @override
   Future<Either<Failure, Unit>> signOut() async {
-    //if there is internet connection, do the following, otherwose return failure.
+    //if there is internet connection, do the following, otherwise return failure.
     //if there is internet connection, try to sign out the current user.
     //if it is NOT successful, return the corresponding failure
 
@@ -69,7 +69,7 @@ class AuthRepository implements BaseAuthRepository {
 
   @override
   Future<Either<Failure, UserEntity>> signUp(UserEntity userEntity) async {
-    //if there is internet connection, do the following, otherwose return failure.
+    //if there is internet connection, do the following, otherwise return failure.
     //if there is internet connection, try to sign up this user.
     //if it is successful, retern the user entity,
     //if it is NOT successful, return the corresponding failure

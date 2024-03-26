@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import '../../../core/constants/firebase_paths.dart';
 import '../../../core/errors/exceptions.dart';
 import '../../../core/models/user_model.dart';
 
@@ -13,6 +14,9 @@ abstract class BaseRemoteUserDataSource {
   //interactions with groups
   Future<Unit> addGroupToUser(UserModel userModel, String groupId);
   Future<Unit> deleteGroupFromUser(UserModel userModel, String groupId);
+
+  //update Contact Info
+  Future<Unit> updateContactInfo(UserModel userModel);
 }
 
 class RemoteUserDataSource implements BaseRemoteUserDataSource {
@@ -94,5 +98,22 @@ class RemoteUserDataSource implements BaseRemoteUserDataSource {
   Future<Unit> deleteGroupFromUser(UserModel userModel, String groupId) {
     // TODO: implement deleteGroupFromUser
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Unit> updateContactInfo(UserModel userModel) async {
+    try {
+      //try to update this user in the (contacts info) collection
+//if it fails, throw an exception
+      FirebaseFirestore myInstance = FirebaseFirestore.instance;
+      CollectionReference<Map<String, dynamic>> colRef =
+          myInstance.collection(FirebasePath.contactsInfo);
+      DocumentReference<Map<String, dynamic>> docRef = colRef.doc(userModel.id);
+      await docRef.set(userModel.toMap());
+
+      return unit;
+    } catch (e) {
+      throw UnkownException();
+    }
   }
 }

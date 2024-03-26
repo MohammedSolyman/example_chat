@@ -4,6 +4,7 @@ class UserEntity extends Equatable {
   String? id;
   String? password;
   String? name;
+  String? image;
   final String email;
   List<String> subscribedGroupsIds = [];
 
@@ -11,6 +12,7 @@ class UserEntity extends Equatable {
     this.id,
     this.password,
     this.name,
+    this.image,
     required this.email,
     required this.subscribedGroupsIds,
   });

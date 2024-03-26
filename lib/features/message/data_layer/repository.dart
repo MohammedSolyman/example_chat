@@ -20,7 +20,7 @@ class MessageRepository implements BaseMessageRepository {
   @override
   Future<Either<Failure, Unit>> sendMessage(
       MessageEntity message, String roomId) async {
-    //if there is internet connection, do the following, otherwose return failure.
+    //if there is internet connection, do the following, otherwise return failure.
     //if there is internet connection, try to send the message to room Id.
     //if it is NOT successful, return the corresponding failure
 
@@ -43,7 +43,7 @@ class MessageRepository implements BaseMessageRepository {
   @override
   Future<Either<Failure, Unit>> getMessages(
       String roomId, void Function(List<MessageModel>) callback) async {
-    //if there is internet connection, do the following, otherwose return failure.
+    //if there is internet connection, do the following, otherwise return failure.
     //if there is internet connection, try to get messages from room Id.
     //if it is NOT successful, return the corresponding failure
 
