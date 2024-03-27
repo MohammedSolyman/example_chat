@@ -25,9 +25,11 @@ class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
           myInstance.collection('groups info');
       DocumentReference<Map<String, dynamic>> docRef = colRef.doc();
 
-      docRef.set(groupModel.toMap());
+      await docRef.set(groupModel.toMap());
       String groupId = docRef.id;
-      docRef.set({'groupId': groupId}, SetOptions(merge: true));
+      print(')))))))))))))))))))))))))');
+      print(groupId);
+      await docRef.set({'groupId': groupId}, SetOptions(merge: true));
 
       return groupId;
     } catch (e) {
@@ -67,7 +69,7 @@ class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
       List<String> members = groupModel.members!;
       List<String> newMembers = [...usersIds, ...members];
       GroupModel newGroupModel = groupModel.copyWith(members: newMembers);
-      docRef.set(newGroupModel.toMap());
+      await docRef.set(newGroupModel.toMap());
 
       return unit;
     } catch (e) {

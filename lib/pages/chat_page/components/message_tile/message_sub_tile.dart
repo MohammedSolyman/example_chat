@@ -47,8 +47,8 @@
 // }
 
 import 'package:flutter/material.dart';
-import '../../../core/widgets/custom_text.dart';
-import '../../../features/message/data_layer/model.dart';
+import '../../../../core/widgets/custom_text.dart';
+import '../../../../features/message/data_layer/model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class MessageSubTile extends StatelessWidget {

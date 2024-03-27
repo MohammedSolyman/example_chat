@@ -52,7 +52,7 @@ class FileController extends GetxController {
   FileModel prepareProfileFile(
       {required File file, required String id, required bool isGroup}) {
     String prefix =
-        isGroup ? FirebasePath.contactsInfo : FirebasePath.groupsInfo;
+        isGroup ? FirebasePath.groupsInfo : FirebasePath.contactsInfo;
 
     String baseName = basename(file.path);
     String extension = baseName.split('.')[1];

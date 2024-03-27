@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_cli_test/core/widgets/my_drawer/my_drawer.dart';
 import '../../core/constants/assets_paths.dart';
 import '../../core/dependency_injection/dependency_injection.dart' as di;
 import '../../core/models/user_model.dart';
 import '../../features/group/data_layer/model.dart';
 import '../../features/message/presentaion_layer/controller.dart';
-import 'components/chat_appbar.dart';
+import 'components/chat_appbar/chat_appbar.dart';
 import 'components/chat_body.dart';
 import 'components/lower_block.dart';
 
@@ -22,11 +23,11 @@ class ChatPage extends StatelessWidget {
   final UserModel? otherUser;
   final UserModel currentUser;
   final GroupModel? groupModel;
-
   final bool isGroup; // is it contact room or group room?
 
   @override
   Widget build(BuildContext context) {
+    print('from chat page:  isGroup: $isGroup ----------------------------');
     MessageController messageController = Get.put(di.sl<MessageController>());
 
     messageController.getChatPageInfo(
@@ -35,17 +36,16 @@ class ChatPage extends StatelessWidget {
       thisUserId: currentUser.id!,
     );
 
-    String title = isGroup
-        ? groupModel!.groupName
-        : messageController.model.value.otherUser!.name!;
-    String subtitle = isGroup
-        ? groupModel!.groupDescription
-        : messageController.model.value.otherUser!.email;
-
     messageController.getMessagesFunction(context: context, roomId: roomId);
 
     return Scaffold(
-      appBar: chatAppBar(title: title, subtitle: subtitle),
+      endDrawer: MyDrawer(
+          isGroup: isGroup, currentUser: currentUser, groupModel: groupModel),
+      appBar: chatAppBar(
+          context: context,
+          isGroup: isGroup,
+          groupModel: groupModel,
+          otherUser: otherUser),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
         decoration: const BoxDecoration(

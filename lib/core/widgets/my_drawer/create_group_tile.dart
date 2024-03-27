@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_strings.dart';
-import '../../../../core/models/user_model.dart';
-import '../../../../core/widgets/custom_text.dart';
-import '../creating_group_dialog/show_create_group_dialog.dart';
+import '../../constants/app_strings.dart';
+import '../../models/user_model.dart';
+import '../custom_text.dart';
+import '../../../pages/home_page/components/creating_group_dialog/show_create_group_dialog.dart';
 
 class CreateGroupTile extends StatelessWidget {
   const CreateGroupTile({

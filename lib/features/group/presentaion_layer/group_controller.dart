@@ -23,11 +23,10 @@ class GroupController extends GetxController {
       required this.addUsersGroupUseCase,
       required this.getAllGroupsUseCase});
 
-  updateGoup({
+  Future<void> updateGoup({
     required BuildContext context,
     required GroupModel groupModel,
   }) async {
-    groupModel.groupName = 'new name';
     Either<Failure, Unit> result =
         await updateGroupUseCase.updateGroup(groupModel);
 

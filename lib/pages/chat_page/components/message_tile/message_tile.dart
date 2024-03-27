@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../features/message/data_layer/model.dart';
-import '../../../features/message/presentaion_layer/controller.dart';
+import '../../../../features/message/data_layer/model.dart';
+import '../../../../features/message/presentaion_layer/controller.dart';
 import 'message_sub_tile.dart';
 
 class MessageTile extends StatelessWidget {

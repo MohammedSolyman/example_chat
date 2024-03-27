@@ -11,7 +11,7 @@ import 'components/contacts_view/contacts_view.dart';
 import 'components/groups_view/groups_view.dart';
 import 'components/my_tab.dart';
 import 'components/top_row.dart';
-import 'components/my_drawer/my_drawer.dart';
+import '../../core/widgets/my_drawer/my_drawer.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({required this.currentUser, super.key});
@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
     groupController.getGroupsFunction(currentUser.id!);
 
     return Scaffold(
-        endDrawer: MyDrawer(currentUser: currentUser),
+        endDrawer: MyDrawer(currentUser: currentUser, isGroup: false),
         body: Container(
           decoration: const BoxDecoration(
               image: DecorationImage(

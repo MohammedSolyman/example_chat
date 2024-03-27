@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../features/message/data_layer/model.dart';
 import '../../../features/message/presentaion_layer/controller.dart';
-import 'message_tile.dart';
-import 'time_tile.dart';
+import 'message_tile/message_tile.dart';
+import 'message_tile/time_tile.dart';
 
 class ChatBody extends StatelessWidget {
   const ChatBody({required this.isGroup, super.key});
