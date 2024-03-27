@@ -7,6 +7,7 @@ abstract class BaseGroupRepository {
   Future<Either<Failure, Unit>> updateGroup(GroupEntity groupEntity);
   Future<Either<Failure, Unit>> addUsersGroup(
       List<String> usersIds, String groupId);
+  Future<Either<Failure, GroupEntity>> getGroupInfo(String groupId);
   Future<Either<Failure, Unit>> getGroups(
       String currentUserId, void Function(List<GroupEntity>) callback);
 }

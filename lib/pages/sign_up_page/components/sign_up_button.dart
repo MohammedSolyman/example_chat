@@ -48,6 +48,9 @@ class SignUpButton extends StatelessWidget {
               userController.addUserToContactInfoFunction(
                   context: context, userModel: userModelWithId);
 
+              //assign this user to current user
+              authController.assignCurrentUser(userModelWithId);
+
               // navigate to hompage
               Get.offAll(() => HomePage(currentUser: userModelWithId));
             }

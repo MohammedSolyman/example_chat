@@ -40,3 +40,12 @@ class GetGroupsUseCase {
     return await baseGroupRepository.getGroups(currentUserId, callback);
   }
 }
+
+class GetGroupInfoUseCase {
+  BaseGroupRepository baseGroupRepository;
+  GetGroupInfoUseCase({required this.baseGroupRepository});
+
+  Future<Either<Failure, GroupEntity>> getGroupInfo(String groupId) async {
+    return await baseGroupRepository.getGroupInfo(groupId);
+  }
+}

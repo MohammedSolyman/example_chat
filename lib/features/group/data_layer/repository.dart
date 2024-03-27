@@ -83,4 +83,21 @@ class GroupRepository implements BaseGroupRepository {
           NoConnectionFailure(failureMessage: ErrorMessages.noConnection));
     }
   }
+
+  @override
+  Future<Either<Failure, GroupEntity>> getGroupInfo(String groupId) async {
+    if (await networkInfo.isConnected) {
+      try {
+        GroupModel groupModel =
+            await baseRemoteGroupDataSource.getGroupInfo(groupId);
+        return Right(groupModel);
+      } on ServerException {
+        return const Left(
+            ServerFailure(failureMessage: ErrorMessages.serverError));
+      }
+    } else {
+      return const Left(
+          NoConnectionFailure(failureMessage: ErrorMessages.noConnection));
+    }
+  }
 }

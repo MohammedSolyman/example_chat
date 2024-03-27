@@ -34,6 +34,7 @@ Future<void> init() async {
 
   // GroupController
   sl.registerFactory(() => GroupController(
+      getGroupInfoUseCase: sl(),
       createGroupUseCase: sl(),
       updateGroupUseCase: sl(),
       addUsersGroupUseCase: sl(),
@@ -76,6 +77,8 @@ Future<void> init() async {
   sl.registerLazySingleton(
       () => AddUsersGroupUseCase(baseGroupRepository: sl()));
   sl.registerLazySingleton(() => GetGroupsUseCase(baseGroupRepository: sl()));
+  sl.registerLazySingleton(
+      () => GetGroupInfoUseCase(baseGroupRepository: sl()));
 
   //auth usecases
   sl.registerLazySingleton(() => SignUpUseCase(baseAuthRepository: sl()));

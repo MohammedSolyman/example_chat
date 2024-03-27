@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import '../../../core/constants/firebase_paths.dart';
 import '../../../core/errors/exceptions.dart';
 import 'model.dart';
 
 abstract class BaseRemoteGroupDataSource {
   Future<String> createGroup(GroupModel groupModel);
   Future<Unit> updateGroup(GroupModel groupModel);
+  Future<GroupModel> getGroupInfo(String groupId);
   Future<Unit> addUsersGroup(List<String> usersIds, String groupId);
   Future<Unit> getGroups(
       String currentUserId, void Function(List<GroupModel>) callback);
@@ -116,6 +118,26 @@ class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
         groups = [];
       });
       return unit;
+    } catch (e) {
+      throw UnkownException();
+    }
+  }
+
+  @override
+  Future<GroupModel> getGroupInfo(String groupId) async {
+    try {
+      //try to get this group info from (groups info) collection
+      //if fails throw an exception
+      FirebaseFirestore myInstance = FirebaseFirestore.instance;
+      CollectionReference<Map<String, dynamic>> colRef =
+          myInstance.collection(FirebasePath.groupsInfo);
+      DocumentReference<Map<String, dynamic>> docRef = colRef.doc(groupId);
+
+      DocumentSnapshot<Map<String, dynamic>> docSnap = await docRef.get();
+      Map<String, dynamic>? map = docSnap.data();
+      GroupModel group = GroupModel.fromMap(map!);
+
+      return group;
     } catch (e) {
       throw UnkownException();
     }

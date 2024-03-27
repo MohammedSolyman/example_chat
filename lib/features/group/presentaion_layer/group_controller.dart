@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import '../../../core/errors/failures.dart';
 import '../../../core/widgets/show_my_dialoge.dart';
 import '../data_layer/model.dart';
+import '../domain_layer/entity.dart';
 import '../domain_layer/use_cases.dart';
 
 class StateModel {
   String groupId = '';
   List<GroupModel> allGroups = [];
+  GroupModel? currentGroup; //selected group to be shown in the chat room
 }
 
 class GroupController extends GetxController {
@@ -17,11 +19,31 @@ class GroupController extends GetxController {
   UpdateGroupUseCase updateGroupUseCase;
   AddUsersGroupUseCase addUsersGroupUseCase;
   GetGroupsUseCase getAllGroupsUseCase;
+  GetGroupInfoUseCase getGroupInfoUseCase;
   GroupController(
       {required this.createGroupUseCase,
       required this.updateGroupUseCase,
+      required this.getGroupInfoUseCase,
       required this.addUsersGroupUseCase,
       required this.getAllGroupsUseCase});
+
+  void assignCurrentGroup(GroupModel currentGroup) {
+    model.update((val) {
+      val!.currentGroup = currentGroup;
+    });
+  }
+
+  Future<GroupModel?> getGroupInfoFunction(String groupId) async {
+    Either<Failure, GroupEntity> result =
+        await getGroupInfoUseCase.getGroupInfo(groupId);
+
+    return result.fold((Failure failure) {
+      // showMyDialog(
+      //     context: context, msg: failure.failureMessage, isSuccess: false);
+    }, (GroupEntity groupEntity) {
+      return GroupModel.fromEntity(groupEntity);
+    });
+  }
 
   Future<void> updateGoup({
     required BuildContext context,

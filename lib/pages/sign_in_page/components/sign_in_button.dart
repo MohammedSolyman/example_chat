@@ -40,11 +40,16 @@ class SignInButton extends StatelessWidget {
             // if the signing in is successful
             if (userId != null) {
               //get this user info
-              UserModel userModelWithInfo =
+              UserModel? userModelWithInfo =
                   await authController.getUserInfoFunction(userId);
 
-              //go to homepage
-              Get.offAll(() => HomePage(currentUser: userModelWithInfo));
+              if (userModelWithInfo != null) {
+                //asign this user to the current user
+                authController.assignCurrentUser(userModelWithInfo);
+
+                //go to homepage
+                Get.offAll(() => HomePage(currentUser: userModelWithInfo));
+              }
             }
           }
         });

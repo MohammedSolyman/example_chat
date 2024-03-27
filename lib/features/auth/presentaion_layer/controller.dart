@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,8 +9,12 @@ import '../../../core/models/user_model.dart';
 import '../../../core/widgets/show_my_dialoge.dart';
 import '../domain_layer/use_cases.dart';
 
+class AuthModel {
+  UserModel? currentUser;
+}
+
 class AuthController extends GetxController {
-//  Rx<UserControllerModel> model = UserControllerModel().obs;
+  Rx<AuthModel> model = AuthModel().obs;
 
   SignUpUseCase signUpUseCase;
   SignInUseCase signInUseCase;
@@ -22,7 +28,17 @@ class AuthController extends GetxController {
     required this.getUserInfo,
   });
 
-  signUpFunction(BuildContext context, UserModel userModel) async {
+  void assignCurrentUser(UserModel currentUser) {
+    model.update((val) {
+      val!.currentUser = currentUser;
+    });
+    print(model.value.currentUser!.name);
+    print(model.value.currentUser!.email);
+    print(model.value.currentUser!.password);
+  }
+
+  Future<UserModel?> signUpFunction(
+      BuildContext context, UserModel userModel) async {
     Either<Failure, UserEntity> result = await signUpUseCase.signUp(userModel);
 
     return result.fold((Failure failure) {
@@ -34,7 +50,8 @@ class AuthController extends GetxController {
     });
   }
 
-  signInFunction(BuildContext context, UserModel userModel) async {
+  Future<String?> signInFunction(
+      BuildContext context, UserModel userModel) async {
     Either<Failure, String> result = await signInUseCase.signIn(userModel);
 
     return result.fold((Failure failure) {
@@ -45,7 +62,7 @@ class AuthController extends GetxController {
     });
   }
 
-  signOutFunction(BuildContext context) async {
+  Future<void> signOutFunction(BuildContext context) async {
     Either<Failure, Unit> result = await signOutUseCase.signOut();
 
     return result.fold((Failure failure) {
@@ -54,7 +71,7 @@ class AuthController extends GetxController {
     }, (Unit unit) {});
   }
 
-  getUserInfoFunction(String userId) async {
+  Future<UserModel?> getUserInfoFunction(String userId) async {
     Either<Failure, UserEntity> result = await getUserInfo.getUserInfo(userId);
 
     return result.fold((Failure failure) {}, (UserEntity userEntity) {
