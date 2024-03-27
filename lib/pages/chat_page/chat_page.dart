@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_cli_test/core/widgets/my_drawer/my_drawer.dart';
 import '../../core/constants/assets_paths.dart';
-import '../../core/dependency_injection/dependency_injection.dart' as di;
 import '../../core/models/user_model.dart';
 import '../../features/group/data_layer/model.dart';
 import '../../features/message/presentaion_layer/controller.dart';
@@ -27,8 +26,7 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('from chat page:  isGroup: $isGroup ----------------------------');
-    MessageController messageController = Get.put(di.sl<MessageController>());
+    MessageController messageController = Get.find<MessageController>();
 
     messageController.getChatPageInfo(
       roomId: roomId,
@@ -39,8 +37,7 @@ class ChatPage extends StatelessWidget {
     messageController.getMessagesFunction(context: context, roomId: roomId);
 
     return Scaffold(
-      endDrawer: MyDrawer(
-          isGroup: isGroup, currentUser: currentUser, groupModel: groupModel),
+      endDrawer: MyDrawer(isGroup: isGroup),
       appBar: chatAppBar(
           context: context,
           isGroup: isGroup,

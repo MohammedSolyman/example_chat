@@ -52,7 +52,7 @@ class SignUpButton extends StatelessWidget {
               authController.assignCurrentUser(userModelWithId);
 
               // navigate to hompage
-              Get.offAll(() => HomePage(currentUser: userModelWithId));
+              Get.offAll(() => const HomePage());
             }
           }
         });

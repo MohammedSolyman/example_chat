@@ -92,7 +92,7 @@ class GroupController extends GetxController {
     await addUsersGroupUseCase.addUsersGroupUseCase(usersIds, groupId);
   }
 
-  getGroupsFunction(String currentUserId) async {
+  getGroupsFunction({required String currentUserId}) async {
     await getAllGroupsUseCase.getGroupsUseCase(currentUserId, (p0) {
       List<GroupModel> groups =
           p0.map((e) => GroupModel.fromEntity(e)).toList();

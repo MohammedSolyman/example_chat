@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../core/constants/assets_paths.dart';
-import '../../../../core/models/user_model.dart';
+import '../../../../core/widgets/tile_image.dart';
+import '../../../../features/auth/presentaion_layer/controller.dart';
 import '../../../../features/group/data_layer/model.dart';
+import '../../../../features/group/presentaion_layer/group_controller.dart';
 import '../../../chat_page/chat_page.dart';
-import '../profile_image.dart';
 
 class HomePageGroupTile extends StatelessWidget {
-  const HomePageGroupTile(
-      {required this.currentUser, required this.group, super.key});
+  const HomePageGroupTile({required this.group, super.key});
 
   final GroupModel group;
-  final UserModel currentUser;
+
   @override
   Widget build(BuildContext context) {
-//    UserController userController = Get.find<UserController>();
+    AuthController authController = Get.find<AuthController>();
+    GroupController groupController = Get.find<GroupController>();
 
     return Card(
       child: ListTile(
-        leading: ProfileImage(isGroup: true, group: group),
+        leading: TileImage(image: group.groupImage!, isGroup: true),
         title: Text(group.groupName),
         onTap: () async {
           Get.to(() => ChatPage(
               roomId: group.groupId!,
               groupModel: group,
-              currentUser: currentUser,
+              currentUser: authController.model.value.currentUser!,
               isGroup: true));
         },
       ),

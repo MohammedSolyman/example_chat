@@ -30,8 +30,6 @@ class RemoteFileDataSource implements BaseRemoteFileDataSource {
         return null;
       }
     } catch (e) {
-      print('actual error ------------------------');
-      print(e.toString());
       throw UnkownException();
     }
   }
@@ -47,8 +45,6 @@ class RemoteFileDataSource implements BaseRemoteFileDataSource {
       await storageRef.putFile(fileModel.file);
       return storageRef.getDownloadURL();
     } catch (e) {
-      print('actual error ------------------------');
-      print(e.toString());
       throw ServerException();
     }
   }

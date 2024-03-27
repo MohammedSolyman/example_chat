@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,9 +30,6 @@ class AuthController extends GetxController {
     model.update((val) {
       val!.currentUser = currentUser;
     });
-    print(model.value.currentUser!.name);
-    print(model.value.currentUser!.email);
-    print(model.value.currentUser!.password);
   }
 
   Future<UserModel?> signUpFunction(

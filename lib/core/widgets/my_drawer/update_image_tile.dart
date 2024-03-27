@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_cli_test/pages/chat_page/chat_page.dart';
+import '../../../features/auth/presentaion_layer/controller.dart';
 import '../../constants/app_strings.dart';
 import '../../models/user_model.dart';
 import '../custom_text.dart';
@@ -14,22 +15,21 @@ import '../../../features/user/presentaion_layer/controller.dart';
 class UpdateImageTile extends StatelessWidget {
   const UpdateImageTile({
     super.key,
-    this.currentUser,
-    this.groupModel,
     required this.isGroup,
   });
 
-  final UserModel? currentUser;
-  final GroupModel? groupModel;
   final bool isGroup;
 
   @override
   Widget build(BuildContext context) {
-    String id = isGroup ? groupModel!.groupId! : currentUser!.id!;
-
     FileController fileController = Get.find<FileController>();
     UserController userController = Get.find<UserController>();
     GroupController groupController = Get.find<GroupController>();
+    AuthController authController = Get.find<AuthController>();
+
+    String id = isGroup
+        ? groupController.model.value.groupId
+        : authController.model.value.currentUser!.id!;
 
     return ListTile(
       leading: const Icon(Icons.person),
@@ -49,22 +49,26 @@ class UpdateImageTile extends StatelessWidget {
           if (imgUrl != null) {
             // if uploading was successful, add image url in user or group info
             if (isGroup) {
-              GroupModel newModel = groupModel!.copyWith(groupImage: imgUrl);
+              GroupModel newModel = groupController.model.value.currentGroup!
+                  .copyWith(groupImage: imgUrl);
               await groupController.updateGoup(
                   context: context, groupModel: newModel);
 
-              Scaffold.of(context).closeEndDrawer();
+              //update current group
+              groupController.assignCurrentGroup(newModel);
 
               Get.off(ChatPage(
-                  roomId: groupModel!.groupId!,
-                  groupModel: groupModel,
-                  currentUser: currentUser!,
+                  roomId: groupController.model.value.currentGroup!.groupId!,
+                  groupModel: groupController.model.value.currentGroup!,
+                  currentUser: authController.model.value.currentUser!,
                   isGroup: true));
             } else {
-              UserModel newModel = currentUser!.copyWith(image: imgUrl);
+              UserModel newModel = authController.model.value.currentUser!
+                  .copyWith(image: imgUrl);
               userController.updateUserFunction(newModel);
-              //and close the drawer
-              Scaffold.of(context).closeEndDrawer();
+
+              //update current group
+              authController.assignCurrentUser(newModel);
             }
           }
         }

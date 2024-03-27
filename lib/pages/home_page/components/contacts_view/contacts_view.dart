@@ -7,12 +7,12 @@ import '../../../../features/user/presentaion_layer/controller.dart';
 import 'home_page_user_tile.dart';
 
 class ContactsView extends StatelessWidget {
-  const ContactsView({required this.currentUser, super.key});
+  const ContactsView({super.key});
 
-  final UserModel currentUser;
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find<UserController>();
+    // AuthController authController = Get.find<AuthController>();
 
     return Obx(() {
       List<UserModel>? users = userController.model.value.users;
@@ -27,8 +27,7 @@ class ContactsView extends StatelessWidget {
           child: ListView.builder(
             itemCount: users.length,
             itemBuilder: (context, index) {
-              return HomePageUserTile(
-                  currentUser: currentUser, user: users[index]);
+              return HomePageUserTile(user: users[index]);
             },
           ),
         );

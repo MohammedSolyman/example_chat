@@ -29,8 +29,7 @@ class RemoteGroupDataSource implements BaseRemoteGroupDataSource {
 
       await docRef.set(groupModel.toMap());
       String groupId = docRef.id;
-      print(')))))))))))))))))))))))))');
-      print(groupId);
+
       await docRef.set({'groupId': groupId}, SetOptions(merge: true));
 
       return groupId;

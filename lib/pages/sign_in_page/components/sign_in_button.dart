@@ -48,7 +48,7 @@ class SignInButton extends StatelessWidget {
                 authController.assignCurrentUser(userModelWithInfo);
 
                 //go to homepage
-                Get.offAll(() => HomePage(currentUser: userModelWithInfo));
+                Get.offAll(() => const HomePage());
               }
             }
           }

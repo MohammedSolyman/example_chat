@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_strings.dart';
-import '../../../../core/models/user_model.dart';
 import '../../../../core/widgets/custom_text.dart';
+import '../../../../features/auth/presentaion_layer/controller.dart';
 import '../../../../features/group/presentaion_layer/group_controller.dart';
 import '../../../../features/user/presentaion_layer/controller.dart';
 import '../../../selecting_group_members/selecting_group_members.dart';
 import 'group_text_field.dart';
 
-showCreateGroupDialog(
-    {required BuildContext context, required UserModel currentUser}) async {
+showCreateGroupDialog({required BuildContext context}) async {
   GroupController groupController = Get.find<GroupController>();
   UserController userController = Get.find<UserController>();
+  AuthController authController = Get.find<AuthController>();
 
   TextEditingController tecGroupName = TextEditingController();
   TextEditingController tecGroupDescription = TextEditingController();
@@ -66,7 +66,7 @@ showCreateGroupDialog(
               //ONLY if the fields are NOT empty
               //create  a group and assign  creating user as an admin
               await groupController.createGoup(
-                  adminId: currentUser.id!,
+                  adminId: authController.model.value.currentUser!.id!,
                   context: context,
                   groupName: tecGroupName.text,
                   groupDescription: tecGroupDescription.text);
@@ -76,7 +76,8 @@ showCreateGroupDialog(
 
               //add this group to user's groups list
               await userController.addGroupToUserFunction(
-                  user: currentUser, groupId: groupId);
+                  user: authController.model.value.currentUser!,
+                  groupId: groupId);
 
               // close the dialog
               Get.back();

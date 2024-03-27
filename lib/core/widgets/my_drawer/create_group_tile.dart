@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../constants/app_strings.dart';
-import '../../models/user_model.dart';
 import '../custom_text.dart';
 import '../../../pages/home_page/components/creating_group_dialog/show_create_group_dialog.dart';
 
 class CreateGroupTile extends StatelessWidget {
   const CreateGroupTile({
     super.key,
-    required this.currentUser,
   });
-
-  final UserModel currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +18,9 @@ class CreateGroupTile extends StatelessWidget {
         Scaffold.of(context).closeEndDrawer();
 
         // open (create group) dialog
-        await showCreateGroupDialog(context: context, currentUser: currentUser);
+        await showCreateGroupDialog(
+          context: context,
+        );
       },
     );
   }

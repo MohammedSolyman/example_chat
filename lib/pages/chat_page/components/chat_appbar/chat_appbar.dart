@@ -3,7 +3,7 @@ import '../../../../core/models/user_model.dart';
 import '../../../../core/widgets/custom_text.dart';
 import '../../../../core/widgets/custom_title.dart';
 import '../../../../features/group/data_layer/model.dart';
-import '../../../home_page/components/profile_image.dart';
+import '../../../../core/widgets/my_drawer/profile_image.dart';
 
 AppBar chatAppBar(
     {required BuildContext context,
@@ -20,7 +20,7 @@ AppBar chatAppBar(
       children: [
         Row(
           children: [
-            ProfileImage(isGroup: isGroup, group: groupModel, user: otherUser),
+            ProfileImage(isGroup: isGroup),
             const SizedBox(width: 5),
             CustomTitle(text: title),
           ],
@@ -37,7 +37,7 @@ AppBar chatAppBar(
               onPressed: () {
                 Scaffold.of(context).openEndDrawer();
               },
-              icon: Icon(Icons.settings, size: 40, color: Colors.white)))
+              icon: const Icon(Icons.settings, size: 40, color: Colors.white)))
     ],
   );
 }
