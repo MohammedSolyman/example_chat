@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../core/models/user_model.dart';
 import '../../../../core/widgets/custom_text.dart';
 import '../../../../core/widgets/custom_title.dart';
-import '../../../../features/group/data_layer/model.dart';
 import '../../../../core/widgets/my_drawer/profile_image.dart';
+import '../../../../features/group/presentaion_layer/group_controller.dart';
+import '../../chat_image.dart';
 
 AppBar chatAppBar(
     {required BuildContext context,
     UserModel? otherUser,
-    GroupModel? groupModel,
     required bool isGroup}) {
-  String title = isGroup ? groupModel!.groupName : otherUser!.name!;
-  String subtitle = isGroup ? groupModel!.groupDescription : otherUser!.email;
+  GroupController groupController = Get.find<GroupController>();
+
+  String title = isGroup
+      ? groupController.model.value.currentGroup!.groupName
+      : otherUser!.name!;
+  String subtitle = isGroup
+      ? groupController.model.value.currentGroup!.groupDescription
+      : otherUser!.email;
 
   return AppBar(
     toolbarHeight: 100,
@@ -20,7 +27,7 @@ AppBar chatAppBar(
       children: [
         Row(
           children: [
-            ProfileImage(isGroup: isGroup),
+            ChatImage(isGroup: isGroup, otherUser: otherUser),
             const SizedBox(width: 5),
             CustomTitle(text: title),
           ],

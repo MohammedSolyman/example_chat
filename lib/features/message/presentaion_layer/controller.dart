@@ -9,9 +9,8 @@ import '../domain_layer/entity.dart';
 import '../domain_layer/use_cases.dart';
 
 class MessageStateModel {
-  String roomId = '';
-  String thisUserId = '';
-  UserModel? otherUser;
+  //String roomId = '';
+  //UserModel? otherUser;
   List<MessageModel> messages = [];
 }
 
@@ -25,34 +24,34 @@ class MessageController extends GetxController {
     required this.getMessagesUseCase,
   });
 
-  void getChatPageInfo(
-      {required String roomId,
-      UserModel? otherUser,
-      required String thisUserId}) {
-    //this function will be called at the beginning of the chat page
-    //this function will fetch the room, this user (if it is contact
-    //NOT group chat) and other user information
-    model.update((val) {
-      val!.roomId = roomId;
-      val.thisUserId = thisUserId;
-      val.otherUser = otherUser;
-    });
-  }
+  // void getChatPageInfo(
+  //     {required String roomId,
+  //     UserModel? otherUser,
+  //     required String thisUserId}) {
+  //   //this function will be called at the beginning of the chat page
+  //   //this function will fetch the room, this user (if it is contact
+  //   //NOT group chat) and other user information
+  //   model.update((val) {
+  //     val!.roomId = roomId;
+  //     val.thisUserId = thisUserId;
+  //     val.otherUser = otherUser;
+  //   });
+  // }
 
   MessageModel prepareMessage(
       {required String messageType,
       required String body,
       required String recieverId,
-      required senderName}) {
+      required UserModel currentUser}) {
     //prepare the message model
 
     DateTime now = DateTime.now();
     int dateTime = now.millisecondsSinceEpoch;
 
     return MessageModel(
-      senderName: senderName,
+      senderName: currentUser.name!,
       dateTime: dateTime,
-      senderId: model.value.thisUserId,
+      senderId: currentUser.id!,
       recieverId: recieverId,
       body: body,
       messageType: messageType,

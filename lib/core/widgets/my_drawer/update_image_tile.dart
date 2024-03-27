@@ -59,8 +59,6 @@ class UpdateImageTile extends StatelessWidget {
 
               Get.off(ChatPage(
                   roomId: groupController.model.value.currentGroup!.groupId!,
-                  groupModel: groupController.model.value.currentGroup!,
-                  currentUser: authController.model.value.currentUser!,
                   isGroup: true));
             } else {
               UserModel newModel = authController.model.value.currentUser!

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../features/auth/presentaion_layer/controller.dart';
 import '../../../../features/message/data_layer/model.dart';
-import '../../../../features/message/presentaion_layer/controller.dart';
 import 'message_sub_tile.dart';
 
 class MessageTile extends StatelessWidget {
@@ -11,11 +11,12 @@ class MessageTile extends StatelessWidget {
   final bool isGroup;
   @override
   Widget build(BuildContext context) {
-    MessageController messageController = Get.find<MessageController>();
+    AuthController authController = Get.find<AuthController>();
 
     return Obx(() {
       String msg = message.body;
-      bool isMe = message.senderId == messageController.model.value.thisUserId;
+      bool isMe =
+          message.senderId == authController.model.value.currentUser!.id!;
       String timeString = message.getimeString();
 
       return MessageSubTile(

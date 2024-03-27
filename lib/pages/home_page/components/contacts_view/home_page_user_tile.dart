@@ -24,11 +24,8 @@ class HomePageUserTile extends StatelessWidget {
           String roomId = userController.generateRoomId(
               senderId: authController.model.value.currentUser!.id!,
               recieverId: user.id!);
-          Get.to(() => ChatPage(
-              roomId: roomId,
-              currentUser: authController.model.value.currentUser!,
-              otherUser: user,
-              isGroup: false));
+          Get.to(
+              () => ChatPage(roomId: roomId, otherUser: user, isGroup: false));
         },
       ),
     );
